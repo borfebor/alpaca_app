@@ -1,5 +1,4 @@
-ALPACA_LOGO2.png
-https://github.com/borfebor/alpaca_app/blob/62b6915c377ccc9af4bc85aed6e715ea27c583b3/ALPACA_LOGO2.png
+[ALPACA](https://github.com/borfebor/alpaca_app/blob/62b6915c377ccc9af4bc85aed6e715ea27c583b3/ALPACA_LOGO2.png)
 # Alpaca app
 
 > An app by [B. Ferrero-Bordera](https://www.linkedin.com/in/borjaferrero/)
