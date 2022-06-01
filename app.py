@@ -7,7 +7,6 @@ import streamlit as st
 from PIL import Image
 from random import randint
 from math import pi
-output_notebook()
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 import seaborn as sns
