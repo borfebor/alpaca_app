@@ -7,13 +7,6 @@ import streamlit as st
 import bokeh
 from PIL import Image
 from random import randint
-from bokeh.io import output_notebook
-from bokeh.io import push_notebook, show, output_notebook
-from bokeh.palettes import Category20c
-from bokeh.io import export_png
-from bokeh.layouts import row
-from bokeh.plotting import figure
-from bokeh.transform import cumsum
 from math import pi
 output_notebook()
 from sklearn.linear_model import LinearRegression
