@@ -1,17 +1,12 @@
 
 #needed packages
-#import matplotlib.pyplot as plt
+
 import numpy as np
 import pandas as pd
 import streamlit as st
 from PIL import Image
 from random import randint
 from math import pi
-#import seaborn as sns
-from src.alpaca import alpaca
-from st_aggrid import AgGrid
-import altair as alt
-import time
 
 st.set_page_config(
      page_title="Alpaca Proteomics",
