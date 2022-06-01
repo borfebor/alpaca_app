@@ -1,3 +1,5 @@
+ALPACA_LOGO2.png
+
 # Alpaca app
 
 > An app by [B. Ferrero-Bordera](https://www.linkedin.com/in/borjaferrero/)
