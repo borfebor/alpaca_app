@@ -6,4 +6,4 @@ scikit-learn
 scipy
 seaborn
 sklearn
-st_aggrid
+streamlit-aggrid
