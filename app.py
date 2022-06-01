@@ -7,8 +7,6 @@ import streamlit as st
 from PIL import Image
 from random import randint
 from math import pi
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
 import seaborn as sns
 from src.alpaca import alpaca
 from st_aggrid import AgGrid
