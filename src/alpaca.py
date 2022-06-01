@@ -2,8 +2,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import bokeh
 
 from random import seed
 from random import randint
@@ -12,14 +10,6 @@ from math import pi
 import altair as alt
 import pandas as pd
 from PIL import Image
-
-
-from bokeh.io import push_notebook, show, output_notebook
-from bokeh.palettes import Category20c
-from bokeh.layouts import row
-from bokeh.plotting import figure
-from bokeh.transform import cumsum
-output_notebook()
 
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
