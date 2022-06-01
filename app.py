@@ -4,7 +4,6 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-import bokeh
 from PIL import Image
 from random import randint
 from math import pi
