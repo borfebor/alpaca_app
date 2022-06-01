@@ -8,7 +8,8 @@ from random import randint
 
 from math import pi
 from PIL import Image
-
+from sklearn.linear_model import LinearRegression 
+from sklearn.metrics import mean_squared_error, r2_score
 
 class alpaca:
 
@@ -91,10 +92,7 @@ class alpaca:
         return df
 
     def ups(df, ups2, volume, amount):
-        
-        from sklearn.linear_model import LinearRegression 
-        from sklearn.metrics import mean_squared_error, r2_score
-        
+                       
         ups2['log2 Amount'] = np.log2(ups2['Amount (fmoles)'])
         ups2['Mass fraction (fmol/µg extract)'] = ups2['Amount (fmoles)'] / 10.6
         ups2['log2 Mass fract'] = np.log2(ups2['Mass fraction (fmol/µg extract)'])
