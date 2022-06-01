@@ -7,6 +7,7 @@ import streamlit as st
 from PIL import Image
 from random import randint
 from math import pi
+from src.alpaca import alpaca
 
 st.set_page_config(
      page_title="Alpaca Proteomics",
