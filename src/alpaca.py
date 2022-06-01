@@ -2,14 +2,19 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 from random import seed
 from random import randint
 
 from math import pi
+import altair as alt
+import pandas as pd
 from PIL import Image
-from sklearn.linear_model import LinearRegression 
+
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
+import seaborn as sns
 
 class alpaca:
 
