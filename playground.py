@@ -43,7 +43,7 @@ if uploaded_file is not None:
     n, r, condition = alpaca.experimenter(df)
     experimenter = st.expander('Experimental set-up', expanded=True)
     
-    col = st.multiselect('Choose the columns to import', columns, default)
+    col = st.sidebar.multiselect('Choose the columns to import', columns, default)
     df = df[col]
      
     with experimenter:
