@@ -41,27 +41,27 @@ if uploaded_file is not None:
     df, columns, default = alpaca.formater(df)
 
     n, r, condition = alpaca.experimenter(df)
-    experimenter = st.sidebar.expander('Experimental set-up', expanded=True)
+    experimenter = st.expander('Experimental set-up', expanded=True)
     
     col = st.multiselect('Choose the columns to import', columns, default)
     df = df[col]
      
-     with experimenter:
-          st.subheader('UPS2')
-          volume = st.number_input('How much volume - in µl - have you used to resuspend your UPS?', 0.0, 50.0, 21.2)
-          amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, volume, 6.0)
+    with experimenter:
+         st.subheader('UPS2')
+         volume = st.number_input('How much volume - in µl - have you used to resuspend your UPS?', 0.0, 50.0, 21.2)
+         amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, volume, 6.0)
           
-          st.subheader('Cell count')
-          c1, c2 = st.columns(2)
-          default_count = 1060000000
-          adder = 0
-          condition_count = list()
-          cell_count = list()
-          for c in condition:
-               cond = c1.multiselect('Counted condition', condition, c)
-               cells = c2.number_input('Cell count (cells/ml)', 10000, 1000000000000, default_count + adder)
-               cell_count.append(cells)
-               condition_count = condition_count + cond
-               adder += 10
-          count_dict = dict(zip(condition_count, cell_count))
+         st.subheader('Cell count')
+         c1, c2 = st.columns(2)
+         default_count = 1060000000
+         adder = 0
+         condition_count = list()
+         cell_count = list()
+         for c in condition:
+              cond = c1.multiselect('Counted condition', condition, c)
+              cells = c2.number_input('Cell count (cells/ml)', 10000, 1000000000000, default_count + adder)
+              cell_count.append(cells)
+              condition_count = condition_count + cond
+              adder += 10
+         count_dict = dict(zip(condition_count, cell_count))
     
