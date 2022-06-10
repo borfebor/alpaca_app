@@ -46,24 +46,24 @@ if uploaded_file is not None:
     col = st.sidebar.multiselect('Choose the columns to import', columns, default)
     df = df[col]
     
-    experiment, set_up = st.columns([1,2])
+    experiment, set_up = st.columns([3,1])
     experiment_expand = experiment.expander('Experimental set-up', expanded=True)
     set_up_expand = set_up.expander('Experimental set-up', expanded=True)
-    with set_up_expand:
+    with set_up:
         
          st.subheader('UPS2')
          volume = st.number_input('How much volume - in µl - have you used to resuspend your UPS?', 0.0, 50.0, 21.2)
          amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, volume, 6.0)
         
          st.subheader('Cell count')
-         #c1, c2 = st.columns(2)
+         c1, c2 = st.columns(2)
          default_count = 1060000000
          adder = 0
          condition_count = list()
          cell_count = list()
          for c in condition:
-               cond = st.multiselect('Counted condition', condition, c)
-               cells = st.number_input('Cell count (cells/ml)', 10000, 1000000000000, default_count + adder)
+               cond = c1.multiselect('Counted condition', condition, c)
+               cells = c2.number_input('Cell count (cells/ml)', 10000, 1000000000000, default_count + adder)
                cell_count.append(cells)
                condition_count = condition_count + cond
                adder += 10
