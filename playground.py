@@ -46,7 +46,9 @@ if uploaded_file is not None:
           volume = st.number_input('How much volume - in µl - have you used to resuspend your UPS?', 0.0, 50.0, 21.2)
           amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, volume, 6.0)
     
-    col = st.sidebar.multiselect('Choose the columns to import', columns, default)
+    columns_to_import = st.sidebar.expander('Imported columns', expanded=True)
+    with columns_to_import:
+          col = st.sidebar.multiselect('Choose the columns to import', columns, default)
     df = df[col]
     
     
