@@ -46,9 +46,8 @@ if uploaded_file is not None:
     col = st.sidebar.multiselect('Choose the columns to import', columns, default)
     df = df[col]
 
-col1, col2 = st.columns([1,2])
-cleaning = col2.expander('Data Cleaning & Manipulation', expanded=True)
-about = col1.expander('ALPACA', expanded=True)
+cleaning = st.expander('Data Cleaning & Manipulation', expanded=True)
+about = st.sidebar.expander('ALPACA', expanded=True)
 with about:
     st.subheader('About Alpaca')
     st.markdown('Alpaca is coded with all my heart to ease your data analysis of '
