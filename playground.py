@@ -62,8 +62,8 @@ if uploaded_file is not None:
          condition_count = list()
          cell_count = list()
          for c in condition:
-               cond = c1.multiselect('Counted condition', condition, c)
-               cells = c2.number_input('Cell count (cells/ml)', 10000, 1000000000000, default_count + adder)
+               cond = st.multiselect('Counted condition', condition, c)
+               cells = st.number_input('Cell count (cells/ml)', 10000, 1000000000000, default_count + adder)
                cell_count.append(cells)
                condition_count = condition_count + cond
                adder += 10
