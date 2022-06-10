@@ -34,7 +34,7 @@ uploaded_file = st.sidebar.file_uploader('Import your Protein Groups file:',
                                               'and clean it using the button below, or pre-clean the data with Perseus. '
                                               'Our quantification approach uses iBAQ for Absolute Quantification.')
 
-about = st.sidebar.expander('About Alpaca', expanded=True)
+about = st.sidebar.expander('About Alpaca', expanded=False)
 with about:
     st.markdown('Alpaca is coded with all my heart to ease your data analysis of '
                 'Absolute Protein Quantification experiments. '
