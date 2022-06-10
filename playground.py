@@ -56,7 +56,7 @@ if uploaded_file is not None:
          amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, volume, 6.0)
         
          st.subheader('Cell count')
-         c1, c2 = st.columns(2)
+         #c1, c2 = st.columns(2)
          default_count = 1060000000
          adder = 0
          condition_count = list()
