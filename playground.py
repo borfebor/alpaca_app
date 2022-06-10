@@ -42,4 +42,11 @@ if uploaded_file is not None:
     col = st.sidebar.multiselect('Choose the columns to import', columns, default)
     df = df[col]
     cleaning = st.sidebar.expander('Data Cleaning & Manipulation', expanded=True)
+    with cleaning:
+          st.subheader('About Alpaca')
+          st.markdown('Alpaca is coded with all my heart to ease your data analysis of '
+                'Absolute Protein Quantification experiments. '
+                'Thank you for pushing Systems Biology a bit further with your data.')
+
+          st.markdown('[**Borja Ferrero-Bordera**](https://www.linkedin.com/in/borjaferrero/) 👨‍🔬🧬')
     
