@@ -41,19 +41,5 @@ if uploaded_file is not None:
     df, columns, default = alpaca.formater(df)
     col = st.sidebar.multiselect('Choose the columns to import', columns, default)
     df = df[col]
-
-placeholder = st.empty()
-
-# Replace the placeholder with some text:
-placeholder.text("Hello")
-
-# Replace the text with a chart:
-placeholder.line_chart({"data": [1, 5, 2, 6]})
-
-# Replace the chart with several elements:
-with placeholder.container():
-     st.write("This is one element")
-     st.write("This is another")
-
-# Clear all those elements:
-#placeholder.empty()
+    cleaning = st.sidebar.expander('Data Cleaning & Manipulation', expanded=True)
+    
