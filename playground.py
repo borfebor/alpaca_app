@@ -46,7 +46,7 @@ if uploaded_file is not None:
     col = st.sidebar.multiselect('Choose the columns to import', columns, default)
     df = df[col]
     
-    experiment, set_up = st.columns(1,2)
+    experiment, set_up = st.columns([1,3])
     experiment_expand = experiment.expander()
     set_up_expand = set_up.expander()
     with set_up_expand:
