@@ -41,3 +41,5 @@ if uploaded_file is not None:
     df, columns, default = alpaca.formater(df)
     col = st.sidebar.multiselect('Choose the columns to import', columns, default)
     df = df[col]
+
+container = st.container()
