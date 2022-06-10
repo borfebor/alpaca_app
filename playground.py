@@ -47,8 +47,8 @@ if uploaded_file is not None:
     df = df[col]
     
     experiment, set_up = st.columns([1,3])
-    experiment_expand = experiment.expander()
-    set_up_expand = set_up.expander()
+    experiment_expand = experiment.expander('Experimental set-up', expand=True)
+    set_up_expand = set_up.expander('Experimental set-up', expand=True)
     with set_up_expand:
         
          st.subheader('UPS2')
