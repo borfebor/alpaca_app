@@ -158,7 +158,7 @@ with expander2:
         data_std['Enrichment'] = data_std['Amount (fmol) in sample'] / data_std['Amount (fmol)']
         st.markdown('**Enrichment Standards in your data**')
         st.write('Data Dimension: ' + str(data_std.shape[0]) + ' rows and ' + str(data_std.shape[1]) + ' columns.')
-        st.dataframe(data_std)
+        st.wrte(data_std)
         enrichment_factors = alpaca.enrichment_factors(data_std, enrichment_type_dict)
     elif enrichments == 0:
         columna1, columna2 = st.columns(2)
