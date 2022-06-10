@@ -52,7 +52,7 @@ if uploaded_file is not None:
           c1, c2 = st.columns(2)
           default_count = 1060000000
           adder = 0
-           condition_count = list()
+          condition_count = list()
           cell_count = list()
           for c in condition:
                cond = c1.multiselect('Counted condition', condition, c)
