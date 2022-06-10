@@ -39,12 +39,28 @@ if uploaded_file is not None:
     # Can be used wherever a "file-like" object is accepted:
     df = alpaca.importer(uploaded_file)
     df, columns, default = alpaca.formater(df)
+
+    n, r, condition = alpaca.experimenter(df)
     experimenter = st.sidebar.expander('Experimental set-up', expanded=True)
      
     with experimenter:
           st.subheader('UPS2')
           volume = st.number_input('How much volume - in µl - have you used to resuspend your UPS?', 0.0, 50.0, 21.2)
           amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, volume, 6.0)
+          
+          st.subheader('Cell count')
+          c1, c2 = st.columns(2)
+          default_count = 1060000000
+          adder = 0
+           condition_count = list()
+          cell_count = list()
+          for c in condition:
+               cond = c1.multiselect('Counted condition', condition, c)
+               cells = c2.number_input('Cell count (cells/ml)', 10000, 1000000000000, default_count + adder)
+               cell_count.append(cells)
+               condition_count = condition_count + cond
+               adder += 10
+          count_dict = dict(zip(condition_count, cell_count))
     
     columns_to_import = st.sidebar.expander('Imported columns', expanded=True)
     with columns_to_import:
