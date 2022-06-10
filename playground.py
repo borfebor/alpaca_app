@@ -64,5 +64,5 @@ if uploaded_file is not None:
                cell_count.append(cells)
                condition_count = condition_count + cond
                adder += 10
-          count_dict = dict(zip(condition_count, cell_count))
+         count_dict = dict(zip(condition_count, cell_count))
     
