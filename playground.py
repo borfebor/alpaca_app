@@ -45,8 +45,11 @@ if uploaded_file is not None:
     
     col = st.sidebar.multiselect('Choose the columns to import', columns, default)
     df = df[col]
-     
-    with experimenter:
+    
+    experiment, set_up = st.columns(1,3)
+    experiment_expand = experiment.expander()
+    set_up_expand = set_up.expander()
+    with set_up_expand:
         
          st.subheader('UPS2')
          volume = st.number_input('How much volume - in µl - have you used to resuspend your UPS?', 0.0, 50.0, 21.2)
