@@ -34,6 +34,14 @@ uploaded_file = st.sidebar.file_uploader('Import your Protein Groups file:',
                                               'and clean it using the button below, or pre-clean the data with Perseus. '
                                               'Our quantification approach uses iBAQ for Absolute Quantification.')
 
+about = st.sidebar.expander('About Alpaca', expanded=True)
+with about:
+    st.markdown('Alpaca is coded with all my heart to ease your data analysis of '
+                'Absolute Protein Quantification experiments. '
+                'Thank you for pushing Systems Biology a bit further with your data.')
+
+    st.markdown('[**Borja Ferrero-Bordera**](https://www.linkedin.com/in/borjaferrero/) 👨‍🔬🧬')
+
 if uploaded_file is None:
     st.image(instructions)
     st.stop()
@@ -47,14 +55,7 @@ if uploaded_file is not None:
     df = df[col]
 
 cleaning = st.expander('Data Cleaning & Manipulation', expanded=True)
-about = st.sidebar.expander('ALPACA', expanded=True)
-with about:
-    st.subheader('About Alpaca')
-    st.markdown('Alpaca is coded with all my heart to ease your data analysis of '
-                'Absolute Protein Quantification experiments. '
-                'Thank you for pushing Systems Biology a bit further with your data.')
 
-    st.markdown('[**Borja Ferrero-Bordera**](https://www.linkedin.com/in/borjaferrero/) 👨‍🔬🧬')
 with cleaning:
     st.subheader('Data Cleaning & Manipulation')
     st.write('Here you can arrange your data. You can clean it out of Possible Contaminants, Reverses and Decoys, or '
