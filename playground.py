@@ -42,8 +42,11 @@ if uploaded_file is not None:
 
     n, r, condition = alpaca.experimenter(df)
     experimenter = st.sidebar.expander('Experimental set-up', expanded=True)
+    
+    col = st.multiselect('Choose the columns to import', columns, default)
+    df = df[col]
      
-    with experimenter:
+     with experimenter:
           st.subheader('UPS2')
           volume = st.number_input('How much volume - in µl - have you used to resuspend your UPS?', 0.0, 50.0, 21.2)
           amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, volume, 6.0)
@@ -61,10 +64,4 @@ if uploaded_file is not None:
                condition_count = condition_count + cond
                adder += 10
           count_dict = dict(zip(condition_count, cell_count))
-    
-    columns_to_import = st.sidebar.expander('Imported columns', expanded=True)
-    with columns_to_import:
-          col = st.multiselect('Choose the columns to import', columns, default)
-    df = df[col]
-    
     
