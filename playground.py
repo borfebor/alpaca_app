@@ -42,7 +42,8 @@ if uploaded_file is not None:
     st.sidebar.header('Data preprocessing')
     cleaning = st.sidebar.checkbox('Data cleaning')
     formating = st.sidebar.checkbox('Data formating')
-
+    
+    lfq_method = st.sidebar.multiselect('Label-Free Quantification method', ['iBAQ', 'LFQ'], 'iBAQ')
     
     df, conditions = alpaca.spits(df, lfq_method='iBAQ', cleaning=cleaning, formating=formating, subproteome=None)
     st.write(df)
