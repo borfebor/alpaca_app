@@ -7,7 +7,7 @@ from PIL import Image
 from random import randint
 from math import pi
 #import seaborn as sns
-from src.alpaca import alpaca
+from src.alpaca import alpaca_new
 from st_aggrid import AgGrid
 import altair as alt
 import time
@@ -37,9 +37,10 @@ if uploaded_file is None:
 if uploaded_file is not None:
 
     # Can be used wherever a "file-like" object is accepted:
-    df = alpaca.importer(uploaded_file)
-    df, columns, default = alpaca.formater(df)
+    df = alpaca.eats(uploaded_file)
+    df, conditions = alpaca.spits(df)
 
+    st.stop()
     n, r, condition = alpaca.experimenter(df)
     experimenter = st.expander('Experimental set-up', expanded=True)
     
