@@ -189,7 +189,7 @@ class alpaca:
     
     def abacus(standards, concentration=0.5, in_sample=6.0):
         
-        ups2 = alpaca.eats(standards)
+        ups2 = pd.read_csv('UPS2.csv', sep=',')
         
         fmol_col = [fmol for fmol in ups2.columns if ('mol' or 'MOL') in fmol]
         st.write(fmol_col)
