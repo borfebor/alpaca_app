@@ -85,7 +85,7 @@ if uploaded_file is not None:
                enrichment_type_dict[enrichment_t[c]] = enrich
                adder += 1
                
-          st.write(enrichment_type_dict, prepa)
+          st.write(enrichment_type_dict, prep)
                     
           st.stop()
 
