@@ -75,9 +75,11 @@ class alpaca:
         df.columns = columns
 
     	# Checking for data cleaning
-        cont_key = [col for col in range(len(df.columns)) if 'identified by site' in df.columns[col]]
+        potential_cols = ['identified by site', 'contaminant', 'Reverse']
+        cont_key = [col for col in df.columns for item in potential_cols if item in col]
         st.write(cont_key)
-        #to_remove = list(df.columns[cont_key[0] : cont_key[0]+3])
+        st.stop()
+        to_remove = list(df.columns[cont_key[0] : cont_key[0]+3])
 
         wanted_ids = ['Accession', 'Gene names', 'Unique peptides', 'Mol. weight [kDa]']
         ids = [col for col in df.columns if col in wanted_ids]
