@@ -75,16 +75,13 @@ if uploaded_file is not None:
           adder = 0
           enrichment_type_dict = dict()
           prep = list()
-          prepa = list()
           for c in range(enrichments):
                enrich = c1.multiselect(enrichment_t[c], condition, condition[adder])
                dil = c2.number_input('Dilution', 1, 1000, 10 + adder)
                vol = c3.number_input('Spiked standard volume (µl)', 0.0, 1000.0, 8.5 + adder)
                sampl_v = c4.number_input('Sample volume (ml)', 0.0, 100.0, 45.0 + adder)
-               prepa = [dil, vol, sample_v]
-               prep.append(dil)
-               prep.append(vol)
-               prep.append(sampl_v)
+               prepa = [dil, vol, sampl_v]
+               prep.append(prepa)
                enrichment_type_dict[enrichment_t[c]] = enrich
                adder += 1
                
