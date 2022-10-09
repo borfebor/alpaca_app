@@ -58,8 +58,8 @@ if uploaded_file is not None:
           replicate_list.append('All')
           replicate = st.selectbox('Were the quantification standards added to just a replicate per set?', replicate_list, 0)
           concentration = st.number_input('Quantification Standards concentration', 0.0, 21.2, 0.5)
-          volume = concentration * 10.6
-          st.write(volume)
+          volume = 10.6 / concentration
+          
           amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, volume, 6.0)
           
           st.header("Enrichment")
