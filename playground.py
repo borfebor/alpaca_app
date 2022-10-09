@@ -53,7 +53,7 @@ if uploaded_file is not None:
     
     experimenter = st.expander('Experimental set-up', expanded=True)
     with experimenter:
-          visualisation = st.selectbox('Feel free to explore a bit your data', ['Identified proteins', 'Intensity distribution'], 'Identified proteins' )
+          visualisation = st.selectbox('Feel free to explore a bit your data', ['Identified proteins', 'Intensity distribution'], 0)
     
     st.stop()
 
