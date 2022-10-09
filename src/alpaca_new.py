@@ -192,9 +192,8 @@ class alpaca:
         ups2 = pd.read_csv('UPS2.csv', sep=',')
         
         fmol_col = [fmol for fmol in ups2.columns if ('mol' or 'MOL') in fmol]
-        st.write(fmol_col)
         MW = [mw for mw in ups2.columns if ('Da' or 'MW') in mw]
-        
+        st.write(fmol_col)
         print('Got column:',fmol_col[0], '- Calculating fmols for you')
         ups2['log2_Amount_fmol'] = np.log2(ups2[fmol_col[0]])
         ups2['Mass fraction (fmol/µg_extract)'] = ups2.log2_Amount_fmol / 10.6
