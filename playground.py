@@ -46,10 +46,10 @@ if uploaded_file is not None:
     lfq_method = st.sidebar.selectbox('Label-Free Quantification method', ['iBAQ', 'LFQ'], 0)
     subproteome = st.sidebar.text_input('Analysed subproteome', None)
     
-    df, conditions = alpaca.spits(df, lfq_method=lfq_method, cleaning=cleaning, formating=formating, subproteome=subproteome)
+    df, condition = alpaca.spits(df, lfq_method=lfq_method, cleaning=cleaning, formating=formating, subproteome=subproteome)
     st.title('Your data')
     st.write(df)
-    st.write(f'Your data contains {len(conditions)} experimental conditions ({conditions})')
+    st.write(f'Your data contains {len(condition)} experimental conditions ({condition})')
     
     experimenter = st.expander('Experimental set-up', expanded=True)
     with experimenter:
@@ -76,7 +76,7 @@ if uploaded_file is not None:
           enrichment_type_dict = dict()
           prep = list()
           for c in range(enrichments):
-               enrich = c1.multiselect(enrichment_t[c], condition, condition)
+               enrich = c1.multiselect(enrichment_t[c], condition, condition[adder])
                dil = c2.number_input('Dilution', 1, 1000, 10 + adder)
                vol = c3.number_input('Spiked standard volume (µl)', 0.0, 1000.0, 8.5 + adder)
                sampl_v = c4.number_input('Sample volume (ml)', 0.0, 100.0, 45.0 + adder)
