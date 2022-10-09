@@ -54,8 +54,9 @@ if uploaded_file is not None:
     experimenter = st.expander('Experimental set-up', expanded=True)
     with experimenter:
           st.subheader('Quantification standards parameters')
-          replicate = st.selectbox('Were the quantification standards added to just a replicate per set?', df.Replicate.unique(), 0)
-          concentration = st.number_input('Standard concentration?', 0.0, 21.2, 0.5)
+          replicate_list = list(df.Replicate.unique()).append('All')
+          replicate = st.selectbox('Were the quantification standards added to just a replicate per set?', replicate_list, 0)
+          concentration = st.number_input('Quantification Standards concentration', 0.0, 21.2, 0.5)
           volume = concentration * 10.6
           amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, volume, 6.0)
           
