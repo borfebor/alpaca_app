@@ -58,8 +58,16 @@ if uploaded_file is not None:
           c = alt.Chart(plot).mark_bar().encode(
                     x='Condition', 
                     y=alt.Y('mean(Accession):Q', title='Mean Yield'))
+          error_bars = alt.Chart().mark_errorbar(extent='ci').encode(
+                        x='year:O',
+                        y='yield:Q'
+                    )
 
-          st.altair_chart(c, use_container_width=True)
+          plot = alt.layer(bars, error_bars, data=source).facet(
+                        column='site:N'
+                    )
+
+          st.altair_chart(plot, use_container_width=True)
     
     st.stop()
 
