@@ -39,7 +39,9 @@ if uploaded_file is not None:
     # Can be used wherever a "file-like" object is accepted:
     df = alpaca.eats(uploaded_file)
      
-    agree = st.sidebar.checkbox('I agree')
+    st.sidebar.head('Data preprocessing')
+    cleaning = st.sidebar.checkbox('Data cleaning')
+    formating = st.sidebar.checkbox('Data formating')
 
     st.write(agree)
     st.stop()
