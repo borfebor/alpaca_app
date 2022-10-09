@@ -49,7 +49,9 @@ if uploaded_file is not None:
     
     approach = sub.button('Subproteomic analysis', False)
     if approach:
-          subproteome = sub.text_input('Analysed subproteome', None)
+          subproteome = sub.text_input('Analysed subproteome')
+    else:
+          subproteome = None
     
     df, condition = alpaca.spits(df, lfq_method=lfq_method, cleaning=cleaning, formating=formating, subproteome=subproteome)
     st.title('Your data')
