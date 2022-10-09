@@ -56,7 +56,7 @@ if uploaded_file is not None:
           visualisation = st.selectbox('Feel free to explore a bit your data', ['Identified proteins', 'Intensity distribution'], 0)
           plot = df.groupby(['Condition', 'Replicate'])['Accession'].nunique().reset_index()
           fig = plt.figure(figsize=(10, 4))
-          sns.countplot(x="Condition", y='Accession', hue='Replicate', data=plot)
+          sns.catplot(x="Condition", y='Accession', hue='Replicate', data=plot)
 
           st.pyplot(fig)
     
