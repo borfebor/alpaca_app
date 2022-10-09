@@ -105,11 +105,10 @@ if uploaded_file is not None:
     with expander1:
           st.header('Quantification')
           #UPS parameters 
-          ups2 = pd.read_csv('ups2_dynamicStd.csv', sep=',')
           #UPS calculations based on the spiked amount of stan
           if replicate == 'All':
                replicate = None     
-          ups2, data, coef, inter = alpaca.census(df, 'ups2_dynamicStd.csv', concentration=concentration, 
+          ups2, data, coef, inter = alpaca.census(df, 'UPS2.csv', concentration=concentration, 
                                                       in_sample=amount, lfq_col=lfq_method, replicate=replicate, save=False)
      
           st.write(data)
