@@ -73,7 +73,7 @@ class alpaca:
         columns[uniprot_key[0]] = 'Accession'
             
         df.columns = columns
-        
+
     	# Checking for data cleaning
         cont_key = [col for col in range(len(df.columns)) if 'identified by site' in df.columns[col]]
         to_remove = list(df.columns[cont_key[0] : cont_key[0]+3])
