@@ -89,7 +89,7 @@ if uploaded_file is not None:
                enrichment_type_dict[enrichment_t[c]] = enrich
                if subproteome != None:
                     my_subproteome = list(subproteome)
-                    subprot = st.multiselect('Prepared subproteome', my_subproteome)
+                    subprot = st.text_input('Prepared subproteome', my_subproteome)
                     subproteome_dict[enrichment_t[c]] = subprot
                adder += 1
                
