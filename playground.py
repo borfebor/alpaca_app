@@ -84,7 +84,7 @@ if uploaded_file is not None:
                enrichment_type_dict[enrichment_t[c]] = enrich
                adder += 1
                     
-           st.stop()
+          st.stop()
 
           if enrichments != 0 :
                instructions_place = st.empty()
