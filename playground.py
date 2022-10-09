@@ -57,7 +57,7 @@ if uploaded_file is not None:
           plot = df.groupby(['Condition', 'Replicate'])['Accession'].nunique().reset_index()
           c = alt.Chart(plot).mark_bar().encode(
                     x='Condition', 
-                    y=alt.Y('mean('Accession'):Q', title='Mean Yield')
+                    y=alt.Y('mean(Accession):Q', title='Mean Yield')
 
           st.altair_chart(c, use_container_width=True)
     
