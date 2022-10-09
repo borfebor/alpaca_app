@@ -71,13 +71,9 @@ if uploaded_file is not None:
           
           st.header("Enrichment preparation")
           enrichments = st.number_input('Different sample preparations', 1, 10, 1)
-          enrichment_t = list()
-          en = 1
-          for en in range(int(enrichments)+1):
-               enrich_name = 'Preparation_' + str(en+1)
-               enrichment_t.append(enrich_name)
-               en += 1
-               
+          
+          enrichment_t = [f'Preparation_{en+1}' for en in range(enrichments)]
+         
           c1, c3, c4, c5 = st.columns([3,1,1,1])
           adder = 0
           enrichment_type_dict = dict()
