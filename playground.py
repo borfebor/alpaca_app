@@ -77,6 +77,7 @@ if uploaded_file is not None:
           c1, c3, c4, c5 = st.columns([3,1,1,1])
           adder = 0
           enrichment_type_dict = dict()
+          subproteome_dict = dict()
           prep = list()
           for c in range(enrichments):
                enrich = c1.multiselect(enrichment_t[c], condition, condition[adder])
