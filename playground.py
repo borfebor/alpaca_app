@@ -44,7 +44,7 @@ if uploaded_file is not None:
     formating = st.sidebar.checkbox('Data formating')
 
     
-    df, conditions = alpaca.spits(df, lfq_method='iBAQ', cleaning=True, formating=True, subproteome=None)
+    df, conditions = alpaca.spits(df, lfq_method='iBAQ', cleaning=cleaning, formating=formating, subproteome=None)
     st.stop()
     
     n, r, condition = alpaca.experimenter(df)
