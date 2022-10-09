@@ -98,35 +98,19 @@ if uploaded_file is not None:
           
           sample_preparation = alpaca.scientist(prep, enrichment_type_dict, subproteome_dict)
           st.write(sample_preparation)
-                    
-          st.stop()
-
-          if enrichments != 0 :
-               instructions_place = st.empty()
-               uploaded_std = st.file_uploader('Import your Enrichment Standards file',
-                                             type = ['txt','csv','xlsx'],
-                                         help='It takes a file for the calculation of the Enrichment factor.'
-                                              'This table requires UNIPROT Accession, MW (kDa) and Mix concentration (µg/µl) '
-                                              'as columns for the proper Enrichment calculation.')
-
-               if uploaded_std is None:
-                    instructions_place.image(alpaca_enrichment)
-                    st.stop()
-
-               std = alpaca.importer(uploaded_std)
-               st.markdown('**Enrichment Standards**')
-               stan = st.write(std)
-
-               
+          
+     expander1 = st.expander('Quantification')
+     expander2 = st.expander('Enrichment')
+     expander3 = st.expander('Absolute Protein Quantification')
      with expander1:
-         st.header('Quantification')
+          st.header('Quantification')
      #UPS parameters input
-         ups2 = pd.read_csv('ups2_dynamicStd.csv', sep=',')
+          ups2 = pd.read_csv('ups2_dynamicStd.csv', sep=',')
      #UPS calculations based on the spiked amount of standards
-         if replicate == 'All':
+          if replicate == 'All':
                replicate = None
-         ups2, data, coef, inter = alpaca.census(df, 'ups2_dynamicStd.csv', concentration=concentration, 
+          ups2, data, coef, inter = alpaca.census(df, 'ups2_dynamicStd.csv', concentration=concentration, 
                                                  in_sample=amount, lfq_col=lfq_method, replicate=replicate, save=False)
 
-         st.write(data)
+          st.write(data)
     
