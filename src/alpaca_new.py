@@ -5,6 +5,8 @@ from sklearn.metrics import mean_squared_error, r2_score
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.impute import KNNImputer, SimpleImputer
+import streamlit as st
+
 
 class alpaca:
     
