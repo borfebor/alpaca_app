@@ -52,11 +52,15 @@ if uploaded_file is not None:
     st.write(f'Your data contains {len(conditions)} experimental conditions ({conditions})')
     
     experimenter = st.expander('Experimental set-up', expanded=True)
+    with experimenter:
+          visualisation = st.selectbox('Feel free to explore a bit your data', ['Identified proteins', 'Intensity distribution'], 'Identified proteins' )
     
+    st.stop()
+
     experiment, set_up = st.columns([3,1])
     experiment_expand = experiment.expander('Experimental set-up', expanded=True)
     set_up_expand = set_up.expander('Experimental set-up', expanded=True)
-    st.stop()
+    
     with set_up:
         
          st.subheader('UPS2')
