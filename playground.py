@@ -51,7 +51,6 @@ if uploaded_file is not None:
     st.write(df)
     st.write(f'Your data contains {len(conditions)} experimental conditions ({conditions})')
     
-    n, r, condition = alpaca.experimenter(df)
     experimenter = st.expander('Experimental set-up', expanded=True)
     
     experiment, set_up = st.columns([3,1])
