@@ -55,19 +55,10 @@ if uploaded_file is not None:
     with experimenter:
           visualisation = st.selectbox('Feel free to explore a bit your data', ['Identified proteins', 'Intensity distribution'], 0)
           plot = df.groupby(['Condition', 'Replicate'])['Accession'].nunique().reset_index()
-          c = alt.Chart(plot).mark_bar().encode(
-                    x='Condition', 
-                    y=alt.Y('mean(Accession):Q', title='Mean Yield'))
-          error_bars = alt.Chart().mark_errorbar(extent='ci').encode(
-                        x='year:O',
-                        y='yield:Q'
-                    )
+          fig = plt.figure(figsize=(10, 4))
+          sns.countplot(x="Condition", y='Accession', hue='Replicate', data=titanic)
 
-          plot = alt.layer(bars, error_bars, data=source).facet(
-                        column='site:N'
-                    )
-
-          st.altair_chart(plot, use_container_width=True)
+          st.pyplot(fig)
     
     st.stop()
 
