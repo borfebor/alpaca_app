@@ -80,15 +80,14 @@ class alpaca:
         potential_cols = ['identified by site', 'contaminant', 'Reverse']
         cont_key = [col for col in df.columns for item in potential_cols if item in col]
         st.write(cont_key)
-        st.stop()
-        to_remove = list(df.columns[cont_key[0] : cont_key[0]+3])
-
+        
         wanted_ids = ['Accession', 'Gene names', 'Unique peptides', 'Mol. weight [kDa]']
         ids = [col for col in df.columns if col in wanted_ids]
         samples = [col for col in columns if lfq_method in col if '_' in col ]
         conditions = list(set([item[len(lfq_method)+1:-3] for item in samples]))
         
-        if cleaning == True:
+        if (cleaning == True) & (lem(cont_key)) != 0 :
+            to_remove = st.multiselect('Items to remove', cont_key, cont_key)
             df = alpaca.data_cleaner(df, to_remove)
             print(f'Items marked on {to_remove} have been removed from the dataset.')
         
