@@ -47,8 +47,8 @@ if uploaded_file is not None:
     
     sub = st.sidebar.empty()
     
-    approach = sub.button('Subproteomic analysis', False)
-    if approach:
+    approach = sub.checkbox('Subproteomic analysis', False)
+    if approach == True:
           subproteome = sub.text_input('Analysed subproteome')
     else:
           subproteome = None
