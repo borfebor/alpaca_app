@@ -47,7 +47,7 @@ if uploaded_file is not None:
     
     side_1, side_2 = st.columns([1,3])
 
-    sub = side_1.sidebar.button('Analysed subproteome', None)
+    sub = side_1.button('Analysed subproteome', None)
     
     subproteome = side_2.sidebar.text_input('Analysed subproteome', None)
     
