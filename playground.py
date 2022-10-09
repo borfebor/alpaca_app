@@ -49,6 +49,7 @@ if uploaded_file is not None:
     df, conditions = alpaca.spits(df, lfq_method=lfq_method, cleaning=cleaning, formating=formating, subproteome=subproteome)
     st.title('Your data')
     st.write(df)
+    st.write(f'Your data contains {len(conditions)} experimental conditions ({conditions})')
     st.stop()
     
     n, r, condition = alpaca.experimenter(df)
