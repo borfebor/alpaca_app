@@ -40,8 +40,8 @@ if uploaded_file is not None:
     df = alpaca.eats(uploaded_file)
      
     st.sidebar.header('Data preprocessing')
-    cleaning = st.sidebar.checkbox('Data cleaning')
-    formating = st.sidebar.checkbox('Data formating')
+    cleaning = st.sidebar.checkbox('Data cleaning', value=True)
+    formating = st.sidebar.checkbox('Data formating', value=True)
     
     lfq_method = st.sidebar.selectbox('Label-Free Quantification method', ['iBAQ', 'LFQ'], 0)
     subproteome = st.sidebar.text_input('Analysed subproteome', None)
@@ -50,17 +50,14 @@ if uploaded_file is not None:
     st.title('Your data')
     st.write(df)
     st.write(f'Your data contains {len(conditions)} experimental conditions ({conditions})')
-    st.stop()
     
     n, r, condition = alpaca.experimenter(df)
     experimenter = st.expander('Experimental set-up', expanded=True)
     
-    col = st.sidebar.multiselect('Choose the columns to import', columns, default)
-    df = df[col]
-    
     experiment, set_up = st.columns([3,1])
     experiment_expand = experiment.expander('Experimental set-up', expanded=True)
     set_up_expand = set_up.expander('Experimental set-up', expanded=True)
+    st.stop()
     with set_up:
         
          st.subheader('UPS2')
