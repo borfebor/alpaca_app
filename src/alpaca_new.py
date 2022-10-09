@@ -84,8 +84,9 @@ class alpaca:
         default = ['Accession', 'Gene names', 'Unique peptides', 'Mol. weight [kDa]']
         
         samples = [col for col in columns if lfq_method in col if '_' in col ]
-        ids = [col for col in df.columns if col in wanted_ids]
+        
         wanted_ids = st.sidebar.multiselect('Data identifiers of interest', df.columns.remove(samples) , default)
+        ids = [col for col in df.columns if col in wanted_ids]
         conditions = list(set([item[len(lfq_method)+1:-3] for item in samples]))
         
         if cleaning == True:
