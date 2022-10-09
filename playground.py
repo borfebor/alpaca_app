@@ -39,11 +39,10 @@ if uploaded_file is not None:
     # Can be used wherever a "file-like" object is accepted:
     df = alpaca.eats(uploaded_file)
      
-    st.sidebar.head('Data preprocessing')
+    st.sidebar.header('Data preprocessing')
     cleaning = st.sidebar.checkbox('Data cleaning')
     formating = st.sidebar.checkbox('Data formating')
 
-    st.write(agree)
     st.stop()
     df, conditions = alpaca.spits(df)
 
