@@ -75,6 +75,7 @@ if uploaded_file is not None:
           adder = 0
           enrichment_type_dict = dict()
           prep = list()
+          prepa = list()
           for c in range(enrichments):
                enrich = c1.multiselect(enrichment_t[c], condition, condition[adder])
                dil = c2.number_input('Dilution', 1, 1000, 10 + adder)
@@ -83,10 +84,11 @@ if uploaded_file is not None:
                prep.append(dil)
                prep.append(vol)
                prep.append(sampl_v)
+               prepa.append(prep)
                enrichment_type_dict[enrichment_t[c]] = enrich
                adder += 1
                
-          st.write(enrichment_type_dict, prep)
+          st.write(enrichment_type_dict, prepa)
                     
           st.stop()
 
