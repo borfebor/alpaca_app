@@ -99,10 +99,10 @@ if uploaded_file is not None:
           sample_preparation = alpaca.scientist(prep, enrichment_type_dict, subproteome_dict)
           st.write(sample_preparation)
           
-     expander1 = st.expander('Quantification')
-     expander2 = st.expander('Enrichment')
-     expander3 = st.expander('Absolute Protein Quantification')
-     with expander1:
+    expander1 = st.expander('Quantification')
+    expander2 = st.expander('Enrichment')
+    expander3 = st.expander('Absolute Protein Quantification')
+    with expander1:
           st.header('Quantification')
           #UPS parameters 
           ups2 = pd.read_csv('ups2_dynamicStd.csv', sep=',')
@@ -113,4 +113,3 @@ if uploaded_file is not None:
                                                       in_sample=amount, lfq_col=lfq_method, replicate=replicate, save=False)
      
           st.write(data)
-     
