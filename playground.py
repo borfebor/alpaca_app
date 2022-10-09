@@ -92,7 +92,9 @@ if uploaded_file is not None:
                     subprot = st.selectbox('Prepared subproteome', my_subproteome, 0)
                     subproteome_dict[enrichment_t[c]] = subprot
                adder += 1
-               
+          
+          sample_preparation = alpaca.scientist(prep, enrichment_type_dict, subproteome_dict)
+          st.write(sample_preparation)
                     
           st.stop()
 
