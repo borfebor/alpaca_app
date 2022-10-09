@@ -86,8 +86,8 @@ class alpaca:
         samples = [col for col in columns if lfq_method in col if '_' in col ]
         conditions = list(set([item[len(lfq_method)+1:-3] for item in samples]))
         
-        if (cleaning == True) & (lem(cont_key)) != 0 :
-            to_remove = st.multiselect('Items to remove', cont_key, cont_key)
+        if cleaning == True:
+            to_remove = st.sidebar.multiselect('Items to remove', cont_key, cont_key)
             df = alpaca.data_cleaner(df, to_remove)
             print(f'Items marked on {to_remove} have been removed from the dataset.')
         
