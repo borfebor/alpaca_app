@@ -45,9 +45,9 @@ if uploaded_file is not None:
     
     lfq_method = st.sidebar.selectbox('Label-Free Quantification method', ['iBAQ', 'LFQ'], 0)
     
-    side_1, side_2 = st.columns([1,3])
+    sub = st.sidebar.empty()
 
-    sub = side_1.button('Analysed subproteome', None)
+    approach = sub.button('Analysed subproteome', False)
     
     subproteome = side_2.sidebar.text_input('Analysed subproteome', None)
     
