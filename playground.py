@@ -54,8 +54,9 @@ if uploaded_file is not None:
     experimenter = st.expander('Experimental set-up', expanded=True)
     with experimenter:
           visualisation = st.selectbox('Feel free to explore a bit your data', ['Identified proteins', 'Intensity distribution'], 0)
-          c = alt.Chart(df).mark_bar().encode(
-                    x='Condition', y='Accession.nunique()')
+          plot = df.groupby(['Condition', 'Replicate'])['Accession'].nunique().reset_index()
+          c = alt.Chart(plot).mark_bar().encode(
+                    x='Condition', y='Accession')
 
           st.altair_chart(c, use_container_width=True)
     
