@@ -71,7 +71,7 @@ if uploaded_file is not None:
                enrichment_t.append(enrich_name)
                en += 1
                
-          c1, c2, c3, c4 = st.columns(4)
+          c1, c2, c3, c4 = st.columns([2,1,1,1])
           adder = 0
           enrichment_type_dict = dict()
           prep = list()
