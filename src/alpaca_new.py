@@ -190,6 +190,7 @@ class alpaca:
     def abacus(standards, concentration=0.5, in_sample=6.0):
         
         ups2 = alpaca.eats(standards)
+        st.write(ups2.columns)
         
         fmol_col = [fmol for fmol in ups2.columns if ('mol' or 'MOL') in fmol]
         MW = [mw for mw in ups2.columns if ('Da' or 'MW') in mw]
