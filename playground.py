@@ -72,19 +72,17 @@ if uploaded_file is not None:
                en += 1
                
           c1, c2, c3, c4 = st.columns(4)
-               adder = 0
-               enrichment_type_dict = dict()
-               prep = list()
-               for c in range(enrichments):
-                    enrich = c1.multiselect(enrichment_t[c], condition, condition[adder])
-                    dil = c2.number_input('Dilution', 1, 1000, 10 + adder)
-                    vol = c3.number_input('Spiked standard volume (µl)', 0.0, 1000.0, 8.5 + adder)
-                    sampl_v = c4.number_input('Sample volume (ml)', 0.0, 100.0, 45.0 + adder)
-                    prep.append(dil)
-                    prep.append(vol)
-                    prep.append(sampl_v)
-                    enrichment_type_dict[enrichment_t[c]] = enrich
-                    adder += 1
+          adder = 0
+          enrichment_type_dict = dict()
+          prep = list()
+          for c in range(enrichments):
+               enrich = c1.multiselect(enrichment_t[c], condition, condition[adder])
+               dil = c2.number_input('Dilution', 1, 1000, 10 + adder)
+               vol = c3.number_input('Spiked standard volume (µl)', 0.0, 1000.0, 8.5 + adder)
+               sampl_v = c4.number_input('Sample volume (ml)', 0.0, 100.0, 45.0 + adder)
+               prep.append([dil, vol, sample_v])
+               enrichment_type_dict[enrichment_t[c]] = enrich
+               adder += 1
                     
             st.stop()
 
