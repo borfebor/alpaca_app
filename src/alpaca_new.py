@@ -81,7 +81,8 @@ class alpaca:
         cont_key = [col for col in df.columns for item in potential_cols if item in col]
         st.write(cont_key)
         
-        wanted_ids = ['Accession', 'Gene names', 'Unique peptides', 'Mol. weight [kDa]']
+        default = ['Accession', 'Gene names', 'Unique peptides', 'Mol. weight [kDa]']
+        wanted_ids = st.sidebar.multiselect('Data identifiers of interest', df.columns , default)
         ids = [col for col in df.columns if col in wanted_ids]
         samples = [col for col in columns if lfq_method in col if '_' in col ]
         conditions = list(set([item[len(lfq_method)+1:-3] for item in samples]))
