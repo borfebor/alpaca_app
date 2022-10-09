@@ -102,15 +102,16 @@ if uploaded_file is not None:
      expander1 = st.expander('Quantification')
      expander2 = st.expander('Enrichment')
      expander3 = st.expander('Absolute Protein Quantification')
-     with expander1:
-          st.header('Quantification')
-     #UPS parameters input
-          ups2 = pd.read_csv('ups2_dynamicStd.csv', sep=',')
-     #UPS calculations based on the spiked amount of standards
-          if replicate == 'All':
-               replicate = None
-          ups2, data, coef, inter = alpaca.census(df, 'ups2_dynamicStd.csv', concentration=concentration, 
-                                                 in_sample=amount, lfq_col=lfq_method, replicate=replicate, save=False)
+     with expan
+     st.header('Quantification')
+     #UPS parameters 
+     ups2 = pd.read_csv('ups2_dynamicStd.csv', sep=',')
+     #UPS calculations based on the spiked amount of stan
+     if replicate == 'A  re     ups2, data, coef, inter = alpaca.census(df, 'ups2_dynamicStd.csv', concentration=concentration, 
+                                                 
+                                  
+                                 
+                                                  in_sample=amount, lfq_col=lfq_method, replicate=replicate, save=False)
 
-          st.write(data)
+     st.write(data)
     
