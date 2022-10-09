@@ -85,7 +85,7 @@ class alpaca:
         
         samples = [col for col in columns if lfq_method in col if '_' in col ]
         
-        wanted_ids = st.sidebar.multiselect('Data identifiers of interest', columns.remove(samples) , default)
+        wanted_ids = st.sidebar.multiselect('Data identifiers of interest', columns.pop(samples) , default)
         ids = [col for col in df.columns if col in wanted_ids]
         conditions = list(set([item[len(lfq_method)+1:-3] for item in samples]))
         
