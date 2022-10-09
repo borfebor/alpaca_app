@@ -55,7 +55,7 @@ if uploaded_file is not None:
     with experimenter:
           visualisation = st.selectbox('Feel free to explore a bit your data', ['Identified proteins', 'Intensity distribution'], 0)
           fig = plt.figure(figsize=(10, 10))
-          sns.catplot(y="Accession", y='Condition', data=df)
+          sns.catplot(y="Accession", x='Condition', hue='Replicate', data=df)
 
           st.pyplot(fig)
     
