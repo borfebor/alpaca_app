@@ -118,7 +118,6 @@ if uploaded_file is not None:
                stan = st.write(std)
 
                
-    st.stop()
      with expander1:
          st.header('Quantification')
      #UPS parameters input
