@@ -56,7 +56,8 @@ if uploaded_file is not None:
           st.subheader('Quantification standards parameters')
           replicate = st.selectbox('Were the quantification standards added to just a replicate per set?', df.Replicate.unique(), 0)
           concentration = st.number_input('Standard concentration?', 0.0, 21.2, 0.5)
-          amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, concentration * 10.6, 6.0)
+          volume = concentration * 10.6
+          amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, volume, 6.0)
           
           st.header("Enrichment")
           enrichments = st.number_input('How many Enrichment conditions have your experiment?', 0, 10, 2)
