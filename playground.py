@@ -53,12 +53,10 @@ if uploaded_file is not None:
     
     experimenter = st.expander('Experimental set-up', expanded=True)
     with experimenter:
-          visualisation = st.selectbox('Feel free to explore a bit your data', ['Identified proteins', 'Intensity distribution'], 0)
-          plot = df.groupby(['Condition', 'Replicate'])['Accession'].nunique().reset_index()
-          fig = plt.figure(figsize=(10, 4))
-          sns.catplot(x="Condition", y='Accession', hue='Replicate', data=plot)
-
-          st.pyplot(fig)
+          st.subheader('Quantification standards parameters')
+          volume = st.number_input('How much volume - in µl - have you used to resuspend your UPS?', 0.0, 50.0, 21.2)
+          amount = st.number_input('How much standard volume - in µl - have you spiked in your samples?', 0.0, volume, 6.0)
+          replicate = st.selectbox('Were the quantification standards added to just a replicate per set?', df.Replicates.unique(), 0)
     
     st.stop()
 
