@@ -79,7 +79,6 @@ class alpaca:
     	# Checking for data cleaning
         potential_cols = ['identified by site', 'contaminant', 'Reverse']
         cont_key = [col for col in df.columns for item in potential_cols if item in col]
-        st.write(cont_key)
         
         default = ['Accession', 'Gene names', 'Unique peptides', 'Mol. weight [kDa]']
         
