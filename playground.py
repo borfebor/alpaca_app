@@ -91,7 +91,7 @@ if uploaded_file is not None:
                prep.append(prepa)
                enrichment_type_dict[enrichment_t[c]] = enrich
                if subproteome != None:
-                    subprot = c2.multiselect('Prepared subproteome', subproteome, subproteome)
+                    subprot = st.multiselect('Prepared subproteome', subproteome, subproteome)
                     subproteome_dict[enrichment_t[c]] = subprot
                adder += 1
                
