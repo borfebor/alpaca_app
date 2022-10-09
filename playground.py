@@ -38,9 +38,14 @@ if uploaded_file is not None:
 
     # Can be used wherever a "file-like" object is accepted:
     df = alpaca.eats(uploaded_file)
+     
+    agree = st.sidebar.checkbox('I agree')
+
+    st.write(agree)
+    st.stop()
     df, conditions = alpaca.spits(df)
 
-    st.stop()
+    
     n, r, condition = alpaca.experimenter(df)
     experimenter = st.expander('Experimental set-up', expanded=True)
     
