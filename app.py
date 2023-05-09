@@ -1,5 +1,3 @@
-
-
 #needed packages
 import numpy as np
 import pandas as pd
@@ -8,7 +6,6 @@ from PIL import Image
 
 from src.alpaca_new import alpaca
 from src.viz import Viz
-
 
 st.set_page_config(
      page_title="Alpaca Proteomics",
@@ -21,7 +18,6 @@ icon = Image.open('ALPACA_ICON.png')
 alpaca_enrichment = Image.open('enrichment_instructions.png')
 instructions = Image.open('instructions.png')
 st.sidebar.image(image)
-
 
 top_bar = st.sidebar.empty()
 uploaded_file = top_bar.file_uploader('Import your Protein Groups file:',
