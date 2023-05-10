@@ -74,7 +74,7 @@ if uploaded_file is not None:
     
     if used_std == 'Custom':
         
-        std_file = st.sidebar.file_uploader('Upload your custom standards')
+        standards = st.sidebar.file_uploader('Upload your custom standards')
         
     st.sidebar.subheader('Quantification standards parameters')
     
