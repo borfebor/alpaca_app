@@ -201,7 +201,7 @@ class alpaca:
         default = ['Accession', 'Gene names', 'Mol. weight [kDa]']
         
         samples = [col for col in columns if lfq_method in col if '_' in col ]
-        all_ids = [col for col in df.columns if col not in samples]
+        all_ids = [col for col in df.select_dtypes(exclude=np.number).columns if col not in samples]
         
         wanted_ids = st.sidebar.multiselect('Data identifiers of interest', all_ids , default)
         ids = [col for col in df.select_dtypes(exclude=np.number).columns if col in wanted_ids]
