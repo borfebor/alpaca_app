@@ -45,7 +45,7 @@ if uploaded_file is not None:
     
     lfq_options = ['iBAQ', 'LFQ', 'Top3', 'Intensity', 'MS/MS count']
     
-    lfq_menu = list(dict.fromkeys([item for item in lfq_options for col in df.select_dtypes(include=np.number).columns if item in col]))
+    lfq_menu = list(dict.fromkeys([item for item in lfq_options for col in df.columns if item in col]))
     
     lfq_method = st.sidebar.selectbox('Label-Free Quantification method', lfq_menu, 0)
     
