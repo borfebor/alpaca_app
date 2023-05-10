@@ -51,7 +51,8 @@ if uploaded_file is not None:
     
     normalization = st.sidebar.selectbox('Intensity normalization', [False, 'Relative', 'Median', 'Quantile'], 0)
       
-    st.write(df)
     df, condition, lfq_method = alpaca.spits(df, lfq_method=lfq_method, cleaning=cleaning, normalization=normalization,
                                 formatting=formatting, identifier=None)
+
+    st.write(df)
 
