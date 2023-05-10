@@ -50,7 +50,8 @@ if uploaded_file is not None:
     lfq_method = st.sidebar.selectbox('Label-Free Quantification method', lfq_menu, 0)
     
     normalization = st.sidebar.selectbox('Intensity normalization', [False, 'Relative', 'Median', 'Quantile'], 0)
-        
-    df, condition, lfq_method = alpaca.spits(df, lfq_method=lfq_method, cleaning=cleaning, normalization=normalization,
-                                formatting=formatting, identifier=None)
+      
+    st.write(df)
+    #df, condition, lfq_method = alpaca.spits(df, lfq_method=lfq_method, cleaning=cleaning, normalization=normalization,
+    #                            formatting=formatting, identifier=None)
 
