@@ -1,5 +1,3 @@
-
-
 #needed packages
 import numpy as np
 import pandas as pd
@@ -32,12 +30,12 @@ example_data = None
 
 if uploaded_file == None:
     
-    example_data = st.sidebar.selectbox('Example datasets', [None, 'Ferrero-Bordera et al. 2023', 'Maaß et al. 2014'])
+    example_data = st.sidebar.selectbox('Example datasets', [None, 'Standard protocol', 'Enriched protocol'])
 
 if example_data != None:   
     
-    paper_dict = {'Ferrero-Bordera et al. 2023':'Secretome', 
-                  'Maaß et al. 2014':'Cytosol'}
+    paper_dict = {'Standard protocol':'Cytosol_example', 
+                  'Enriched protocol':'Enriched_example'}
     
     title = f'Working with an example dataset from {example_data}'
     top_bar.title(title)
