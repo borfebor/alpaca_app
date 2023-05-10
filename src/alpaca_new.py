@@ -54,7 +54,6 @@ class alpaca:
     	df = df.drop(columns=to_remove)
 
     	return df
-
     
     def quant_norm(df):
         ranks = (df.rank(method="first")
@@ -70,8 +69,7 @@ class alpaca:
                   .stack()
                   .map(rank_mean)
                   .unstack())
-    
-    
+   
     def normalizer(data, lfq_method='iBAQ', normalization='Median', 
                    id_col=['Protein', 'Accession', 'Unique peptides', 'Mol. weight [kDa]']):
     
@@ -112,7 +110,6 @@ class alpaca:
             df = df.rename(columns={lfq_method:new_col})
             
         return df, new_col
-
 
     def machine_vision(df, conditions, ids, lfq_cols, lfq_method, identifier=None):
     	
@@ -199,11 +196,12 @@ class alpaca:
         cont_key = [col for col in df.columns for item in potential_cols if item in col]
         
         default = ['Accession', 'Gene names', 'Mol. weight [kDa]']
+        by_default = [col for col in df.select_dtypes(exclude=np.number).columns if col in default ]
         
         samples = [col for col in columns if lfq_method in col if '_' in col ]
         all_ids = [col for col in df.select_dtypes(exclude=np.number).columns if col not in samples]
         
-        wanted_ids = st.sidebar.multiselect('Data identifiers of interest', all_ids , default)
+        wanted_ids = st.sidebar.multiselect('Data identifiers of interest', all_ids , by_default)
         ids = [col for col in df.select_dtypes(exclude=np.number).columns if col in wanted_ids]
         conditions = list(set([item[len(lfq_method)+1:-3] for item in samples]))
         
