@@ -74,7 +74,8 @@ if uploaded_file is not None:
     
     if used_std == 'Custom':
         
-        standards = st.sidebar.file_uploader('Upload your custom standards')
+        custom_std = st.sidebar.file_uploader('Upload your custom standards')
+        standards = alpaca.eats(custom_std)  
         
     st.sidebar.subheader('Quantification standards parameters')
     
