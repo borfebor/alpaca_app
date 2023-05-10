@@ -97,9 +97,9 @@ if uploaded_file is not None:
         
         try:
             suggested = alpaca.pca(df, standards_clean, lfq_method)
+            clustered, suggested = alpaca.KMeans(suggested)
         except:
             suggested = []
-        clustered, suggested = alpaca.KMeans(suggested)
         
         replicate = st.sidebar.multiselect('Select where can I find your UPS spiked', 
                                    samples, suggested)
