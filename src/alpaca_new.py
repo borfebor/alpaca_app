@@ -119,7 +119,7 @@ class alpaca:
         df_melt = df.melt(id_vars=ids, 
                         value_vars=lfq_cols,
                         var_name='Sample', value_name='value')
-        df_melt = df_melt.rename(columns={'value':'lfq_method'})
+        df_melt = df_melt.rename(columns={'value':lfq_method})
         if identifier != None:
                 df_melt = alpaca.identifiers(df_melt, identifier)
             
