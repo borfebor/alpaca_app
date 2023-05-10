@@ -204,7 +204,7 @@ class alpaca:
         all_ids = [col for col in df.columns if col not in samples]
         
         wanted_ids = st.sidebar.multiselect('Data identifiers of interest', all_ids , default)
-        ids = [col for col in df.columns if col in wanted_ids]
+        ids = [col for col in df.select_dtypes(exclude=np.number).columns if col in wanted_ids]
         conditions = list(set([item[len(lfq_method)+1:-3] for item in samples]))
         
         if cleaning is True:
