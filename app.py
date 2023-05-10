@@ -39,8 +39,7 @@ if example_data != None:
     
     title = f'Working with an example dataset from {example_data}'
     top_bar.title(title)
-    uploaded_file = f'datasets/{paper_dict[example_data]}.txt'
-    #uploaded_file = 'data.txt'
+    uploaded_file = f'Datasets/{paper_dict[example_data]}.txt'
 
 if uploaded_file is None:
     st.image(instructions)
