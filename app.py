@@ -209,7 +209,7 @@ if uploaded_file is not None:
               
               if std_show.button('Show standards example'):
                   
-                  example.dataframe(enrichment_example.set_index('Condition'), use_container_width=True)
+                  example.dataframe(enrichment_example, use_container_width=True)
               
               export_params = params_example.to_csv(sep='\t').encode('utf-8')
           
