@@ -111,7 +111,7 @@ if uploaded_file is not None:
                > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification.
                """)
         else:
-        standards = alpaca.eats(custom_std)  
+          standards = alpaca.eats(custom_std)  
         
     st.sidebar.subheader('Quantification standards parameters')
     
