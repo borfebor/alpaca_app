@@ -108,7 +108,8 @@ if uploaded_file is not None:
                |PX0709          |500`           				 |49670            |
                |QZ06T9          |50`|18093|
                > **Amount column:** it should contain "fmol" on the title (e.g. Amount_fmol)
-               > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification.
+               
+               > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification (e.g. Molecular wight (Da)).
                """)
         else:
           standards = alpaca.eats(custom_std)  
