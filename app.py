@@ -65,6 +65,23 @@ if uploaded_file is not None:
     df, condition, lfq_method = alpaca.spits(df, lfq_method=lfq_method, cleaning=cleaning, normalization=normalization,
                                  formatting=formatting, identifier=None)
     
+    if formatting == False:
+     
+        export_not_formated_results = df.to_csv(sep='\t').encode('utf-8')
+        
+        st.dataframe(df, use_container_width=True)   
+        
+        st.download_button(
+              label="Download clean data",
+              data=export_not_formated_results,
+              file_name='alpaca_clean_data.txt',
+              mime='text/csv',
+              help='Here you can download your data',
+              use_container_width=True,
+          )
+        
+        st.stop()
+    
     st.sidebar.header('Quantification standards')
     
     standards = alpaca.eats('UPS2.txt')  
@@ -75,15 +92,32 @@ if uploaded_file is not None:
     if used_std == 'Custom':
         
         custom_std = st.sidebar.file_uploader('Upload your custom standards')
+        if custom_std == None:
+          st.markdown("""
+               ## Welcome to the Custom Standards assistant 🤖
+
+               You can upload the used standards at the bottom of the sidebar, an uploader just poped up there. Just a few things to consider:
+
+               1. Your standards should be included in the database used for the MaxQuant search, otherwise the standards will be missing in the dataset.
+               2. Your standards list should contain the **same Accession** as the one they had in the database used for MaxQuant searches
+               3. Files can be uploaded either as tab-delimitted (TXT), comma-delimitted (CSV) or excel (XLSX). I just need you to use the following format for preparing the standards list:
+
+               |    Accession   |fmol                         	 |MW (Da)                         |
+               |----------------|-------------------------------|-------------------|
+               |P00689			 |5000     						 |20900       |
+               |PX0709          |500`           				 |49670            |
+               |QZ06T9          |50`|18093|
+               > **Amount column:** it should contain "fmol" on the title (e.g. Amount_fmol)
+               > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification.
+               """)
+        else:
         standards = alpaca.eats(custom_std)  
         
     st.sidebar.subheader('Quantification standards parameters')
     
     samples = list(df.Sample.unique())
     replicate = None
-     
-    
-   
+        
     col1, col2 = st.sidebar.columns(2)  
     concentration = col1.number_input('Quantification Standards concentration (µg/µl)', 0.0, 21.2, 0.5)
     volume = 10.6 / concentration
@@ -108,14 +142,12 @@ if uploaded_file is not None:
                                 list(standards['Accession'].unique()))
             
     standards_clean = standards[~standards['Accession'].isin(selected)] 
-    
-    
+        
     experimenter = st.expander('Experimental set-up', expanded=False)
     
     enricher = st.expander('Enrichment standards', expanded=False)
         
     visualizer = st.expander('Data visualization', expanded=False)
-    
     
     st.title('Your data')
     
