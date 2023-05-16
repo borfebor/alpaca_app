@@ -520,8 +520,8 @@ class alpaca:
         
         
         return e_test, preparation
-    
-        def correctionSRM(df, preparation):
+   
+    def correctionSRM(df, preparation):
 
         data = pd.DataFrame()
 
