@@ -1028,8 +1028,7 @@ class alpaca:
         template = template.replace(0, np.nan).reset_index().rename(columns={'index':'Conditions'})
         
         return template
-
-    @st.cache_data    
+   
     def generate_example_params(df):
         """
         Given a dataframe `df` containing columns 'Condition', 'Replicate', and 'Sample',
@@ -1068,8 +1067,7 @@ class alpaca:
         df_params = pd.DataFrame(data=data, index=index, columns=param_names).reset_index(names='Condition')
     
         return df_params
-    
-    
+ 
     def where_to_find_std(clean, standards, thresh = 12):
     
         stan_list = standards['Accession'].unique()  
@@ -1080,8 +1078,7 @@ class alpaca:
         suggestion = where_to[where_to.Accession > thresh]['Sample'].to_list()
         
         return suggestion
-    
-    
+        
     def pca(clean, standards, lfq_method='iBAQ'):
         
         stan_list = standards['Accession'].unique()  
@@ -1130,7 +1127,6 @@ class alpaca:
         principalComponents = pca.fit_transform(x)
        
         variance = pca.explained_variance_ratio_
-    
         
         columns = [f'PC{var[0]+1}' for var in enumerate(variance)]
         
@@ -1169,8 +1165,7 @@ class alpaca:
         return random_df
     
     def pivoter(df):
-        
-        
+         
         cols = [col for col in df.select_dtypes(include=np.number).columns[1:]]
         values = [('mean', 'std') for i in range(len(cols))]
         
