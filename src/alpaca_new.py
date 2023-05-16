@@ -521,7 +521,37 @@ class alpaca:
         
         return e_test, preparation
     
+        def correctionSRM(df, preparation):
+
+        data = pd.DataFrame()
+
+        for index, content in preparation.dropna().iterrows():
+            
+                vals = str(content['fmolSRM']).split(',')
+                values = [float(val) for val in vals]
     
+                entries = content['ProteinSRM'].split(',')
+    
+                condition = content.Condition
+    
+                temp = pd.DataFrame(zip(entries,values), columns=['Accession', 'fmolSRM'])
+                temp['Condition'] = condition
+                data = pd.concat([data, temp])
+                
+        if data.shape[0] >= 1:
+    
+            correction = data.merge(df, 
+                                   on=['Accession', 'Condition'],
+                                   how='left').groupby([
+                            'Condition', 'Accession']).apply(lambda x: pd.Series({
+                            'CorrectionSRM': x['fmolSRM'].mean() / x['fmol'].mean()
+                        })).reset_index(
+            ).groupby('Condition')['CorrectionSRM'].mean().reset_index()
+    
+            preparation = preparation.merge(correction, on='Condition') 
+    
+        return preparation
+        
     def preparator(std, clean, sample, lfq_method='iBAQ'):
     
         enriched_conditions = [condition for condition, details in sample['Added volume'].items() if details != 0]
@@ -765,9 +795,9 @@ class alpaca:
                     
         return dummy
     
-    def wooler(df, preparation):
+     def wooler(df, preparation):
 
-        enrichment_params = ['Enrichment', 'EnrichmentDirection', 'CorrectionFactorSRM', 'EnrichmentFactor']
+        enrichment_params = ['Enrichment', 'EnrichmentDirection', 'ProteinSRM', 'fmolSRM', 'EnrichmentFactor']
         sample_params = ['SampleVolume', 'ProteinConcentration', 'AmountMS']
         cells_params = ['CellsPerML', 'TotalCultureVolume']
         
@@ -781,16 +811,25 @@ class alpaca:
                     compared to the original proteome. E.g., Membrane
                     """
                     df['fmol'] = np.where(df.Condition == condition, 
-                                        df.fmol / values['EnrichmentFactor'] * values['CorrectionFactorSRM'], 
+                                        df.fmol / values['EnrichmentFactor'], 
                                         df.fmol)
+                    
                 elif values['EnrichmentDirection'] == 'Down': 
                     """
                     This calculation is made for samples which correspond to a smaller fraction
                     to the original proteome. E.g., Secretome
                     """
                     df['fmol'] = np.where(df.Condition == condition, 
-                                          df.fmol * values['EnrichmentFactor'] * values['CorrectionFactorSRM'], 
+                                          df.fmol * values['EnrichmentFactor'], 
                                           df.fmol)
+                    
+                preparation = alpaca.correctionSRM(df, preparation)
+                
+                if "CorrectionSRM" in df.columns:
+                
+                    df['fmol'] = np.where(df.Condition == condition, 
+                                        df.fmol * values['CorrectionSRM'], 
+                                        df.fmol)
         
         df['Molecules'] = df['fmol'] * 6.023e8  # Avogadro's number fixed for fmol (-15)
         
@@ -820,6 +859,7 @@ class alpaca:
                                                     df['MoleculesPerCell'])
         
         return df
+    
     
     def wool_old(dummy, prep, count_dict, conditions=None, enrichment_factors=None, enrichment_type_dict=None, subproteome=None):  
         
@@ -1004,10 +1044,11 @@ class alpaca:
     
         param_names = ['SampleVolume', 'ProteinConcentration', 'AmountMS',
                        'CellsPerML', 'TotalCultureVolume', 
-                       'CorrectionFactorSRM', 
+                       'ProteinSRM', 'fmolSRM', 
                        'Enrichment', 'EnrichmentDirection', 'StdDilution', 'StdVolume']
         param_types = [float, float, float,
-                       float, float, float,
+                       float, float, 
+                       str, float,
                        bool, str, float, float]
     
         # Generate random values for each parameter
@@ -1015,8 +1056,10 @@ class alpaca:
         for name, dtype in zip(param_names, param_types):
             if dtype == bool:
                 data[name] = np.random.choice([True, False], size=(n_conditions))
-            elif dtype == str:
+            elif name == 'EnrichmentDirection':
                 data[name] = np.random.choice(['Up', 'Down'], size=(n_conditions))
+            elif name == 'ProteinSRM':
+                data[name] = np.random.choice(df.Accession, size=(n_conditions))
             else:
                 data[name] = np.random.rand(n_conditions) * 10
     
