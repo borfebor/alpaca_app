@@ -794,8 +794,7 @@ class alpaca:
                                                                dummy.Molecules / cells, dummy.Molecules_per_cell)
                     
         return dummy
-    
-     def wooler(df, preparation):
+    def wooler(df, preparation):
 
         enrichment_params = ['Enrichment', 'EnrichmentDirection', 'ProteinSRM', 'fmolSRM', 'EnrichmentFactor']
         sample_params = ['SampleVolume', 'ProteinConcentration', 'AmountMS']
