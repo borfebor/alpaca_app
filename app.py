@@ -105,8 +105,8 @@ if uploaded_file is not None:
                |    Accession   |fmol                         	 |MW (Da)                         |
                |----------------|-------------------------------|-------------------|
                |P00689			 |5000     						 |20900       |
-               |PX0709          |500`           				 |49670            |
-               |QZ06T9          |50`|18093|
+               |PX0709          |500           				 |49670            |
+               |QZ06T9          |50 |18093|
                > **Amount column:** it should contain "fmol" on the title (e.g. Amount_fmol)
                
                > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification (e.g. Molecular wight (Da)).
@@ -248,6 +248,7 @@ if uploaded_file is not None:
                   if "PARAM" in item.name.upper():
                       
                       sample_conditions = alpaca.eats_better(item)
+                      sample_conditions = alpaca.matchmaker(sample_conditions, params_example)
                       sample_conditions = sample_conditions.set_index(sample_conditions.columns[0])
                       
                       #agree = agree_placeholder.checkbox('Use parameters for calculations', True)
@@ -256,7 +257,8 @@ if uploaded_file is not None:
                       
                   if "STANDARD" in item.name.upper():
                       
-                      enrichment_std = alpaca.eats(item)  
+                      enrichment_std = alpaca.eats(item)
+                      enrichment_std = alpaca.matchmaker(enrichment_std, enrichment_example)
                       
           with tab2:
                 
