@@ -8,3 +8,4 @@ seaborn
 streamlit-aggrid
 openpyxl
 fuzzywuzzy
+python-Levenshtein
