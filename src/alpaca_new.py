@@ -247,8 +247,7 @@ class alpaca:
             df = df[ids]
             print('Data is formated for human vision.\nThat could lead to errors or incompatibilities in further analysis using Alpaca pipeline.\nConsider formating your dataset if you see any anomally.')
             
-        return df, conditions, lfq_method
-    
+        return df, conditions, lfq_method    
     
     def scientist(prep, enrichment_type_dict, subproteome_dict=None):
         preparation = dict()
@@ -270,63 +269,10 @@ class alpaca:
                                  'Subproteome': False}
         return preparation
 
-
     def log_transform(df):
         ibaq = [x for x in df.columns if 'iBAQ' in x]
         df[ibaq] = np.log2(df[ibaq])
         return df
-
-    def experimenter(df):
-        """
-        Looks for the experimental conditions in the samples and recognises how many (n)
-        and which ones (condition)
-        """
-        try:
-            condition = [x[5:-3] for x in df.columns if '_' in x]
-            n = len(set(condition))  # defines the number of condition in the experiment
-            r = int(len(condition) / n)
-            condition = list(set(condition))
-            print('Your experiment has', n, 'experimental conditions', condition, ', with', r, 'replicates.')
-        except:
-            print("I'm sorry, I could't predict your experimental conditions.")
-        return n, r, condition
-
-    def replicator(n):
-        """
-        Gets the amount of replicates from experimenter() and creates tags for the columns.
-        It helps solving the problem of variable amount of replicates in different experiments.
-        It returns a list of replicate names with numbers, that will be used later by condition_format() function.
-        """
-        i = 1
-        rep = list()
-        for x in range(n + 1):
-            replicate = 'Replicate_' + str(i)
-            rep.append(replicate)
-            i += 1
-        print('Generated your replicate names:', rep)
-        return rep
-
-    def condition_format(df, condition, rep):
-        condition_col = list()
-        condition_col = [x for x in df.columns if condition in x]
-        try:
-            cd = df[['Accession', 'Gene names', 'Mol. weight [kDa]']]
-        except:
-            print("Sorry, I couldn't found the columns Accession', 'Gene names', 'Mol. weight [kDa]")
-
-        cd[rep] = df[condition_col]
-        cd['Mean'] = cd[rep].median(axis=1)
-        cd['Condition'] = condition
-        cd = cd.dropna(subset=rep, thresh=2)
-        return cd
-
-    def sample_volumes(enrichment_type_dict, prep):
-        volume_matcher = list()
-        i = 2
-        for key, value in enrichment_type_dict.items():
-            volume_matcher.append([key, prep[i]])
-            i += 3
-        return volume_matcher
     
     def abacus(ups2, concentration=0.5, in_sample=6.0, total_protein=10):
         
@@ -448,18 +394,6 @@ class alpaca:
     
         return df, ups_red, coef, inter, R2
     
-    def Quantify_old(df, condition, rep, coef, inter):
-        appended = list()
-        # This new loop solves the problem of variable amount of experimental conditions.
-        # It creates a dataframe (clean_data) based on the condition list.
-        for x in condition:
-            cond = alpaca.condition_format(df, x, rep)
-            appended.append(cond)
-
-        clean_data = pd.concat(appended)
-        clean_data['Amount (fmol)'] = 2 ** ((clean_data[['Mean']] - inter) / coef)
-        return clean_data
-    
     def gathers(df, enrichment_standards, preparation, subproteome=None, QC=False, deviation_lim=10, thresh=10, 
                 imputation=True, strategy='KNN', plot=False, save_plot=False, lfq_method='iBAQ'):
         '''
@@ -520,7 +454,6 @@ class alpaca:
             sns.catplot(data=enrichments, x='Condition', y='Enrichment', kind='box', width=0.5)
         if save_plot == True:
             plt.savefig('spiked_in_standards.svg', bbox_inches='tight', pad_inches=0.5)
-        
         
         return e_test, preparation
    
@@ -754,49 +687,6 @@ class alpaca:
             test_imputed = test_clean.copy()
         return test_imputed
     
-    def wool(dummy, preparation, count_dict=None, enrichment_factors=None):  
-        
-        if enrichment_factors != None:
-            dummy['Enriched_fmol'] = dummy.fmol.copy()
-            for condition, enrichment in enrichment_factors.items():
-                if len(condition) == 2:
-                    print(f'{condition[1]} in subproteome {condition[0]} has been {round(enrichment, 2)} times enriched.')
-                    dummy['Enriched_fmol'] = np.where((dummy.Condition == condition[1]) 
-                                                      & (dummy.Subproteome == condition[0]),
-                                                      dummy.fmol * enrichment, dummy.Enriched_fmol)
-                elif len(condition) == 1:
-                    print(f'{condition} has been {round(enrichment, 2)} times enriched.')
-                    dummy['Enriched_fmol'] = np.where(dummy.Condition == condition, 
-                                                      dummy.fmol * enrichment, dummy.Enriched_fmol)
-                
-            dummy['Molecules'] = dummy['Enriched_fmol'] * (
-                            6.023e8)  # Avogadro's number fixed for fmol (-15)
-        else:
-            dummy['Molecules'] = dummy['fmol'] * (
-                            6.023e8)  # Avogadro's number fixed for fmol (-15)
-        
-                    
-        
-        dummy['Molecules_per_cell'] = np.nan
-        for prepo, values in preparation.items():
-            if values['Subproteome'] == False:
-                print('No subproteomic approach')
-            for condition in values['Enriched_Condition']:
-                
-                vol = values['Sample_vol']
-                cells = count_dict[condition] * vol
-                
-                if values['Subproteome'] != False:
-                    for subprot in values['Subproteome']:
-                        print(f'{condition} in {subprot} subproteome sample volume was {vol} ml.\nProteins quantified for {cells} cells.')
-                        dummy['Molecules_per_cell'] = np.where((dummy.Condition == condition) & (dummy.Subproteome == subprot),
-                                                               dummy.Molecules / cells, dummy.Molecules_per_cell)
-                else:
-                    print(f'{condition} sample volume was {vol} ml.\nProteins quantified for {cells} cells.')
-                    dummy['Molecules_per_cell'] = np.where(dummy.Condition == condition,
-                                                               dummy.Molecules / cells, dummy.Molecules_per_cell)
-                    
-        return dummy
     def wooler(df, preparation):
 
         enrichment_params = ['Enrichment', 'EnrichmentDirection', 'ProteinSRM', 'fmolSRM', 'EnrichmentFactor']
@@ -861,155 +751,6 @@ class alpaca:
                                                     df['MoleculesPerCell'])
         
         return df
-    
-    
-    def wool_old(dummy, prep, count_dict, conditions=None, enrichment_factors=None, enrichment_type_dict=None, subproteome=None):  
-        
-        if conditions == None:
-            conditions = list(dummy.Condition.unique())
-            
-        if enrichment_type_dict == None:
-            enrichment_type_dict = {'Enrichment_1' : list(dummy.Condition.unique())}
-            
-        if enrichment_factors != None:
-            dummy['Enriched_fmol'] = dummy.fmol.copy()
-            for condition, enrichment in enrichment_factors.items():
-                if len(condition) == 2:
-                    print(f'{condition[1]} in subproteome {condition[0]} has been {round(enrichment, 2)} times enriched.')
-                    dummy['Enriched_fmol'] = np.where((dummy.Condition == condition[1]) & (dummy.Subproteome == condition[0]), dummy.fmol * enrichment, dummy.Enriched_fmol)
-                elif len(condition) == 1:
-                    print(f'{condition} has been {round(enrichment, 2)} times enriched.')
-                    dummy['Enriched_fmol'] = np.where(dummy.Condition == condition, dummy.fmol * enrichment, dummy.Enriched_fmol)
-                
-            dummy['Molecules'] = dummy['Enriched_fmol'] * (
-                            6.023e8)  # Avogadro's number fixed for fmol (-15)
-        else:
-            dummy['Molecules'] = dummy['fmol'] * (
-                            6.023e8)  # Avogadro's number fixed for fmol (-15)
-        
-                    
-        
-        token = 0
-        dummy['Molecules_per_cell'] = np.nan
-        for item in enumerate(enrichment_type_dict.values()):
-            for condition in enumerate(conditions):
-                if condition[1] in item[1]:
-                    accessor = 2
-                    if token < item[0]:
-                        accessor += 3
-                    print(f'In {condition[1]}, there are {count_dict[condition[1]]} cells per ml in {prep[accessor]} ml')
-                    cells = count_dict[condition[1]] * prep[accessor]
-                    dummy['Molecules_per_cell'] = np.where((dummy.Condition == condition[1]) & (dummy.Subproteome == subproteome), dummy.Molecules / cells, dummy.Molecules_per_cell)
-                    token = item[0]
-            
-        return dummy
-
-    def std_amount(df, list, i):  # enrichments -> Integer. Enrichment types in our experiment, that's the reason that the function is in comprised in a loop
-        e1 = df.copy()
-        """
-        This function will be comprised in the enricher() function, as a tool for calculating the enrichment amounts in
-        every condition.
-        """
-        e1['Enrichment_type'] = 'Enrichment_' + str(i)
-        e1['Added Standard proteins (ng)'] = e1[['Mix concentration (µg/µl)']]/ list[0] * list[1]
-        e1['Amount (fmol) in sample'] = e1['Added Standard proteins (ng)'] / e1['MW (kDa)'] * 1000
-        e1['Standard fmol/ml sample'] = e1['Amount (fmol) in sample'] / list[2]
-        return e1
-
-    def enricher(std, clean_data, prep, enrichment_type_dict, n, condition):
-        # std -> dataframe including Enrichment standards
-        # clean_data -> dataframe including our experimental data
-        # prep - list with enrichment preparations (dilution, added volume, sample volume) * n
-        # enrichments -> Integer. Enrichment types in our experiment
-        # n -> Number of samples - output from experimenter
-        """
-        This function opens the possibility of introducing a variable number of enrichment conditions.
-        It needs an extra step at the end for sorting the output, cause it calculates all the possible enrichments for
-        all the standards. 
-        """
-        enrichments = len(enrichment_type_dict) 
-        std_list = list()
-        y = 0
-        z = 3    
-        x = 1
-        for i in range(enrichments):
-            tope = prep[y: z]
-            cond = alpaca.std_amount(std, tope, x)
-            std_list.append(cond)
-            if x < enrichments+1:
-                x +=1
-            y += 3
-            z += 3
-        e1 = pd.concat(std_list)
-        std_condition = list()
-        for p in range(n):
-            cond = clean_data[clean_data['Condition'] == condition[p]]
-            std_condition.append(cond)
-        std = pd.concat(std_condition)
-        data = pd.merge(std, e1, on='Accession', how='inner')
-        
-        data = alpaca.enrichment_filter(data, enrichment_type_dict)
-        with pd.ExcelWriter('enrichment_std.xlsx') as writer:  
-            data.to_excel(writer, sheet_name='enrichment_std')
-        return data
-
-    def enrichment_filter(std_data, enrichment_type_dict):
-        filtered = list()
-        for key, value in enrichment_type_dict.items():
-            for v in value:
-                std_data_filtered = std_data[(std_data['Enrichment_type'] == key) & (std_data['Condition'] == v)]
-                filtered.append(std_data_filtered)
-        std_data = pd.concat(filtered)
-        return std_data
-
-    def enrichment_factors(data_std, enrichment_type_dict):
-        enrichment_factors = dict(data_std.groupby(["Enrichment_type"])["Enrichment"].median())
-        return enrichment_factors
-
-    def getEnriched(dummy, enrichment_type_dict):
-        enriqui_martin = list()
-        for key, value in enrichment_type_dict.items():
-            for v in value:
-                dummy['Enrichment_type'] = key
-                new_df = dummy[dummy.Condition == v]
-                enriqui_martin.append(new_df)
-        new_df = pd.concat(enriqui_martin, ignore_index=True)
-        return new_df
-
-    def getMolecules(dummy, enrichment_factors):
-        enriqui_puig = list()
-
-        for key, value in enrichment_factors.items():
-            dummy['Enrichment_factor'] = value
-            new_df = dummy[dummy.Enrichment_type == key]
-            enriqui_puig.append(new_df)
-        dummy = pd.concat(enriqui_puig)
-        dummy['Enriched_fmol'] = dummy['Enrichment_factor'] * dummy['fmol']
-        dummy['Molecules'] = dummy['Enriched_fmol'] * (
-                    6.023e8)  # Avogadro's number fixed for fmol (-15)
-        return dummy
-
-    def getMolecules_cell(dummy, enrichment_type_dict, prep, count_dict):
-        sample_volumes = alpaca.sample_volumes(enrichment_type_dict, prep)
-
-        enriqui_viii = list()
-        for k, v in count_dict.items():
-            for key, value in enrichment_type_dict.items():
-                for valor in value:
-                    print(key, valor, v)
-                    if k == valor:
-                        dummy['Cells_per_ml'] = v
-                        new_df = dummy.loc[(dummy['Condition'] == valor) & (dummy['Enrichment_type'] == key)]
-                        enriqui_viii.append(new_df)
-        la_tabla = pd.concat(enriqui_viii)
-
-        dummy = list()
-        for thing in sample_volumes:
-            la_tabla['Molecules_per_cell'] = la_tabla['Molecules'] / (la_tabla['Cells_per_ml'] * thing[1])
-            new_df = la_tabla.loc[la_tabla['Enrichment_type'] == thing[0]]
-            dummy.append(new_df)
-        la_tabla = pd.concat(dummy)
-        return la_tabla
     
     def parameter_gen(clean, params, conditions):
 
@@ -1207,4 +948,28 @@ class alpaca:
 
             
             return df
-            
+        
+    def match_names(name, df, thresh=75):
+    
+        for index, x in enumerate(df.columns):
+
+            score = fuzz.ratio(name.lower(), x.lower())
+
+            if score > thresh:
+
+                return index, name, score
+        
+    def matchmaker(df_original, df_desired):
+    
+        editable = df_original.columns.to_list()
+
+        for x in df_desired.columns:
+
+            match = alpaca.match_names(x, df_original, 75)
+
+            editable[match[0]] = match[1]
+
+        df_original.columns = editable
+
+        return df_original
+
