@@ -166,6 +166,27 @@ if uploaded_file is not None:
                                                            save=False)   
     except:
         st.warning("Couldn't find the quantification standards")
+        st.markdown("""
+               ## Hi, I'm your Quantification Standards assistant 🤖
+
+               Check that on the bottom part of the sidebar if the right standards are selected.
+               Otherwise, you can upload your custom standards if you have not use any of the Universal Proteomics Standards mixes.
+               
+               Just a few things to consider:
+
+               1. Your standards should be included in the database used for the MaxQuant search, otherwise the standards will be missing in the dataset.
+               2. Your standards list should contain the **same Accession** as the one they had in the database used for MaxQuant searches
+               3. Files can be uploaded either as tab-delimitted (TXT), comma-delimitted (CSV) or excel (XLSX). I just need you to use the following format for preparing the standards list:
+
+               |    Accession   |fmol                         	 |MW (Da)                         |
+               |----------------|-------------------------------|-------------------|
+               |P00689			 |5000     						 |20900       |
+               |PX0709          |500           				 |49670            |
+               |QZ06T9          |50 |18093|
+               > **Amount column:** it should contain "fmol" on the title (e.g. Amount_fmol)
+               
+               > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification (e.g. Molecular wight (Da)).
+               """)
         st.stop()
     
     with experimenter:
