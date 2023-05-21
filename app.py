@@ -445,7 +445,7 @@ if uploaded_file is not None:
         if query != []:
             
             data = data[data[look_on].isin(query)]
-            data = alpaca.pregunton(data, query, look_on)
+            #data = alpaca.pregunton(data, query, look_on)
         
         export_results = data.to_csv(sep='\t').encode('utf-8')
         
