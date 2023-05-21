@@ -436,10 +436,10 @@ if uploaded_file is not None:
             
         look_on = c2.selectbox('Search based on', select_cols)
         
-        query = c3.multiselect('Search term (e.g., TrxA, Erv1, Cox1)', data[look_on].unique(),
-                               default=[])
+        query = c3.text_input('Search term (e.g., TrxA, Erv1, Cox1)', 
+                               value="")
         
-        if query != []:
+        if query != "":
             
             data = alpaca.pregunton(data, query, look_on)
         
