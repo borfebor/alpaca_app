@@ -435,9 +435,6 @@ if uploaded_file is not None:
         select_cols = [col for col in data.select_dtypes(exclude=np.number)]
             
         look_on = c2.selectbox('Search based on', select_cols)
-        
-        #query = c3.text_input('Search term (e.g., TrxA, Erv1, Cox1)', 
-        #                       value="")
      
         query = c3.multiselect('Search term (e.g., TrxA, Erv1, Cox1)', data[look_on].unique(),
                                default=[])
@@ -445,7 +442,6 @@ if uploaded_file is not None:
         if query != []:
             
             data = data[data[look_on].isin(query)]
-            #data = alpaca.pregunton(data, query, look_on)
         
         export_results = data.to_csv(sep='\t').encode('utf-8')
         
