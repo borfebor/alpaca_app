@@ -436,7 +436,7 @@ if uploaded_file is not None:
             
         look_on = c2.selectbox('Search based on', select_cols)
         
-        query = c3.text_input('Search term (e.g., TrxA, Erv1, Cox1)', value="")
+        query = c3.multiselect('Search term (e.g., TrxA, Erv1, Cox1)', value="", data[select_cols].unique().to_list())
         
         if query != "":
             
