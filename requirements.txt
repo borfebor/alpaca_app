@@ -7,5 +7,5 @@ scipy
 seaborn
 streamlit-aggrid
 openpyxl
-fuzzywuzzy
+thefuzz
 python-Levenshtein
