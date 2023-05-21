@@ -157,7 +157,9 @@ class alpaca:
         
             return clean
         
-    def spits(df, lfq_method='iBAQ', cleaning=True, formatting=True, identifier=None, normalization=False,
+    def spits(df, lfq_method='iBAQ', cleaning=True, formatting=True, 
+              lfq_columns=['iBAQ', 'LFQ', 'Top3', 'Intensity', 'MS/MS count'], 
+              normalization=False, identifier=None,
               protein_ids=['Accession', 'Gene names', 'Mol. weight [kDa]']):
         '''
         
@@ -209,7 +211,8 @@ class alpaca:
         
         wanted_ids = st.sidebar.multiselect('Data identifiers of interest', all_ids , default)
         ids = [col for col in df.columns if col in wanted_ids]
-        conditions = list(set([item[len(lfq_method)+1:-3] for item in samples]))
+        #conditions = list(set([item[len(lfq_method)+1:-3] for item in samples]))
+        conditions = alpaca.conditions(df, lfq_columns)
         
         if cleaning is True:
             to_remove = st.sidebar.multiselect('Items to remove', cont_key, cont_key)
