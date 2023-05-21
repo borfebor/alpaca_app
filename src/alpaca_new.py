@@ -12,6 +12,7 @@ from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from thefuzz import fuzz
 from thefuzz import process
+import re
 
 class alpaca:
     
@@ -954,4 +955,42 @@ class alpaca:
         df_original.columns = editable
 
         return df_original
+    
+    def conditions(raw, lfq_method):
+    
+        unique_items = list(sum([col.split(' ') for col in raw.columns for method in lfq_method if method in col], []))
+        counts = pd.Series(unique_items).value_counts().reset_index()
+
+        drop = [index for index in counts['index'].unique() for method in lfq_method if method.upper() in index.upper()]
+
+        counted = counts[~counts['index'].isin(drop)].groupby('count')['index'].unique().reset_index()
+
+        samples = counted[counted['count'] > 1]['index'][1]
+
+        conditions = alpaca.condition_detective(samples, 85)
+
+        conditions = [re.sub('[^0-9a-zA-Z]+', '', sample) for sample in conditions]
+
+        return conditions
+
+    def condition_detective(samples, thresh = 75):
+    
+        common = []
+
+        for case_a, case_b in permutations(samples, 2):
+
+            ratio = fuzz.ratio(case_a, case_b)
+
+            if ratio > thresh:
+
+                distance = round(len(case_a) - len(case_a) * ratio / 100)
+
+                if distance >= 1:
+
+                    name = case_a[:-distance]
+                    common.append(name)
+
+        conditions = list(dict.fromkeys(common))
+
+        return conditions
 
