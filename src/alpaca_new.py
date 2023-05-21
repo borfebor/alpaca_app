@@ -930,23 +930,6 @@ class alpaca:
         df_pivot = df_pivot[cols].reset_index()
         
         return df_pivot
-    
-    def pregunton(df, query, look_on):
-        
-            if query.count(', ') >= 1:
-                query = query.split(', ')
-            elif query.count(',') >= 1:
-                query = query.split(',')
-            elif query.count(' ') >= 1:
-                query = query.split(' ')
-            else:
-                query = [query]
-            
-                
-            df = df[df[look_on].isin(query)]
-
-            
-            return df
         
     def match_names(name, df, thresh=75):
     
