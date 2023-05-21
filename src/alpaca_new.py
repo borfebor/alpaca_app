@@ -10,9 +10,8 @@ from itertools import takewhile
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
-import fuzzywuzzy
-from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
+from thefuzz import fuzz
+from thefuzz import process
 
 class alpaca:
     
