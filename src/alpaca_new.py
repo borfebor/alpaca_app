@@ -206,13 +206,14 @@ class alpaca:
         
         default = ['Accession', 'Gene names', 'Mol. weight [kDa]']
         
-        samples = [col for col in columns if lfq_method in col if '_' in col ]
+        #samples = [col for col in columns if lfq_method in col if '_' in col ]
+        conditions, samples = alpaca.conditions(df, lfq_columns, lfq_method)
         all_ids = [col for col in df.columns if col not in samples]
+       
         
         wanted_ids = st.sidebar.multiselect('Data identifiers of interest', all_ids , default)
         ids = [col for col in df.columns if col in wanted_ids]
         #conditions = list(set([item[len(lfq_method)+1:-3] for item in samples]))
-        conditions = alpaca.conditions(df, lfq_columns)
         
         if cleaning is True:
             to_remove = st.sidebar.multiselect('Items to remove', cont_key, cont_key)
@@ -959,7 +960,7 @@ class alpaca:
 
         return df_original
     
-    def conditions(raw, lfq_method):
+    def conditions(raw, lfq_method, lfq):
     
         unique_items = list(sum([col.split(' ') for col in raw.columns for method in lfq_method if method in col], []))
         counts = pd.Series(unique_items).value_counts().reset_index()
@@ -973,8 +974,10 @@ class alpaca:
         conditions = alpaca.condition_detective(samples, 85)
 
         conditions = [re.sub('[^0-9a-zA-Z]+', '', sample) for sample in conditions]
+        
+        sample_cols = [col for col in raw.columns for sample in samples if lfq in col if sample in col]
 
-        return conditions
+        return conditions, sample_cols
 
     def condition_detective(samples, thresh = 75):
     
