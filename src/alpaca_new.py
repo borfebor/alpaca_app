@@ -232,16 +232,14 @@ class alpaca:
                 
                 df, lfq_method = alpaca.normalizer(df, lfq_method=lfq_method, 
                                                    normalization=normalization, id_col=ids)
-            
-            #lfq = list(df.Sample.unique())
-            #prefix = ''.join(c[0] for c in takewhile(lambda x: all(x[0] == y for y in x), zip(*lfq)))
+           
             df['Condition'] = np.nan
             df['Replicate'] = np.nan
             
             for item in replicate_dict:
                 
-                df['Condition'] = np.where(df.Sample == item, replicate_dict[item][0], df.Sample)
-                df['Replicate'] = np.where(df.Sample == item, replicate_dict[item][1], df.Sample)
+                df['Condition'] = np.where(df.Sample == item, replicate_dict[item][0], df.Condition)
+                df['Replicate'] = np.where(df.Sample == item, replicate_dict[item][1], df.Replicate)
                 
             df = df.dropna(subset=lfq_method)
             
