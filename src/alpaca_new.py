@@ -979,7 +979,7 @@ class alpaca:
 
         sample_cols = [col for col in raw.columns for sample in samples if lfq in col if sample in col]
 
-        replicate = replicate_seeker(sample_cols, thresh=85)
+        replicate = alpaca.replicate_seeker(sample_cols, thresh=85)
 
         conditions = list(dict.fromkeys([replicate[item][0] for item in replicate]))
 
