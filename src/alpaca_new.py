@@ -207,7 +207,7 @@ class alpaca:
         default = ['Accession', 'Gene names', 'Mol. weight [kDa]']
         
         #samples = [col for col in columns if lfq_method in col if '_' in col ]
-        conditions, samples = alpaca.conditions(df, lfq_columns, lfq_method)
+        conditions, samples, replicate_dict = alpaca.conditions(df, lfq_columns, lfq_method)
         all_ids = [col for col in df.columns if col not in samples]
        
         
@@ -233,10 +233,16 @@ class alpaca:
                 df, lfq_method = alpaca.normalizer(df, lfq_method=lfq_method, 
                                                    normalization=normalization, id_col=ids)
             
-            lfq = list(df.Sample.unique())
-            prefix = ''.join(c[0] for c in takewhile(lambda x: all(x[0] == y for y in x), zip(*lfq)))
-            df['Condition'] = df['Sample'].str[len(prefix):-3]
-            df['Replicate'] = 'Replicate' + df['Sample'].str[-3:]
+            #lfq = list(df.Sample.unique())
+            #prefix = ''.join(c[0] for c in takewhile(lambda x: all(x[0] == y for y in x), zip(*lfq)))
+            df['Condition'] = np.nan
+            df['Replicate'] = np.nan
+            
+            for item in replicate_dict:
+                
+                df['Condition'] = np.where(df.Sample == item, replicate_dict[item][0], df.Sample)
+                df['Replicate'] = np.where(df.Sample == item, replicate_dict[item][1], df.Sample)
+                
             df = df.dropna(subset=lfq_method)
             
             if 'Gene names' in ids:
@@ -971,13 +977,13 @@ class alpaca:
 
         samples = counted[counted['count'] > 1]['index'][1]
 
-        conditions = alpaca.condition_detective(samples, 85)
-
-        conditions = [re.sub('[^0-9a-zA-Z]+', '', sample) for sample in conditions]
-        
         sample_cols = [col for col in raw.columns for sample in samples if lfq in col if sample in col]
 
-        return conditions, sample_cols
+        replicate = replicate_seeker(sample_cols, thresh=85)
+
+        conditions = list(dict.fromkeys([replicate[item][0] for item in replicate]))
+
+        return conditions, sample_cols, replicate
 
     def condition_detective(samples, thresh = 75):
     
@@ -999,4 +1005,20 @@ class alpaca:
         conditions = list(dict.fromkeys(common))
 
         return conditions
+    
+    def replicate_seeker(samples, thresh=85):
+
+        replicate = {}
+
+        for sample, sample2 in permutations(samples, 2):
+
+            ratio = fuzz.ratio(sample.split(' ')[1], sample2.split(' ')[1])
+
+            if ratio > thresh:
+
+                diff = int(len(sample) - len(sample) / ratio * 100)
+
+                replicate[sample] = [sample[:diff].split(' ')[1], f'Replicate_{sample[diff:]}']
+
+        return replicate
 
