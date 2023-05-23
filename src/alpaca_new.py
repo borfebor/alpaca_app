@@ -971,40 +971,40 @@ class alpaca:
 
         conditions = []
         replicate = dict()
-    previous = ''
+        previous = ''
 
-    for candidate in permutations(candidates, 2):
+        for candidate in permutations(candidates, 2):
 
-        name1 = re.sub('[^0-9a-zA-Z]+', '', candidate[0])
+            name1 = re.sub('[^0-9a-zA-Z]+', '', candidate[0])
 
-        name2 = re.sub('[^0-9a-zA-Z]+', '', candidate[1])
+            name2 = re.sub('[^0-9a-zA-Z]+', '', candidate[1])
 
-        ratio = fuzz.ratio(name1, name2)
+            ratio = fuzz.ratio(name1, name2)
 
-        if ratio > 85:
+            if ratio > 85:
 
-            #print(candidate[0], candidate[1], ratio)
-            common = os.path.commonprefix(candidate)
-            #print('was', common)
+                #print(candidate[0], candidate[1], ratio)
+                common = os.path.commonprefix(candidate)
+                #print('was', common)
 
-            if common in previous:
+                if common in previous:
 
-                common = previous
+                    common = previous
 
-            previous = common
+                previous = common
 
-            if common != '':
+                if common != '':
 
-                conditions.append(common)
+                    conditions.append(common)
 
-                rep = candidate[0].replace(common, '')
+                    rep = candidate[0].replace(common, '')
 
-                col = [col for col in df.columns for item in conditions if 'iBAQ' in col if candidate[0] in col][0]
+                    col = [col for col in df.columns for item in conditions if 'iBAQ' in col if candidate[0] in col][0]
 
-                replicate[col] = [common, f'Replicate_{rep}']
-                
+                    replicate[col] = [common, f'Replicate_{rep}']
+
         conditions = list(dict.fromkeys(conditions))
         sample_cols = list(replicate.keys())
-        
+
         return conditions, sample_cols,  replicate
 
