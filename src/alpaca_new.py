@@ -971,10 +971,27 @@ class alpaca:
 
         conditions = []
         replicate = dict()
+    previous = ''
 
-        for candidate in permutations(candidates, 2):
+    for candidate in permutations(candidates, 2):
 
+        name1 = re.sub('[^0-9a-zA-Z]+', '', candidate[0])
+
+        name2 = re.sub('[^0-9a-zA-Z]+', '', candidate[1])
+
+        ratio = fuzz.ratio(name1, name2)
+
+        if ratio > 85:
+
+            #print(candidate[0], candidate[1], ratio)
             common = os.path.commonprefix(candidate)
+            #print('was', common)
+
+            if common in previous:
+
+                common = previous
+
+            previous = common
 
             if common != '':
 
