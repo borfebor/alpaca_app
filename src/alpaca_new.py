@@ -964,59 +964,29 @@ class alpaca:
 
         return df_original
     
-    def conditions(raw, lfq_method, lfq):
-    
-        unique_items = list(sum([col.split(' ') for col in raw.columns for method in lfq_method if method in col], []))
-        counts = pd.Series(unique_items).value_counts().reset_index()
+    def path_finder(df, lfq_method):
 
-        drop = [index for index in counts['index'].unique() for method in lfq_method if method.upper() in index.upper()]
+        candidates = [re.findall(r"\w+", col)[1] for col in df.columns if lfq_method in col if len(col) > len(lfq_method)]
 
-        counted = counts[~counts['index'].isin(drop)].groupby('count')['index'].unique().reset_index()
+        conditions = []
+        replicate = dict()
 
-        samples = counted[counted['count'] > 1]['index'][1]
+        for candidate in permutations(candidates, 2):
 
-        sample_cols = [col for col in raw.columns for sample in samples if lfq in col if sample in col]
+            common = os.path.commonprefix(candidate)
 
-        replicate = alpaca.replicate_seeker(sample_cols, thresh=85)
+            if common != '':
 
-        conditions = list(dict.fromkeys([replicate[item][0] for item in replicate]))
+                conditions.append(common)
 
-        return conditions, sample_cols, replicate
+                rep = candidate[0].replace(common, '')
 
-    def condition_detective(samples, thresh = 75):
-    
-        common = []
+                col = [col for col in df.columns for item in conditions if 'iBAQ' in col if candidate[0] in col][0]
 
-        for case_a, case_b in permutations(samples, 2):
-
-            ratio = fuzz.ratio(case_a, case_b)
-
-            if ratio > thresh:
-
-                distance = round(len(case_a) - len(case_a) * ratio / 100)
-
-                if distance >= 1:
-
-                    name = case_a[:-distance]
-                    common.append(name)
-
-        conditions = list(dict.fromkeys(common))
-
-        return conditions
-    
-    def replicate_seeker(samples, thresh=85):
-
-        replicate = {}
-
-        for sample, sample2 in permutations(samples, 2):
-
-            ratio = fuzz.ratio(sample.split(' ')[1], sample2.split(' ')[1])
-
-            if ratio > thresh:
-
-                diff = int(len(sample) - len(sample) / ratio * 100)
-
-                replicate[sample] = [sample[:diff].split(' ')[1], f'Replicate_{sample[diff:]}']
-
-        return replicate
+                replicate[col] = [common, f'Replicate_{rep}']
+                
+        conditions = list(dict.fromkeys(conditions))
+        sample_cols = list(replicate.keys())
+        
+        return conditions, sample_cols,  replicate
 
