@@ -983,9 +983,7 @@ class alpaca:
 
             if ratio > 85:
 
-                #print(candidate[0], candidate[1], ratio)
                 common = os.path.commonprefix(candidate)
-                #print('was', common)
 
                 if common in previous:
 
@@ -999,7 +997,7 @@ class alpaca:
 
                     rep = candidate[0].replace(common, '')
 
-                    col = [col for col in df.columns for item in conditions if 'iBAQ' in col if candidate[0] in col][0]
+                    col = [col for col in df.columns for item in conditions if lfq_method in col if candidate[0] in col][0]
 
                     replicate[col] = [common, f'Replicate_{rep}']
 
