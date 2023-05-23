@@ -13,6 +13,7 @@ from sklearn.cluster import KMeans
 from thefuzz import fuzz
 from thefuzz import process
 import re
+import os
 
 class alpaca:
     
@@ -207,7 +208,7 @@ class alpaca:
         default = ['Accession', 'Gene names', 'Mol. weight [kDa]']
         
         #samples = [col for col in columns if lfq_method in col if '_' in col ]
-        conditions, samples, replicate_dict = alpaca.conditions(df, lfq_columns, lfq_method)
+        conditions, samples, replicate_dict = alpaca.path_finder(df, lfq_method)
         all_ids = [col for col in df.columns if col not in samples]
        
         
