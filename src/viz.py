@@ -19,11 +19,6 @@ from st_aggrid import AgGrid
 import altair as alt
 import time
 
-import plotly.graph_objs as go
-import plotly.io as pio
-from plotly.subplots import make_subplots
-import seaborn as sns
-
 class Viz:
     
     def boxplot(df, categorical, numerical, color):
