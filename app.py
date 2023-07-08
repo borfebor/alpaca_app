@@ -8,9 +8,10 @@ from src.alpaca_new import alpaca
 from src.viz import Viz
 
 image = Image.open('ALPACA_LOGO2.png')
+tab_logo = Image.open('tab_logo.png')
 
 st.set_page_config(
-     page_title="alpaca",
+     page_title="alpaca proteomics",
      page_icon=image,
      layout="wide",
      initial_sidebar_state="expanded"
