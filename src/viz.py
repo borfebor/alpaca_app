@@ -102,7 +102,7 @@ class Viz:
         chart = px.scatter(
                     x=df[amount], 
                     y=df[lfq_method]),
-                    color=df['Accession'],
+                    #color=df['Accession'],
                     hover_name=df['Accession'],
                     )
         
