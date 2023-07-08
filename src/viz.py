@@ -105,6 +105,9 @@ class Viz:
                     trendline='ols',
                     title = fitting,
                     hover_name=df['Accession']
+                    labels={ # replaces default labels by column name
+                            "x": "fmol of standard (log2)",  "y": f"{lfq_method} (log2)",
+                    },
         )
         
         return chart
