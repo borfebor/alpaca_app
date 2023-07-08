@@ -101,7 +101,7 @@ class Viz:
 
         fig = go.Figure(data=go.Scatter(
                 x=df[amount], 
-                y=df[lfq_method])
+                y=df[lfq_method]),
                 mode='markers',
                 marker=dict(
                     size=16,
