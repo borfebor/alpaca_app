@@ -96,16 +96,15 @@ class Viz:
         
         fitting = f'R2 = {round(R, 3)}'
 
-        chart = go.Figure(data=go.Scatter(
-            x=df[amount], 
-            y=df[lfq_method], 
-            mode='markers', 
-            line="ols",
-            marker=dict(
-            color=np.random.randn(10000),
-            colorscale='Viridis',
-            line_width=1
-        )))
+        chart = px.scatter(df, 
+                        x=df[amount], 
+                        y=df[lfq_method], 
+                        trendline="ols", 
+                        marker=dict(
+                        color=np.random.randn(10000),
+                        colorscale='Viridis',
+                        line_width=1, 
+                        mode='markers',)
         
         return chart
     
