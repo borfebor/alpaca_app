@@ -59,6 +59,8 @@ class Viz:
         return chart
 
     def boxplot_2(df, categorical, numerical, color, lfq_method='intensity'):
+
+        pio.templates.default = "plotly_white"
     
         colores = df[color].unique()
     
