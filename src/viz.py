@@ -102,6 +102,7 @@ class Viz:
         chart = px.scatter(
                     x=df[amount], 
                     y=df[lfq_method],
+                    trendline='ols',
                     hover_name=df['Accession']
         )
         
