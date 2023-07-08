@@ -103,7 +103,6 @@ class Viz:
                     x=df[amount], 
                     y=df[lfq_method],
                     trendline='ols',
-                    color='SkyBlue',
                     title = fitting,
                     hover_name=df['Accession'],
                     labels={ 
@@ -113,6 +112,7 @@ class Viz:
         chart.update_traces(marker=dict(size=8,
                               line=dict(width=2,
                                         color='DarkSlateGrey')),
+                            fill=dict(color='#C5D2E7'),
                   selector=dict(mode='markers'))
         
         return chart
