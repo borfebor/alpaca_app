@@ -430,7 +430,7 @@ if uploaded_file is not None:
 
         try: 
              plot.plotly_chart(chart) 
-        else:
+        except:
              
              plot.altair_chart(chart, use_container_width=adjusment) 
     
