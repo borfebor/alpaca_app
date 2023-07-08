@@ -78,7 +78,8 @@ class Viz:
                         x=[group] * len(df[df[categorical] == group][numerical]),
                         name=color[0],
                         fillcolor=color[1],
-                        line_color='#000000'
+                        line_color='#000000',
+                        legendgroup=color[0]
                     ))
             
         box.update_layout(
