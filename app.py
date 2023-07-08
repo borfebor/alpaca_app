@@ -54,7 +54,7 @@ if uploaded_file is not None:
     cleaning = st.sidebar.checkbox('Data cleaning', value=True)
     formatting = st.sidebar.checkbox('Data formatting', value=True)
     
-    lfq_options = ['iBAQ', 'LFQ', 'Top3', 'Intensity', 'MS/MS count']
+    lfq_options = ['iBAQ', 'LFQ intensity', 'Top3', 'Intensity', 'MS/MS count']
     
     lfq_menu = list(dict.fromkeys([item for item in lfq_options for col in df.select_dtypes(include=np.number).columns if item in col]))
     
