@@ -962,7 +962,7 @@ class alpaca:
     
     def path_finder(df, lfq_method):
 
-        candidates = [re.findall(r"\w+", col)[1] for col in df.columns if lfq_method in col if len(col) > len(lfq_method)]
+        candidates = [re.findall(r"\w+", col)[-1] for col in df.columns if lfq_method in col if len(col) > len(lfq_method)]
 
         conditions = []
         replicate = dict()
