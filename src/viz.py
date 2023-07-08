@@ -49,8 +49,6 @@ class Viz:
         return chart
 
     def boxplot(df, categorical, numerical, color):
-
-        pio.templates.default = "plotly_white"
     
         colores = df[color].unique()
     
@@ -107,7 +105,7 @@ class Viz:
             color=np.random.randn(N),
             colorscale='Viridis',
             line_width=1
-        ))
+        )))
         
         return chart
     
