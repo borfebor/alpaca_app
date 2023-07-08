@@ -38,13 +38,22 @@ class Viz:
 
     def box_2(df, categorical, numerical, color, lfq_method='intensity'):
         
-        box = go.Figure()
+        colores = df[color].unique()
+
+        categories = df[categorical].unique()
         
-        for num, group in enumerate(categorical):
+        colors = dict(zip(colores, sns.color_palette('Set1', len(colores)).as_hex()))
+        
+        box = go.Figure()
+                
+        for num, group in enumerate(categories):
             
+            color = [colors[key] for key in colors if key in group][0]
+            
+            print(group)
             box.add_trace(go.Box(
-                        y=df.loc[group][numerical],
-                        x=group,
+                        y=df[df[categorical] == group][numerical],
+                        x=[group] * len(df[df[categorical] == group][numerical]),
                         name=group,
                         fillcolor=color,
                         line_color='#000000'
