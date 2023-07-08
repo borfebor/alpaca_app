@@ -102,7 +102,7 @@ class Viz:
             mode='markers', 
             trendline="ols",
             marker=dict(
-            color=np.random.randn(N),
+            color=np.random.randn(10000),
             colorscale='Viridis',
             line_width=1
         )))
