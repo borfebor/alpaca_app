@@ -99,19 +99,12 @@ class Viz:
         
         fitting = f'R2 = {round(R, 3)}'
 
-        chart = go.Figure(data=go.Scatter(
+        chart = px.scatter(
                 x=df[amount], 
                 y=df[lfq_method]),
-                mode='markers',
-                marker=dict(
-                    size=16,
-                    color=np.random.randn(500), #set color equal to a variable
-                    colorscale='Viridis', # one of plotly colorscales
-                    showscale=True
-                )
-            )
-
-
+                color=df['Accession'],
+                hover_name=df['Accession'],
+                    )
         
         return chart
     
