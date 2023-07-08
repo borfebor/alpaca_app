@@ -8,7 +8,8 @@ from src.alpaca_new import alpaca
 from src.viz import Viz
 
 st.set_page_config(
-     page_title="🦙 alpaca",
+     page_title="alpaca",
+     page_icon="😍",
      layout="wide",
      initial_sidebar_state="expanded"
 )
