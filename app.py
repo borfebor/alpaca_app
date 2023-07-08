@@ -7,9 +7,6 @@ from PIL import Image
 from src.alpaca_new import alpaca
 from src.viz import Viz
 
-import plotly.io as pio
-
-
 st.set_page_config(
      page_title="Alpaca Proteomics",
      layout="wide",
