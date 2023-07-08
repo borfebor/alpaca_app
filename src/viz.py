@@ -59,10 +59,10 @@ class Viz:
                         line_color='#000000'
                     ))
             
-        box.update_layout(
-                yaxis_title=lfq_method,
-                hovermode="x",
-            )
+        #box.update_layout(
+        #        yaxis_title=lfq_method,
+        #        hovermode="x",
+        #    )
         
         return box
     
