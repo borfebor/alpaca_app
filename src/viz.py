@@ -104,7 +104,6 @@ class Viz:
                     y=df[lfq_method],
                     trendline='ols',
                     trendline_color_override='Black',
-                    title = fitting,
                     hover_name=df['Accession'],
                     labels={ 
                             "x": "fmol of standard (log2)",  "y": f"{lfq_method} (log2)",
@@ -118,6 +117,7 @@ class Viz:
                             line=dict(width=2,
                                     color='DarkSlateGrey')),
                   selector=dict(mode='markers'))
+        chart.update_layout(title_text=fitting, title_x=0.5)
         
         return chart
     
