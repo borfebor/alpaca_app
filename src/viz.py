@@ -106,7 +106,7 @@ class Viz:
                         color=np.random.randn(10000),
                         colorscale='Viridis',
                         line_width=1, 
-                        mode='markers',)
+                        mode='markers'))
         
         return chart
     
