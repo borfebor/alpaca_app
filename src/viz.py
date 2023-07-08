@@ -112,7 +112,7 @@ class Viz:
         chart.update_traces(marker=dict(size=8,
                               line=dict(width=2,
                                         color='DarkSlateGrey')),
-                               color='LightSkyBlue',
+                               fill='LightSkyBlue',
                   selector=dict(mode='markers'))
         
         return chart
