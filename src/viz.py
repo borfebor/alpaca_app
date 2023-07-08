@@ -70,14 +70,14 @@ class Viz:
                 
         for num, group in enumerate(categories):
             
-            color = [colors[key] for key in colors if key in group][0]
+            color = [(key, colors[key]) for key in colors if key in group][0]
             
             print(group)
             box.add_trace(go.Box(
                         y=df[df[categorical] == group][numerical],
                         x=[group] * len(df[df[categorical] == group][numerical]),
-                        name=group,
-                        fillcolor=color,
+                        name=color[0],
+                        fillcolor=color[1],
                         line_color='#000000'
                     ))
             
