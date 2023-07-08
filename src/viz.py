@@ -109,7 +109,7 @@ class Viz:
                     colorscale='Viridis', # one of plotly colorscales
                     showscale=True
                 )
-            ))
+            )
 
 
         
