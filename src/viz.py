@@ -48,7 +48,7 @@ class Viz:
         
         return chart
 
-    def boxplot(df, categorical, numerical, color, lfq_method='intensity'):
+    def boxplot(df, categorical, numerical, color):
 
         pio.templates.default = "plotly_white"
     
@@ -82,7 +82,7 @@ class Viz:
             previous = color[0]
             
         box.update_layout(
-                yaxis_title=lfq_method,
+                yaxis_title=numerical,
                 hovermode="x",
                 legend=dict(
                     orientation="h",
