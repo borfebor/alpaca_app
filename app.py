@@ -12,7 +12,7 @@ tab_logo = Image.open('tab_logo.png')
 
 st.set_page_config(
      page_title="alpaca proteomics",
-     page_icon=image,
+     page_icon=tab_logo,
      layout="wide",
      initial_sidebar_state="expanded"
 )
