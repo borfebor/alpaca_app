@@ -97,7 +97,7 @@ class Viz:
     
     def Regression(df, amount, lfq_method, R):
         
-        fitting = f'R2 = {round(R, 3)}'
+        fitting = f'R² = {round(R, 3)}'
 
         chart = px.scatter(
                     x=df[amount], 
