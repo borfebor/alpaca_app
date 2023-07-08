@@ -8,7 +8,7 @@ from src.alpaca_new import alpaca
 from src.viz import Viz
 
 st.set_page_config(
-     page_title="Alpaca Proteomics",
+     page_title="🦙 alpaca",
      layout="wide",
      initial_sidebar_state="expanded"
 )
@@ -421,10 +421,7 @@ if uploaded_file is not None:
             
             chart = Viz.heatmap(data, 'Sample','Protein',  numerical, z_score, color_scheme)
         
-        try:
-             plot.altair_chart(chart, use_container_width=adjusment) 
-        except:
-             plot.plotly_chart(chart, use_container_width=adjusment)
+         plot.altair_chart(chart, use_container_width=adjusment) 
     
     with results:
                     
