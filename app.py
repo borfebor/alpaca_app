@@ -321,9 +321,6 @@ if uploaded_file is not None:
     param_1 = 'Sample'
     param_2 = 'iBAQ'
     param_3 = 'Condition'
-
-    box = Viz.boxplot_2(df, param_1, param_2, param_3)
-    st.plotly_chart(box) 
      
     with visualizer:
         
@@ -356,8 +353,10 @@ if uploaded_file is not None:
                 
                 color = settings.selectbox('Pick a category', 
                                                  categories, con_index)
-            
+             
+                box = Viz.boxplot_2(df, param_1, param_2, param_3)
                 chart  = Viz.boxplot(df, categorical, numerical, color)
+                plot.plotly_chart(box)
                 
         elif viz_type == 'Quantified proteins':
             
