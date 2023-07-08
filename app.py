@@ -317,7 +317,14 @@ if uploaded_file is not None:
         
         data = alpaca.wooler(df, sample_conditions)
 
-    
+
+    param_1 = 'Sample'
+    param_2 = 'iBAQ'
+    param_3 = 'Condition'
+
+    box = boxplot_2(df, param_1, param_2, param_3)
+    st.plotly_chart(box) 
+     
     with visualizer:
         
         settings, plot = st.columns([1,2])
