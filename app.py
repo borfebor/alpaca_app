@@ -422,8 +422,10 @@ if uploaded_file is not None:
             
             chart = Viz.heatmap(data, 'Sample','Protein',  numerical, z_score, color_scheme)
         
-        
-        plot.altair_chart(chart, use_container_width=adjusment) 
+        try:
+             plot.altair_chart(chart, use_container_width=adjusment) 
+        except:
+             plot.plotly_chart(chart, use_container_width=adjusment)
     
     with results:
                     
