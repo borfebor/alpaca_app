@@ -7,14 +7,14 @@ from PIL import Image
 from src.alpaca_new import alpaca
 from src.viz import Viz
 
+image = Image.open('ALPACA_LOGO2.png')
+
 st.set_page_config(
      page_title="alpaca",
-     page_icon="🦙",
+     page_icon=image,
      layout="wide",
      initial_sidebar_state="expanded"
 )
-
-image = Image.open('ALPACA_LOGO2.png')
 instructions = Image.open('instructions.png')
 st.sidebar.image(image)
 
