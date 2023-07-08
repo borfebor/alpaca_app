@@ -354,9 +354,9 @@ if uploaded_file is not None:
                 color = settings.selectbox('Pick a category', 
                                                  categories, con_index)
              
-                box = Viz.boxplot_2(df, categorical, numerical, color)
+                chart = Viz.boxplot_2(df, categorical, numerical, color)
                 #chart  = Viz.boxplot(df, categorical, numerical, color)
-                plot.plotly_chart(box)
+                plot.plotly_chart(chart)
                 
         elif viz_type == 'Quantified proteins':
             
@@ -428,8 +428,8 @@ if uploaded_file is not None:
                                             'lightorange', 'lighttealblue'], 0)
             
             chart = Viz.heatmap(data, 'Sample','Protein',  numerical, z_score, color_scheme)
-
-        plot.altair_chart(chart, use_container_width=adjusment) 
+        try:  
+             plot.altair_chart(chart, use_container_width=adjusment) 
     
     with results:
                     
