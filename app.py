@@ -354,7 +354,7 @@ if uploaded_file is not None:
                 color = settings.selectbox('Pick a category', 
                                                  categories, con_index)
              
-                chart = Viz.boxplot_2(df, categorical, numerical, color)
+                chart = Viz.boxplot(df, categorical, numerical, color)
                 #chart  = Viz.boxplot(df, categorical, numerical, color)
                 
         elif viz_type == 'Quantified proteins':
