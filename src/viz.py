@@ -100,10 +100,10 @@ class Viz:
         fitting = f'R2 = {round(R, 3)}'
 
         chart = px.scatter(
-                x=df[amount], 
-                y=df[lfq_method]),
-                color=df['Accession'],
-                hover_name=df['Accession'],
+                    x=df[amount], 
+                    y=df[lfq_method]),
+                    color=df['Accession'],
+                    hover_name=df['Accession'],
                     )
         
         return chart
