@@ -277,11 +277,6 @@ class alpaca:
                                  'Enriched_Condition': enrichment_type_dict[prepa[1]],
                                  'Subproteome': False}
         return preparation
-
-    def log_transform(df):
-        ibaq = [x for x in df.columns if 'iBAQ' in x]
-        df[ibaq] = np.log2(df[ibaq])
-        return df
     
     def abacus(ups2, concentration=0.5, in_sample=6.0, total_protein=10):
         
