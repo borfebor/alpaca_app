@@ -97,18 +97,29 @@ class Viz:
     def Regression(df, amount, lfq_method, R):
         
         fitting = f'R2 = {round(R, 3)}'
+
+        chart = go.Figure(data=go.Scatter(
+            x=df[amount], 
+            y=df[lfq_method], 
+            mode='markers', 
+            trendline="ols",
+            marker=dict(
+            color=np.random.randn(N),
+            colorscale='Viridis',
+            line_width=1
+        ))
             
-        reg = alt.Chart(df).mark_point().encode(
-                alt.X(amount,
-                      scale=alt.Scale(domain=(df[amount].min()-df[amount].std()/2,
-                                              df[amount].max()+df[amount].std()/2))),
-                alt.Y(lfq_method,
-                      scale=alt.Scale(domain=(df[lfq_method].min()-df[lfq_method].std()/2, 
-                                              df[lfq_method].max()+df[lfq_method].std()/2))),
-                ).properties(title=fitting, height=500)
+        #reg = alt.Chart(df).mark_point().encode(
+        #        alt.X(amount,
+        #              scale=alt.Scale(domain=(df[amount].min()-df[amount].std()/2,
+        #                                      df[amount].max()+df[amount].std()/2))),
+        #        alt.Y(lfq_method,
+        #              scale=alt.Scale(domain=(df[lfq_method].min()-df[lfq_method].std()/2, 
+        #                                      df[lfq_method].max()+df[lfq_method].std()/2))),
+        #        ).properties(title=fitting, height=500)
         
         
-        chart = reg + reg.transform_regression(amount, lfq_method).mark_line() 
+        #chart = reg + reg.transform_regression(amount, lfq_method).mark_line() 
         
         return chart
     
