@@ -10,4 +10,3 @@ openpyxl
 thefuzz
 python-Levenshtein
 plotly
-statsmodels
