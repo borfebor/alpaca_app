@@ -26,16 +26,6 @@ import seaborn as sns
 
 class Viz:
     
-    def boxplot(df, categorical, numerical, color):
-        
-        chart = alt.Chart(df).mark_boxplot(extent='min-max').encode(
-            x=categorical,
-            y=numerical,
-            color=color
-            )
-        
-        return chart
-    
     def identifications(df, categorical, color, grouper):
         
         df_grouped = df.groupby(grouper)['Accession'].nunique().reset_index()
@@ -58,7 +48,7 @@ class Viz:
         
         return chart
 
-    def boxplot_2(df, categorical, numerical, color, lfq_method='intensity'):
+    def boxplot(df, categorical, numerical, color, lfq_method='intensity'):
 
         pio.templates.default = "plotly_white"
     
