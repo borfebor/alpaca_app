@@ -57,6 +57,35 @@ class Viz:
         chart = bar + text
         
         return chart
+
+    def boxplot_2(df, categorical, color, grouper, lfq_method='intensity'):
+    
+        colores = df[color].unique()
+    
+        categories = df[categorical].unique()
+        
+        colors = dict(zip(colores, sns.color_palette('Set1', len(colores)).as_hex()))
+        
+        box = go.Figure()
+                
+        for num, group in enumerate(categories):
+            
+            color = [colors[key] for key in colors if key in group][0]
+            
+            print(group)
+            box.add_trace(go.Box(
+                        y=df[df[categorical] == group][numerical],
+                        x=[group] * len(df[df[categorical] == group][numerical]),
+                        name=group,
+                        fillcolor=color,
+                        line_color='#000000'
+                    ))
+            
+        box.update_layout(
+                yaxis_title=lfq_method,
+                hovermode="x",
+            )  
+        return box
     
     
     def Regression(df, amount, lfq_method, R):
