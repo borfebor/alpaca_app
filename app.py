@@ -421,7 +421,7 @@ if uploaded_file is not None:
             
             chart = Viz.heatmap(data, 'Sample','Protein',  numerical, z_score, color_scheme)
         
-         plot.altair_chart(chart, use_container_width=adjusment) 
+        plot.altair_chart(chart, use_container_width=adjusment) 
     
     with results:
                     
