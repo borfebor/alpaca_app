@@ -30,6 +30,27 @@ class Viz:
             )
         
         return chart
+
+    def box_2(df, categorical, numerical, color, lfq_method='intensity'):
+        
+        box = go.Figure()
+        
+        for num, group in enumerate(categorical):
+            
+            box.add_trace(go.Box(
+                        y=df.loc[group][numerical],
+                        x=group,
+                        name=group,
+                        fillcolor=color,
+                        line_color='#000000'
+                    ))
+            
+        box.update_layout(
+                yaxis_title=lfq_method,
+                hovermode="x",
+            )
+        
+        return box
     
     def identifications(df, categorical, color, grouper):
         
