@@ -101,8 +101,7 @@ class Viz:
 
         chart = px.scatter(df, 
                         x=df[amount], 
-                        y=df[lfq_method], 
-                        trendline="ols")
+                        y=df[lfq_method])
         
         return chart
     
