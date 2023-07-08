@@ -103,7 +103,6 @@ class Viz:
                     x=df[amount], 
                     y=df[lfq_method],
                     trendline='ols',
-                    trendline_options=dict(frac=0.1),
                     trendline_color_override='Black',
                     title = fitting,
                     hover_name=df['Accession'],
