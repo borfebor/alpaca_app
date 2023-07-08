@@ -101,12 +101,7 @@ class Viz:
         chart = px.scatter(df, 
                         x=df[amount], 
                         y=df[lfq_method], 
-                        trendline="ols", 
-                        marker=dict(
-                        color=np.random.randn(10000),
-                        colorscale='Viridis',
-                        line_width=1, 
-                        mode='markers'))
+                        trendline="ols")
         
         return chart
     
