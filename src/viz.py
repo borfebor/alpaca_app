@@ -109,6 +109,8 @@ class Viz:
                     labels={ 
                             "x": "fmol of standard (log2)",  "y": f"{lfq_method} (log2)",
                     },
+            width=800,
+            height=800
         )
         chart.update_traces(marker=dict(
                             color='LightSkyBlue',
