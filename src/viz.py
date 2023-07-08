@@ -100,7 +100,7 @@ class Viz:
             x=df[amount], 
             y=df[lfq_method], 
             mode='markers', 
-            trendline="ols",
+            line="ols",
             marker=dict(
             color=np.random.randn(10000),
             colorscale='Viridis',
