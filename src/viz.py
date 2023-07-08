@@ -84,7 +84,13 @@ class Viz:
         box.update_layout(
                 yaxis_title=lfq_method,
                 hovermode="x",
-            )  
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=1.02,
+                    xanchor="right",
+                    x=1
+            ))  
         return box
     
     
