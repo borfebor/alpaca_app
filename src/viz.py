@@ -100,7 +100,6 @@ class Viz:
         fitting = f'R2 = {round(R, 3)}'
 
         fig = go.Figure(data=go.Scatter(
-                df, 
                 x=df[amount], 
                 y=df[lfq_method])
                 mode='markers',
