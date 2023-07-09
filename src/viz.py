@@ -66,19 +66,27 @@ class Viz:
         colors = dict(zip(colores, sns.color_palette('Set3', len(colores)).as_hex()))
 
         box = go.Figure()
+        previous = ''
                 
         for num, group in enumerate(categories):
             
-            color = [colors[key] for key in colors if key in group][0]
+            color = [(colors[key], key) for key in colors if key in group][0]
+
+            if color[1] == previous:
+                legend=False
+            else:
+                legend=True
             
             print(group)
             box.add_trace(go.Box(
                         y=df[df[categorical] == group][numerical],
                         x=[group] * len(df[df[categorical] == group][numerical]),
                         name=group,
-                        fillcolor=color,
+                        fillcolor=color[0],
                         line_color='#000000'
+                        showlegend=legend
                     ))
+              previous = color[1]
             
         box.update_layout(
                 yaxis_title=lfq_method,
