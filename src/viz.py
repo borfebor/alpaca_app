@@ -55,8 +55,8 @@ class Viz:
                         x=1
                 ))  
         except:
-            
-            st.error(f'Oops! Apparently I cannot plot based on {(',').join(group for group in grouper)}', icon="🚨")
+            error_on = (',').join(group for group in grouper)
+            st.error(f'Oops! Apparently I cannot plot based on {error_on}', icon="🚨")
                 
         return chart
 
