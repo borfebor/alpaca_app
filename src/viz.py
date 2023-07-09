@@ -58,19 +58,13 @@ class Viz:
         return chart
 
     def boxplot(df, categorical, numerical, color):
-    
-        colores = df[color].unique()
-    
-        categories = df[categorical].unique()
-        
-        colors = dict(zip(colores, sns.color_palette('Set1', len(colores)).as_hex()))
         
         box = px.box(df,
                     y=numerical,
                     x=categorical,
-                    #color=color,
+                    color=color,
                     color_discrete_sequence=px.colors.qualitative.T10,
-                    ).update_traces(marker_line_width=2,)
+                    ).update_traces(marker_line_width=2, width=2)
             
         box.update_layout(
                 yaxis_title=numerical,
