@@ -43,7 +43,7 @@ class Viz:
                       text_auto=True,
                       #line_color='#000000',
                       color_discrete_sequence=px.colors.qualitative.T10,
-                      ).update_traces(marker_line_width=2,)
+                      ).update_traces(marker_line_width=2)
         chart.update_layout(
                 yaxis_title='ID proteins',
                 hovermode="x",
@@ -65,7 +65,7 @@ class Viz:
                     color=color,
                     color_discrete_sequence=px.colors.qualitative.T10,
                     ).update_traces(marker_line_width=2, width=0.8, 
-                                   line=dict(width=2))
+                                   line=dict(width=2), line_color='#000000')
             
         box.update_layout(
                 yaxis_title=numerical,
