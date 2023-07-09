@@ -34,9 +34,9 @@ class Viz:
         colores = df[color].unique()
             
         colors = dict(zip(colores, sns.color_palette('Set1', len(colores)).as_hex()))
-            
-        df_grouped = df.groupby(grouper)['Accession'].nunique().reset_index()
-        try:   
+        try: 
+            df_grouped = df.groupby(grouper)['Accession'].nunique().reset_index()
+  
             chart = px.bar(df_grouped, 
                            y='Accession', x=categorical,
                           color=color,
@@ -56,7 +56,7 @@ class Viz:
                 ))  
         except:
             error_on = (',').join(group for group in grouper)
-            st.error(f'Oops! Apparently I cannot plot based on {error_on}', icon="🚨")
+            st.error(f'Oops! Apparently I cannot plot based on the given categories ({error_on})', icon="🚨")
                 
         return chart
 
