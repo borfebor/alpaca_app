@@ -43,10 +43,10 @@ class Viz:
                 hovermode="x",
                 legend=dict(
                     orientation="h",
-                    yanchor="bottom",
+                    yanchor="top",
                     y=1.0,
                     xanchor="center",
-                    x=1
+                    x=0
             ))  
         
         return chart
