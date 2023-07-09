@@ -30,30 +30,34 @@ import statsmodels.api as sm
 class Viz:
     
     def identifications(df, categorical, color, grouper):
-
+        
         colores = df[color].unique()
-        
+            
         colors = dict(zip(colores, sns.color_palette('Set1', len(colores)).as_hex()))
-        
+            
         df_grouped = df.groupby(grouper)['Accession'].nunique().reset_index()
-        
-        chart = px.bar(df_grouped, 
-                       y='Accession', x=categorical,
-                      color=color,
-                      text_auto=True,
-                      #line_color='#000000',
-                      color_discrete_sequence=px.colors.qualitative.Set3,
-                      ).update_traces(marker_line_width=2)
-        chart.update_layout(
-                yaxis_title='ID proteins',
-                hovermode="x",
-                legend=dict(
-                    orientation="h",
-                    yanchor="bottom",
-                    y=1.2,
-                    xanchor="right",
-                    x=1
-            ))  
+        try:   
+            chart = px.bar(df_grouped, 
+                           y='Accession', x=categorical,
+                          color=color,
+                          text_auto=True,
+                          #line_color='#000000',
+                          color_discrete_sequence=px.colors.qualitative.Set3,
+                          ).update_traces(marker_line_width=2)
+            chart.update_layout(
+                    yaxis_title='ID proteins',
+                    hovermode="x",
+                    legend=dict(
+                        orientation="h",
+                        yanchor="bottom",
+                        y=1.2,
+                        xanchor="right",
+                        x=1
+                ))  
+        except:
+            
+            st.error(f'Oops! Apparently I cannot plot based on {(,).join(group for group in grouper)}', icon="🚨")
+                
         
         return chart
 
