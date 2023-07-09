@@ -50,7 +50,7 @@ class Viz:
                 legend=dict(
                     orientation="h",
                     yanchor="bottom",
-                    y=2.0,
+                    y=1.2,
                     xanchor="right",
                     x=1
             ))  
