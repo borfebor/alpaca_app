@@ -65,7 +65,7 @@ class Viz:
                     color=color,
                     color_discrete_sequence=px.colors.qualitative.T10,
                     ).update_traces(marker_line_width=2, width=1, 
-                                   line=dict(width=2, color='Black')
+                                   line=dict(width=2, color='Black'))
             
         box.update_layout(
                 yaxis_title=numerical,
