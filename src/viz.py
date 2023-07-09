@@ -45,7 +45,7 @@ class Viz:
                     orientation="h",
                     yanchor="bottom",
                     y=1.0,
-                    xanchor="center",
+                    xanchor="left",
                     x=1
             ))  
         
