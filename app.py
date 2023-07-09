@@ -50,6 +50,8 @@ if uploaded_file is not None:
 
     # Can be used wherever a "file-like" object is accepted:
     df = alpaca.eats(uploaded_file)
+
+    aid =  st.empty()
      
     st.sidebar.header('Data preprocessing')
     cleaning = st.sidebar.checkbox('Data cleaning', value=True)
@@ -95,7 +97,7 @@ if uploaded_file is not None:
         
         custom_std = st.sidebar.file_uploader('Upload your custom standards')
         if custom_std == None:
-          st.markdown("""
+          aid.markdown("""
                ## Welcome to the Custom Standards assistant 🤖
 
                You can upload the used standards at the bottom of the sidebar, an uploader just poped up there. Just a few things to consider:
@@ -167,8 +169,8 @@ if uploaded_file is not None:
                                                            added_samples=replicate, valid_values=2,
                                                            save=False)   
     except:
-        st.warning("Couldn't find the quantification standards")
-        st.markdown("""
+        aid.warning("Couldn't find the quantification standards")
+        aid.markdown("""
                ## Hi, I'm your Quantification Standards assistant 🤖
 
                Check that on the bottom part of the sidebar if the right standards are selected.
@@ -189,7 +191,6 @@ if uploaded_file is not None:
                
                > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification (e.g. Molecular wight (Da)).
                """)
-        #st.stop()
     
     with experimenter:
 
