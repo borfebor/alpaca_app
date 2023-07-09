@@ -44,9 +44,9 @@ class Viz:
                 legend=dict(
                     orientation="h",
                     yanchor="bottom",
-                    y=0.0,
+                    y=1.0,
                     xanchor="center",
-                    x=0
+                    x=1
             ))  
         
         return chart
