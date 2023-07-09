@@ -138,6 +138,14 @@ class Viz:
                             line=dict(width=2,
                                     color='DarkSlateGrey')),
                   selector=dict(mode='markers'))
+        chart.add_shape(type="circle",
+                xref=x, yref=y,
+                x0=min(x1), y0=min(y1),
+                x1=max(x1), y1=max(y1),
+                opacity=0.2,
+                fillcolor="orange",
+                line_color="orange",
+            )
 
         chart.update_layout(
                 xaxis_title=name[0],
