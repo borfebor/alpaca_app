@@ -135,6 +135,7 @@ class Viz:
         )
         
         chart.update_traces(marker=dict(
+                            color='Condition',
                             size=8,
                             line=dict(width=2,
                                     color='DarkSlateGrey')),
