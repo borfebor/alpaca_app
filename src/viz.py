@@ -243,7 +243,7 @@ class Viz:
             chart = px.imshow(hm,
                               text_auto=True, aspect="auto",
                              color_continuous_scale=color_scheme)
-         except:
+        except:
             chart = f'Sorry :( This is a bit embarrassing but something went wrong'
 
         return chart
