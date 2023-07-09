@@ -477,6 +477,6 @@ if uploaded_file is not None:
                    help='Here you can download your results',
                    use_container_width=True,
                )
-         except:
+          except:
                st.stop()
      
