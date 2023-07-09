@@ -445,9 +445,9 @@ if uploaded_file is not None:
         except:
              plot.error(chart, icon="🚨")
     
-     if 'data' in globals():
+
      
-          with results:
+     with results:
      
                   c1, c2, c3 = results.columns([1, 2, 3])
                   
@@ -478,6 +478,5 @@ if uploaded_file is not None:
                         help='Here you can download your results',
                         use_container_width=True,
                     )
-     else:
-               st.stop()
+
      
