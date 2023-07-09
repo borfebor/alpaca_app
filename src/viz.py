@@ -37,7 +37,7 @@ class Viz:
                        y='Accession', x=categorical,
                       color=color,
                       text_auto=True
-                      ).update_traces(marker_line_width=1)
+                      ).update_traces(marker_line_width=2,)
         chart.update_layout(
                 yaxis_title='ID proteins',
                 hovermode="x",
