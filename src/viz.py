@@ -142,7 +142,7 @@ class Viz:
                    facet_col="Condition",
                    facet_row='Replicate',
                    nbins=25,
-                   barmode='overlay')
+                   barmode='overlay').update_traces(marker_line_width=2)
         chart.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
         chart.update_layout(
