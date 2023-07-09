@@ -128,13 +128,11 @@ class Viz:
                     x=x, 
                     y=y,
                     color='Condition',
-                    text='Condition',
             width=500,
             height=600
         )
         
-        chart.update_traces(textposition="bottom right",
-                            marker=dict(
+        chart.update_traces(marker=dict(
                             size=10,
                             line=dict(width=2,
                                     color='DarkSlateGrey')),
