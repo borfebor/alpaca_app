@@ -76,7 +76,7 @@ class Viz:
                         y=df[df[categorical] == group][numerical],
                         x=[group] * len(df[df[categorical] == group][numerical]),
                         name=group,
-                        fillcolor=colors[num],
+                        fillcolor=color,
                         line_color='#000000'
                     ))
             
