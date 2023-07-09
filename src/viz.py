@@ -229,7 +229,8 @@ class Viz:
         hm = df.pivot_table(columns=y, index=x, values=c)
 
         chart = px.imshow(hm,
-                          text_auto=True, aspect="auto")
+                          text_auto=True, aspect="auto",
+                         color_continuous_scale=color_scheme)
         
 
         return chart
