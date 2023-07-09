@@ -58,7 +58,6 @@ class Viz:
             
             st.error(f'Oops! Apparently I cannot plot based on {(',').join(group for group in grouper)}', icon="🚨")
                 
-        
         return chart
 
     def boxplot(df, categorical, numerical, color, lfq_method='Intensity'):
