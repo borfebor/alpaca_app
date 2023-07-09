@@ -69,8 +69,7 @@ class Viz:
                     x=group,
                     name=color,
                     color_discrete_sequence=px.colors.qualitative.T10,
-                    ))
-            
+                    )
             
         box.update_layout(
                 yaxis_title=numerical,
