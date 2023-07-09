@@ -130,7 +130,11 @@ class Viz:
                     color='Condition',
             width=500,
             height=600
-        )
+        ).update_xaxes(
+                zeroline=True,
+            ).update_yaxes(
+                zeroline=True,
+            )
         
         chart.update_traces(marker=dict(
                             size=10,
