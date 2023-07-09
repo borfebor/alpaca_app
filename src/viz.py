@@ -67,7 +67,6 @@ class Viz:
         box = px.box(df,
                     y=numerical,
                     x=categorical,
-                    name=color,
                     color_discrete_sequence=px.colors.qualitative.T10,
                     )
             
