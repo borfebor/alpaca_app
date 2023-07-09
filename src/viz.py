@@ -130,6 +130,7 @@ class Viz:
         chart = px.scatter(df,
                     x=df[x], 
                     y=df[y],
+                    color=columns,
             width=500,
             height=600
         )
