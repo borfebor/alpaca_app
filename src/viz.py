@@ -64,7 +64,7 @@ class Viz:
                     x=categorical,
                     color=color,
                     color_discrete_sequence=px.colors.qualitative.Set3,
-                    ).update_traces(marker_line_width=2, width=0.8, box_line_color='black',
+                    ).update_traces(marker_line_width=2, width=0.8,
                                    line=dict(width=2))
             
         box.update_layout(
