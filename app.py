@@ -422,8 +422,20 @@ if uploaded_file is not None:
                                            numbers, lfq_index)
             
             color_scheme = settings.selectbox('Colour scheme', 
-                                           ['redblue', 'blueorange', 'spectral', 'tealblues', 'purples', 
-                                            'lightorange', 'lighttealblue'], 0)
+                                           ['aggrnyl', 'agsunset', 'algae', 'amp', 'armyrose', 'balance',
+                                            'blackbody', 'bluered', 'blues', 'blugrn', 'bluyl', 'brbg',
+                                            'brwnyl', 'bugn', 'bupu', 'burg', 'burgyl', 'cividis', 'curl',
+                                            'darkmint', 'deep', 'delta', 'dense', 'earth', 'edge', 'electric',
+                                            'emrld', 'fall', 'geyser', 'gnbu', 'gray', 'greens', 'greys',
+                                            'haline', 'hot', 'hsv', 'ice', 'icefire', 'inferno', 'jet',
+                                            'magenta', 'magma', 'matter', 'mint', 'mrybm', 'mygbm', 'oranges',
+                                            'orrd', 'oryel', 'oxy', 'peach', 'phase', 'picnic', 'pinkyl',
+                                            'piyg', 'plasma', 'plotly3', 'portland', 'prgn', 'pubu', 'pubugn',
+                                            'puor', 'purd', 'purp', 'purples', 'purpor', 'rainbow', 'rdbu',
+                                            'rdgy', 'rdpu', 'rdylbu', 'rdylgn', 'redor', 'reds', 'solar',
+                                            'spectral', 'speed', 'sunset', 'sunsetdark', 'teal', 'tealgrn',
+                                             'tealrose', 'tempo', 'temps', 'thermal', 'tropic', 'turbid',
+                                            'turbo', 'twilight', 'viridis', 'ylgn', 'ylgnbu', 'ylorbr','ylorrd']], 0)
             
             chart = Viz.heatmap(data, 'Sample','Protein',  numerical, z_score, color_scheme)
 
