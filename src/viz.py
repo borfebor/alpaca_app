@@ -59,13 +59,31 @@ class Viz:
 
     def boxplot(df, categorical, numerical, color):
         
-        box = px.box(df,
-                    y=numerical,
-                    x=categorical,
-                    color=color,
-                    color_discrete_sequence=px.colors.qualitative.Set3,
-                    ).update_traces(marker_line_width=2, width=0.8,
-                                   line=dict(width=2, color='rgb(7,40,89)'))
+        colores = df[color].unique()
+
+        categories = df[categorical].unique()
+        
+        colors = dict(zip(colores, sns.color_palette('Set3', len(colores)).as_hex()))
+
+        box = go.Figure()
+                
+        for num, group in enumerate(categories):
+            
+            color = [colors[key] for key in colors if key in group][0]
+            
+            print(group)
+            box.add_trace(go.Box(
+                        y=df[df[categorical] == group][numerical],
+                        x=[group] * len(df[df[categorical] == group][numerical]),
+                        name=group,
+                        fillcolor=color,
+                        line_color='#000000'
+                    ))
+            
+        box.update_layout(
+                yaxis_title=lfq_method,
+                hovermode="x",
+            )
             
         box.update_layout(
                 yaxis_title=numerical,
