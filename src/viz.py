@@ -30,6 +30,10 @@ import statsmodels.api as sm
 class Viz:
     
     def identifications(df, categorical, color, grouper):
+
+        colores = df[color].unique()
+        
+        colors = dict(zip(colores, sns.color_palette('Set1', len(colores)).as_hex()))
         
         df_grouped = df.groupby(grouper)['Accession'].nunique().reset_index()
         
@@ -37,6 +41,7 @@ class Viz:
                        y='Accession', x=categorical,
                       color=color,
                       text_auto=True
+                      color_discrete_sequence=px.colors.qualitative.G10,
                       ).update_traces(marker_line_width=2,)
         chart.update_layout(
                 yaxis_title='ID proteins',
