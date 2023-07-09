@@ -107,8 +107,7 @@ class Viz:
                         x=1
                 )) 
         except:
-            error_on = (',').join(group for group in grouper)
-            box = f'Oops! Apparently I cannot plot based on the given categories ({error_on})'
+            box = f'Oops! Apparently I cannot plot based on {categorical}'
         return box
     
     
