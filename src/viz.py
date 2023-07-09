@@ -128,6 +128,7 @@ class Viz:
                     x=x, 
                     y=y,
                     color='Condition',
+                    text='Condition',
             width=500,
             height=600
         )
