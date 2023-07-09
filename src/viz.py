@@ -147,7 +147,8 @@ class Viz:
                     # Quadratic Bezier Curves
                     dict(type="path",
                                  path="M 4,4 Q 6,0 8,4",
-                                 row=1, col="all", line_color="green"
+                                 fillcolor="PaleTurquoise",
+                                 line_color="LightSeaGreen",
                         )])
 
         chart.update_layout(
