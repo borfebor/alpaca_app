@@ -56,7 +56,7 @@ class Viz:
                 ))  
         except:
             error_on = (',').join(group for group in grouper)
-            st.error(f'Oops! Apparently I cannot plot based on the given categories ({error_on})', icon="🚨")
+            chart = f'Oops! Apparently I cannot plot based on the given categories ({error_on})'
                 
         return chart
 
