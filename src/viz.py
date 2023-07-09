@@ -128,6 +128,7 @@ class Viz:
                     x=x, 
                     y=y,
                     color='Condition',
+                    symbol="Condition",
                     color_discrete_sequence=px.colors.qualitative.Safe,
             width=500,
             height=600
