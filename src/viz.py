@@ -132,8 +132,10 @@ class Viz:
             height=600
         ).update_xaxes(
                 zeroline=True,
+                color='#00000'
             ).update_yaxes(
                 zeroline=True,
+                color='#00000'
             )
         
         chart.update_traces(marker=dict(
