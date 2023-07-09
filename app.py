@@ -332,7 +332,7 @@ if uploaded_file is not None:
             plots.append('Enrichment')
             
         viz_type = settings.selectbox('What would you like to inspect?', 
-                                plots, 0)
+                                plots, 1)
         
         adjusment = settings.checkbox('Adjust plot to the container', True)
         
