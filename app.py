@@ -447,7 +447,7 @@ if uploaded_file is not None:
     
 
      
-     with results:
+      with results:
      
                   c1, c2, c3 = results.columns([1, 2, 3])
                   
