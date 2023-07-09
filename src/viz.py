@@ -57,7 +57,7 @@ class Viz:
         
         return chart
 
-    def boxplot(df, categorical, numerical, color):
+    def boxplot(df, categorical, numerical, color, lfq_method='Intensity'):
         
         colores = df[color].unique()
 
