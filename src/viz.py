@@ -83,7 +83,7 @@ class Viz:
                         x=[group] * len(df[df[categorical] == group][numerical]),
                         name=group,
                         fillcolor=color[0],
-                        line_color='#000000'
+                        line_color='#000000',
                         showlegend=legend
                     ))
               previous = color[1]
