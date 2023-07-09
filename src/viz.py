@@ -143,6 +143,16 @@ class Viz:
                    nbins=25,
                    barmode='overlay')
         chart.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
+
+        chart.update_layout(
+                hovermode="x",
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=1.2,
+                    xanchor="right",
+                    x=1
+            ))
         
         return chart
     
