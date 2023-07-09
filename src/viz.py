@@ -46,6 +46,7 @@ class Viz:
                           ).update_traces(marker_line_width=2)
             chart.update_layout(
                     yaxis_title='ID proteins',
+                    xaxis_title=None,
                     hovermode="x",
                     legend=dict(
                         orientation="h",
@@ -98,6 +99,7 @@ class Viz:
                 
             box.update_layout(
                     yaxis_title=numerical,
+                    xaxis_title=None,
                     hovermode="x",
                     legend=dict(
                         orientation="h",
