@@ -41,7 +41,7 @@ class Viz:
                        y='Accession', x=categorical,
                       color=color,
                       text_auto=True,
-                      line_color='#000000',
+                      #line_color='#000000',
                       color_discrete_sequence=px.colors.qualitative.T10,
                       ).update_traces(marker_line_width=2,)
         chart.update_layout(
