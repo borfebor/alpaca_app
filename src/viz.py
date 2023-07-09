@@ -138,6 +138,7 @@ class Viz:
                    x=lfq_method, 
                    color="Condition",
                    hover_data=df.columns,
+                   color_discrete_sequence=px.colors.qualitative.Set3, 
                    facet_col="Condition",
                    facet_row='Replicate',
                    nbins=25,
