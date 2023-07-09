@@ -194,8 +194,8 @@ class Viz:
                       selector=dict(mode='markers'))
     
             chart.update_layout(
-                    xaxis_title=name[x[-1]],
-                    yaxis_title=name[y[-1]],
+                    xaxis_title=name[int(x[-1])-1],
+                    yaxis_title=name[int(y[-1])-1],
                     legend=dict(
                         orientation="h",
                         yanchor="bottom",
