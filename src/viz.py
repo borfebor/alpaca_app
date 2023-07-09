@@ -42,7 +42,7 @@ class Viz:
                       color=color,
                       text_auto=True,
                       #line_color='#000000',
-                      color_discrete_sequence=px.colors.qualitative.T10,
+                      color_discrete_sequence=px.colors.qualitative.Safe,
                       ).update_traces(marker_line_width=2)
         chart.update_layout(
                 yaxis_title='ID proteins',
@@ -63,7 +63,7 @@ class Viz:
                     y=numerical,
                     x=categorical,
                     color=color,
-                    color_discrete_sequence=px.colors.qualitative.T10,
+                    color_discrete_sequence=px.colors.qualitative.Safe,
                     ).update_traces(marker_line_width=2, width=0.8, 
                                    line=dict(width=2))
             
@@ -128,7 +128,7 @@ class Viz:
                     x=x, 
                     y=y,
                     color='Condition',
-                    color_discrete_sequence=px.colors.qualitative.T10,
+                    color_discrete_sequence=px.colors.qualitative.Safe,
             width=500,
             height=600
             ).update_xaxes(
