@@ -78,6 +78,7 @@ class Viz:
                 legend=True
             
             print(group)
+            previous = color[1]
             box.add_trace(go.Box(
                         y=df[df[categorical] == group][numerical],
                         x=[group] * len(df[df[categorical] == group][numerical]),
@@ -86,8 +87,7 @@ class Viz:
                         line_color='#000000',
                         showlegend=legend
                     ))
-              previous = color[1]
-            
+  
         box.update_layout(
                 yaxis_title=lfq_method,
                 hovermode="x",
