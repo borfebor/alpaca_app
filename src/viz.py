@@ -133,7 +133,8 @@ class Viz:
             height=600
         )
         
-        chart.update_traces(marker=dict(
+        chart.update_traces(textposition="bottom right",
+                            marker=dict(
                             size=10,
                             line=dict(width=2,
                                     color='DarkSlateGrey')),
