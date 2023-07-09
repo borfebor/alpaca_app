@@ -226,7 +226,10 @@ class Viz:
         quant_50 = source[c].quantile(0.5)
         quant_25 = source[c].quantile(0.25)
 
-        chart = px.imshow(df[c], text_auto=True, aspect="auto")
+        chart = px.imshow(source[c],
+                          x=source[x],
+                          y=source[y],
+                          text_auto=True, aspect="auto")
         
 
         return chart
