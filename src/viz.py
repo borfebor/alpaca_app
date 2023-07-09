@@ -82,7 +82,7 @@ class Viz:
             box.add_trace(go.Box(
                         y=df[df[categorical] == group][numerical],
                         x=[group] * len(df[df[categorical] == group][numerical]),
-                        name=group,
+                        name=color[0],
                         fillcolor=color[0],
                         line_color='#000000',
                         showlegend=legend
