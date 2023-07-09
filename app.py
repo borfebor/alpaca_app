@@ -420,9 +420,8 @@ if uploaded_file is not None:
             
             numerical = settings.selectbox('Value to plot', 
                                            numbers, lfq_index)
-            
-            color_scheme = settings.selectbox('Colour scheme', 
-                                           ['aggrnyl', 'agsunset', 'algae', 'amp', 'armyrose', 'balance',
+
+            hm_palettes = ['aggrnyl', 'agsunset', 'algae', 'amp', 'armyrose', 'balance',
                                             'blackbody', 'bluered', 'blues', 'blugrn', 'bluyl', 'brbg',
                                             'brwnyl', 'bugn', 'bupu', 'burg', 'burgyl', 'cividis', 'curl',
                                             'darkmint', 'deep', 'delta', 'dense', 'earth', 'edge', 'electric',
@@ -435,7 +434,10 @@ if uploaded_file is not None:
                                             'rdgy', 'rdpu', 'rdylbu', 'rdylgn', 'redor', 'reds', 'solar',
                                             'spectral', 'speed', 'sunset', 'sunsetdark', 'teal', 'tealgrn',
                                              'tealrose', 'tempo', 'temps', 'thermal', 'tropic', 'turbid',
-                                            'turbo', 'twilight', 'viridis', 'ylgn', 'ylgnbu', 'ylorbr','ylorrd']], 0)
+                                            'turbo', 'twilight', 'viridis', 'ylgn', 'ylgnbu', 'ylorbr','ylorrd']
+            
+            color_scheme = settings.selectbox('Colour scheme', 
+                                         hm_palettes , hm_palettes.index('rdbu'))
             
             chart = Viz.heatmap(data, 'Sample','Protein',  numerical, z_score, color_scheme)
 
