@@ -146,7 +146,7 @@ class Viz:
                 shapes=[
                     # Quadratic Bezier Curves
                     dict(type="path",
-                                 path="M 4,4 Q 6,0 8,4",
+                                 path=" M 3,7 L2,8 L2,9 L3,10, L4,10 L5,9 L5,8 L4,7 Z",
                                  fillcolor="PaleTurquoise",
                                  line_color="LightSeaGreen",
                         )])
