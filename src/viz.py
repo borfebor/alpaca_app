@@ -40,7 +40,7 @@ class Viz:
         chart.update_layout(
                 yaxis_title='ID proteins',
                 hovermode="x",
-                barmode='group',
+                #barmode='group',
                 legend=dict(
                     orientation="h",
                     yanchor="bottom",
