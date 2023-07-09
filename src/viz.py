@@ -107,15 +107,11 @@ class Viz:
         return chart
     
     def displot(df, lfq_method):
-    
-        chart = alt.Chart(df).mark_bar(
-            opacity=0.3,
-            binSpacing=0
-        ).encode(
-            alt.X(lfq_method, bin=alt.Bin(maxbins=100)),
-            alt.Y('count()', stack=None),
-            alt.Color('Sample:N')
-            )
+
+        chart = px.histogram(df, 
+                   x="lfq_method", y=lfq_method, color="Sample",
+                   marginal="box", # or violin, rug
+                   hover_data=df.columns)
         
         return chart
     
