@@ -445,7 +445,8 @@ if uploaded_file is not None:
         except:
              plot.error(chart, icon="🚨")
     
-
+    if 'data' not in globals():
+         st.stop()
      
     with results:
      
