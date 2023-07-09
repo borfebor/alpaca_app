@@ -128,6 +128,7 @@ class Viz:
                     x=x, 
                     y=y,
                     color='Condition',
+                    fill="toself",
             width=500,
             height=600
         )
@@ -141,7 +142,6 @@ class Viz:
         chart.update_layout(
                 xaxis_title=name[0],
                 yaxis_title=name[1],
-                hovermode="x",
                 legend=dict(
                     orientation="h",
                     yanchor="bottom",
