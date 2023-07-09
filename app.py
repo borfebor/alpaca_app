@@ -446,34 +446,37 @@ if uploaded_file is not None:
              plot.error(chart, icon="🚨")
     
     with results:
-                    
-        c1, c2, c3 = results.columns([1, 2, 3])
         
-        if c1.checkbox('Pivot table'):
-        
-            data = alpaca.pivoter(data)
-            
-        select_cols = [col for col in data.select_dtypes(exclude=np.number)]
-            
-        look_on = c2.selectbox('Search based on', select_cols)
+        try:            
+             c1, c2, c3 = results.columns([1, 2, 3])
+             
+             if c1.checkbox('Pivot table'):
+             
+                 data = alpaca.pivoter(data)
+                 
+             select_cols = [col for col in data.select_dtypes(exclude=np.number)]
+                 
+             look_on = c2.selectbox('Search based on', select_cols)
+          
+             query = c3.multiselect('Search term (e.g., TrxA, Erv1, Cox1)', data[look_on].unique(),
+                                    default=[])
+             
+             if query != []:
+                 
+                 data = data[data[look_on].isin(query)]
+             
+             export_results = data.to_csv(sep='\t').encode('utf-8')
+             
+             data_frame.dataframe(data, use_container_width=True)   
+             
+             c1.download_button(
+                   label="Download results",
+                   data=export_results,
+                   file_name='alpaca_results.txt',
+                   mime='text/csv',
+                   help='Here you can download your results',
+                   use_container_width=True,
+               )
+         except:
+               st.stop()
      
-        query = c3.multiselect('Search term (e.g., TrxA, Erv1, Cox1)', data[look_on].unique(),
-                               default=[])
-        
-        if query != []:
-            
-            data = data[data[look_on].isin(query)]
-        
-        export_results = data.to_csv(sep='\t').encode('utf-8')
-        
-        data_frame.dataframe(data, use_container_width=True)   
-        
-        c1.download_button(
-              label="Download results",
-              data=export_results,
-              file_name='alpaca_results.txt',
-              mime='text/csv',
-              help='Here you can download your results',
-              use_container_width=True,
-          )
-
