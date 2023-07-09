@@ -128,9 +128,10 @@ class Viz:
                     x=x, 
                     y=y,
                     color='Condition',
+                    color_discrete_sequence=px.colors.qualitative.T10,
             width=500,
             height=600
-        ).update_xaxes(
+            ).update_xaxes(
                 zeroline=True,
                 color='black'
             ).update_yaxes(
@@ -143,19 +144,6 @@ class Viz:
                             line=dict(width=2,
                                     color='DarkSlateGrey')),
                   selector=dict(mode='markers'))
-
-        for condition in df['Condition'].unique():
-
-            traces = df[df['Condition'] == condition]
-
-            chart.update_layout(
-                shapes=[
-                    # Quadratic Bezier Curves
-                    dict(type="path",
-                                 path=" M 3,7 L2,8 L2,9 L3,10, L4,10 L5,9 L5,8 L4,7 Z",
-                                 fillcolor="PaleTurquoise",
-                                 line_color="LightSeaGreen",
-                        )])
 
         chart.update_layout(
                 xaxis_title=name[0],
@@ -175,7 +163,7 @@ class Viz:
         data['z_score'] = np.nan
     
         for sample in data.Sample.unique():
-    
+            
             value = data[data.Sample == sample][intensity_method]
             mean = value.mean()
             sd = value.std()
