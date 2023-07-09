@@ -128,7 +128,6 @@ class Viz:
                     x=x, 
                     y=y,
                     color='Condition',
-                    fill="toself",
             width=500,
             height=600
         )
