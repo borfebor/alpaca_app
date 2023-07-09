@@ -56,7 +56,7 @@ class Viz:
                 ))  
         except:
             
-            st.error(f'Oops! Apparently I cannot plot based on {(,).join(group for group in grouper)}', icon="🚨")
+            st.error(f'Oops! Apparently I cannot plot based on {(',').join(group for group in grouper)}', icon="🚨")
                 
         
         return chart
