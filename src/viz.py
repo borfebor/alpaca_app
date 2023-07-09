@@ -116,6 +116,7 @@ class Viz:
                    facet_row='Replicate',
                    nbins=25,
                    barmode='overlay')
+        chart.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
         
         return chart
     
