@@ -169,7 +169,7 @@ class Viz:
     
     def scatter(df, x, y, variance, columns):
         try: 
-            name = [f'PC{var[0]+1} ({100*round(var[1],2)} %)' for var in enumerate(variance) if (x or y) in var[1]]
+            name = [f'PC{var[0]+1} ({100*round(var[1],2)} %)' for var in enumerate(variance)]
     
             chart = px.scatter(df,
                         x=x, 
@@ -194,8 +194,8 @@ class Viz:
                       selector=dict(mode='markers'))
     
             chart.update_layout(
-                    xaxis_title=name[0],
-                    yaxis_title=name[1],
+                    #xaxis_title=name[0],
+                    #yaxis_title=name[1],
                     legend=dict(
                         orientation="h",
                         yanchor="bottom",
