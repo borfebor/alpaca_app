@@ -141,11 +141,14 @@ class Viz:
         for condition in df['Condition'].unique():
 
             traces = df[df['Condition'] == condition]
-            chart.add_shape(
+
+            chart.update_layout(
+                shapes=[
+                    # Quadratic Bezier Curves
                     dict(type="path",
-                         path="M 4,4 Q 6,0 8,4",
-                         row=1, col="all", line_color="green"
-                )
+                                 path="M 4,4 Q 6,0 8,4",
+                                 row=1, col="all", line_color="green"
+                        )
 
         chart.update_layout(
                 xaxis_title=name[0],
