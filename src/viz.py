@@ -44,7 +44,7 @@ class Viz:
                     yanchor="bottom",
                     y=1.0,
                     xanchor="right",
-                    x=1
+                    x=0
             ))  
         
         return chart
