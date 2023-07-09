@@ -225,16 +225,8 @@ class Viz:
         quant_75 = source[c].quantile(0.75)
         quant_50 = source[c].quantile(0.5)
         quant_25 = source[c].quantile(0.25)
+
+        chart = px.imshow(df[c], text_auto=True, aspect="auto")
         
-        chart = alt.Chart(source).mark_rect().encode(
-            alt.X(x),
-            alt.Y(y),
-            alt.Color(c, scale=alt.Scale(
-            domain=[quant_25,quant_50,quant_75], 
-            scheme=color_scheme, 
-            #interpolate=method
-            ),
-        legend=alt.Legend(direction='horizontal', orient='top', title=None)
-        )
-        )
+
         return chart
