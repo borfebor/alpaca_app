@@ -33,21 +33,7 @@ class Viz:
         
         df_grouped = df.groupby(grouper)['Accession'].nunique().reset_index()
         
-        
-        bar = alt.Chart(df_grouped).mark_bar().encode(
-            y = alt.Y(categorical),
-            x = alt.X('Accession:Q'),
-            color = color
-            )
-        
-        text = alt.Chart(df_grouped).mark_text(dx=-15, dy=3, color='white').encode(
-                x=alt.X('Accession:Q'),
-                y=alt.Y(categorical),
-                #detail='site:N',
-                text=alt.Text('Accession:Q', format='.0f')
-            )
-        
-        chart = bar + text
+        chart = px.bar(df, x='Accession', y=grouper)
         
         return chart
 
