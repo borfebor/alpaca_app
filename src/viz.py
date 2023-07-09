@@ -69,8 +69,8 @@ class Viz:
                     y=numerical,
                     x=categorical,
                     color=color,
-                    color_discrete_sequence=px.colors.qualitative.T10,
-                    )#.update_traces(marker_line_width=2,)
+                   # color_discrete_sequence=px.colors.qualitative.T10,
+                    ).update_traces(marker_line_width=2,)
             
         box.update_layout(
                 yaxis_title=numerical,
