@@ -109,10 +109,13 @@ class Viz:
     def displot(df, lfq_method):
 
         chart = px.histogram(df, 
-                           x=lfq_method,  
-                           color="Sample",
-                           marginal="box", # or violin, rug
-                           hover_data=df.columns)
+                   x=lfq_method, 
+                   color="Condition",
+                   hover_data=df.columns,
+                   facet_col="Condition",
+                   facet_row='Replicate',
+                   nbins=25,
+                   barmode='overlay')
         
         return chart
     
