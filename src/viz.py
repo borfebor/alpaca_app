@@ -148,7 +148,7 @@ class Viz:
                     dict(type="path",
                                  path="M 4,4 Q 6,0 8,4",
                                  row=1, col="all", line_color="green"
-                        ))
+                        )])
 
         chart.update_layout(
                 xaxis_title=name[0],
