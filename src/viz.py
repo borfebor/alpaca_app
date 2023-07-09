@@ -125,14 +125,21 @@ class Viz:
         name = [f'PC{var[0]+1} ({100*round(var[1],2)} %)' for var in enumerate(variance)]
         
         pos_x = columns.index(x)
-        pos_y = columns.index(y)       
-    
-        chart = alt.Chart(df).mark_circle(size=60).encode(
-            x=alt.X(x, axis=alt.Axis(title=name[pos_x])),
-            y=alt.Y(y, axis=alt.Axis(title=name[pos_y])),
-            color='Condition',
-            tooltip='Sample'
-            ).interactive()
+        pos_y = columns.index(y)
+
+        chart = px.scatter(df,
+                    x=df[x], 
+                    y=df[y],
+                    },
+            width=500,
+            height=600
+        )
+        
+        chart.update_traces(marker=dict(
+                            size=8,
+                            line=dict(width=2,
+                                    color='DarkSlateGrey')),
+                  selector=dict(mode='markers'))
         
         return chart
     
