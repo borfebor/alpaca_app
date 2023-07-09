@@ -36,6 +36,16 @@ class Viz:
         chart = px.bar(df_grouped, 
                        y='Accession', x=categorical,
                       color=color)
+        chart.update_layout(
+                yaxis_title='ID proteins',
+                hovermode="x",
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=1.02,
+                    xanchor="right",
+                    x=1
+            ))  
         
         return chart
 
