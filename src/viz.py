@@ -146,7 +146,7 @@ class Viz:
         chart.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
         chart.update_layout(
-                bargap=0),
+                bargap=0,
                 hovermode="x",
                 legend=dict(
                     orientation="h",
