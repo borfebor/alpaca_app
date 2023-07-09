@@ -447,7 +447,7 @@ if uploaded_file is not None:
     
     with results:
         
-        try:            
+        try:  
              c1, c2, c3 = results.columns([1, 2, 3])
              
              if c1.checkbox('Pivot table'):
@@ -477,6 +477,6 @@ if uploaded_file is not None:
                    help='Here you can download your results',
                    use_container_width=True,
                )
-          except:
+        except:
                st.stop()
      
