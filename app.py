@@ -444,8 +444,7 @@ if uploaded_file is not None:
         try: 
              plot.plotly_chart(chart, theme=None, use_container_width=adjusment) 
         except:
-             
-             plot.altair_chart(chart, use_container_width=adjusment) 
+             plot.error(chart, icon="🚨")
     
     with results:
                     
