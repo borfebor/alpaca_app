@@ -192,7 +192,7 @@ if uploaded_file is not None:
         #st.stop()
     
     with experimenter:
-        
+
           st.markdown("""
             #### Welcome to the experimental details panel! 👋
             Here you will be able to translate the labwork into data analysis.
@@ -228,7 +228,7 @@ if uploaded_file is not None:
 
                   example.dataframe(params_example.set_index('Condition'), use_container_width=True)
                   
-              enrichment_example = alpaca.create_random_df(data).reset_index(drop=True)
+              enrichment_example = alpaca.create_random_df(df).reset_index(drop=True)
               
               if std_show.button('Show standards example'):
                   
@@ -264,7 +264,6 @@ if uploaded_file is not None:
                                                    please name the file "standards".
                                                       """,
                                             accept_multiple_files=True)      
-          
           
               for item in experiment:
                   
