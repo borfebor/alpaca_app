@@ -189,7 +189,7 @@ if uploaded_file is not None:
                
                > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification (e.g. Molecular wight (Da)).
                """)
-        st.stop()
+        #st.stop()
     
     with experimenter:
         
