@@ -43,7 +43,7 @@ class Viz:
                 hovermode="x",
                 legend=dict(
                     orientation="h",
-                    yanchor="top",
+                    yanchor="bottom",
                     y=0.0,
                     xanchor="center",
                     x=0
