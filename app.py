@@ -150,7 +150,7 @@ if uploaded_file is not None:
     
     enricher = st.expander('Enrichment standards', expanded=False)
         
-    visualizer = st.expander('Data visualization', expanded=False)
+    visualizer = st.expander('Data visualization', expanded=True)
     
     st.title('Your data')
     
