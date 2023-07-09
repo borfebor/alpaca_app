@@ -40,7 +40,7 @@ class Viz:
         chart = px.bar(df_grouped, 
                        y='Accession', x=categorical,
                       color=color,
-                      text_auto=True
+                      text_auto=True,
                       color_discrete_sequence=px.colors.qualitative.G10,
                       ).update_traces(marker_line_width=2,)
         chart.update_layout(
