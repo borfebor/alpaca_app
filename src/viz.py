@@ -33,7 +33,7 @@ class Viz:
         
         df_grouped = df.groupby(grouper)['Accession'].nunique().reset_index()
         
-        chart = px.bar(df_grouped, x='Accession', y=categorical)
+        chart = px.bar(df_grouped, y='Accession', x=categorical)
         
         return chart
 
