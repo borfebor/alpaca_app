@@ -169,7 +169,7 @@ class Viz:
     
     def scatter(df, x, y, variance, columns):
         try: 
-            name = [f'PC{var[0]+1} ({100*round(var[1],2)} %)' for var in enumerate(variance) if x in var[1] if y in var[1]]
+            name = [f'PC{var[0]+1} ({100*round(var[1],2)} %)' for var in enumerate(variance) if (x or y) in var[1]]
     
             chart = px.scatter(df,
                         x=x, 
