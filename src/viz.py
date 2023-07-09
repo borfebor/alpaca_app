@@ -128,14 +128,14 @@ class Viz:
         pos_y = columns.index(y)
 
         chart = px.scatter(df,
-                    x=df[x], 
-                    y=df[y],
+                    x=x, 
+                    y=y,
+                    color='Condition',
             width=500,
             height=600
         )
         
         chart.update_traces(marker=dict(
-                            color='Condition',
                             size=8,
                             line=dict(width=2,
                                     color='DarkSlateGrey')),
