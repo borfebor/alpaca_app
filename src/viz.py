@@ -41,7 +41,7 @@ class Viz:
                        y='Accession', x=categorical,
                       color=color,
                       text_auto=True,
-                      color_discrete_sequence=px.colors.qualitative.G10,
+                      color_discrete_sequence=px.colors.qualitative.T10,
                       ).update_traces(marker_line_width=2,)
         chart.update_layout(
                 yaxis_title='ID proteins',
@@ -80,7 +80,8 @@ class Viz:
                         y=df[df[categorical] == group][numerical],
                         x=[group] * len(df[df[categorical] == group][numerical]),
                         name=color[0],
-                        fillcolor=color[1],
+                        color_discrete_sequence=px.colors.qualitative.T10,
+                        #fillcolor=color[1],
                         line_color='#000000',
                         legendgroup=color[0],
                         showlegend=depend
