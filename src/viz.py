@@ -139,8 +139,8 @@ class Viz:
                   selector=dict(mode='markers'))
 
         chart.update_layout(
-                yaxis_title=name[0],
-                xaxis_title=name[1],
+                xaxis_title=name[0],
+                yaxis_title=name[1],
                 hovermode="x",
                 legend=dict(
                     orientation="h",
