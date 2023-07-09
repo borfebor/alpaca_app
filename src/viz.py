@@ -138,9 +138,13 @@ class Viz:
                                     color='DarkSlateGrey')),
                   selector=dict(mode='markers'))
 
-        chart.add_shape(
-                dict(type="circle", x0=10, y0=2, x1=20, y1=7), row=1, col="all", line_color="green"
-            )
+        for condition in df['Condition'].unique():
+
+            traces = df[df['Condition'] == condition]
+            chart.add_shape(
+                    dict(type="circle", x0=traces['x'].min(), y0=traces['y'].min(), 
+                         x1=traces['x'].max(), y1=traces['y'].max()), row=1, col="all", line_color="green"
+                )
 
         chart.update_layout(
                 xaxis_title=name[0],
