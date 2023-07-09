@@ -226,7 +226,7 @@ class Viz:
         quant_50 = source[c].quantile(0.5)
         quant_25 = source[c].quantile(0.25)
 
-        hm = source.pivot_table(columns=y, index=x, values=c)
+        hm = source.pivot_table(columns=x, index=y, values=c)
 
         chart = px.imshow(hm,
                           text_auto=True, aspect="auto",
