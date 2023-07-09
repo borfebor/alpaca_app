@@ -142,7 +142,7 @@ class Viz:
 
             traces = df[df['Condition'] == condition]
             chart.add_shape(
-                    dict(type="circle", x0=traces[x].min(), y0=traces[y].min(), 
+                    dict(type="polygon", x0=traces[x].min(), y0=traces[y].min(), 
                          x1=traces[x].max(), y1=traces[y].max()), row=1, col="all", line_color="green"
                 )
 
