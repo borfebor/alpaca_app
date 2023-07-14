@@ -19,24 +19,24 @@ class alpaca:
     
     def eats(file):
         
-        file_type = file.name
-        st.write(file_type)
+        #file_type = file.name
+        st.write(file)
         
-        if 'TXT' in file_type.upper():
+        if 'TXT' in file.upper():
             
-            df = pd.read_csv(file_type, sep='\t')
+            df = pd.read_csv(file, sep='\t')
 
-        if 'TSV' in file_type.upper():
+        if 'TSV' in file.upper():
             
-            df = pd.read_csv(file_type, sep='\t')
+            df = pd.read_csv(file, sep='\t')
             
-        if 'CSV' in file_type.upper():
+        if 'CSV' in file.upper():
             
-            df = pd.read_csv(file_type, sep=',')
+            df = pd.read_csv(file, sep=',')
             
-        if 'XLSX' in file_type.upper():
+        if 'XLSX' in file.upper():
                 
-            df = pd.read_excel(file_type)
+            df = pd.read_excel(file)
         
         else:
             st.warning('Not compatible format')
