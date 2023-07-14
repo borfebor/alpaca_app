@@ -19,8 +19,10 @@ class alpaca:
     
     def eats(file):
         
-        #file_type = file.name
-        st.write(type(file))
+        if type(file) == str:
+            pass
+        else:
+            file = file.name
         
         if 'TXT' in file.upper():
             
