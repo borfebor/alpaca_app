@@ -240,7 +240,7 @@ class alpaca:
                 df['Replicate'] = np.where(df.Sample == item, replicate_dict[item][1], df.Replicate)
             try:
                 df['Sample'] = df['Sample'].str.rsplit(' ', expand=True, n=1)[1]
-                df['Sample'] = df['Sample'].str.apply(lambda x: re.sub(r'.0', '', x))
+                df['Sample'] = df['Sample'].replace(r'.0', '', regex=True)
             except:
                 pass
             df = df.dropna(subset=lfq_method)
