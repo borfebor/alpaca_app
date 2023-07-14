@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 from PIL import Image
-from pathlib import Path
 
 from src.alpaca_new import alpaca
 from src.viz import Viz
@@ -41,7 +40,7 @@ if example_data != None:
     
     title = f'Working with an example dataset from {example_data}'
     top_bar.title(title)
-    uploaded_file = Path(f'Datasets/{paper_dict[example_data]}.txt')
+    uploaded_file = f'Datasets/{paper_dict[example_data]}.txt'
 
 if uploaded_file is None:
     st.image(instructions)
@@ -89,7 +88,7 @@ if uploaded_file is not None:
     
     st.sidebar.header('Quantification standards')
     
-    standards = alpaca.eats(Path('UPS2.txt')) 
+    standards = alpaca.eats('UPS2.txt')
     
     used_std = st.sidebar.selectbox('Used quantification standards', 
                      ['UPS1', 'UPS2', 'UPS3', 'Custom'], 1)
