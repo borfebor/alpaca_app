@@ -48,6 +48,13 @@ class Viz:
                     yaxis_title='ID proteins',
                     xaxis_title=None,
                     hovermode="x",
+                    margin=dict(
+                        l=50,
+                        r=50,
+                        b=100,
+                        t=100,
+                        pad=4
+                    ),
                     legend=dict(
                         orientation="h",
                         yanchor="bottom",
