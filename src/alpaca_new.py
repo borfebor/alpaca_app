@@ -206,15 +206,12 @@ class alpaca:
         cont_key = [col for col in df.columns for item in potential_cols if item in col]
         
         default = ['Accession', 'Gene names', 'Mol. weight [kDa]']
-        
-        #samples = [col for col in columns if lfq_method in col if '_' in col ]
+    
         conditions, samples, replicate_dict = alpaca.path_finder(df, lfq_method)
         all_ids = [col for col in df.columns if col not in samples]
-       
         
         wanted_ids = st.sidebar.multiselect('Data identifiers of interest', all_ids , default)
         ids = [col for col in df.columns if col in wanted_ids]
-        #conditions = list(set([item[len(lfq_method)+1:-3] for item in samples]))
         
         if cleaning is True:
             to_remove = st.sidebar.multiselect('Items to remove', cont_key, cont_key)
