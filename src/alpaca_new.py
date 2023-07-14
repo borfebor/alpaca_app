@@ -20,23 +20,23 @@ class alpaca:
     def eats(file):
         
         if type(file) == str:
-            pass
+            file_name = file
         else:
-            file = file.name
+            file_name = file.name
         
-        if 'TXT' in file.upper():
+        if 'TXT' in file_name.upper():
             
             df = pd.read_csv(file, sep='\t')
 
-        elif 'TSV' in file.upper():
+        elif 'TSV' in file_name.upper():
             
             df = pd.read_csv(file, sep='\t')
             
-        elif 'CSV' in file.upper():
+        elif 'CSV' in file_name.upper():
             
             df = pd.read_csv(file, sep=',')
             
-        elif 'XLSX' in file.upper():
+        elif 'XLSX' in file_name.upper():
                 
             df = pd.read_excel(file)
         
