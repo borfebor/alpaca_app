@@ -230,7 +230,10 @@ class alpaca:
                 
                 df, lfq_method = alpaca.normalizer(df, lfq_method=lfq_method, 
                                                    normalization=normalization, id_col=ids)
-           
+            try:
+                df['Sample'] = df.Sample.str.replace(r'.0', '', regex=True)
+            except:
+                pass
             df['Condition'] = np.nan
             df['Replicate'] = np.nan
             
@@ -239,7 +242,7 @@ class alpaca:
                 df['Condition'] = np.where(df.Sample == item, replicate_dict[item][0], df.Condition)
                 df['Replicate'] = np.where(df.Sample == item, replicate_dict[item][1], df.Replicate)
 
-            df['Sample'] = df['Sample'].str.rsplit(' ', expand=True, n=1)[1].str.replace(r'.0', '', regex=True)
+            df['Sample'] = df['Sample'].str.rsplit(' ', expand=True, n=1)[1]
 
             df = df.dropna(subset=lfq_method)
             
