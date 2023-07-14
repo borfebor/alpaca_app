@@ -10,3 +10,4 @@ openpyxl
 thefuzz
 python-Levenshtein
 plotly
+pathlib
