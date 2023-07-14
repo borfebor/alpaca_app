@@ -238,8 +238,10 @@ class alpaca:
                 
                 df['Condition'] = np.where(df.Sample == item, replicate_dict[item][0], df.Condition)
                 df['Replicate'] = np.where(df.Sample == item, replicate_dict[item][1], df.Replicate)
-
-            df['Sample'] = df['Sample'].str.rsplit(' ', expand=True, n=1)[1].str.apply(lambda x: re.sub(r'.0', '', x))
+            try:
+                df['Sample'] = df['Sample'].str.rsplit(' ', expand=True, n=1)[1]#.apply(lambda x: re.sub(r'.0', '', x))
+            except:
+                continue
             df = df.dropna(subset=lfq_method)
             
             if 'Gene names' in ids:
