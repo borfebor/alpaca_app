@@ -206,6 +206,11 @@ class alpaca:
         cont_key = [col for col in df.columns for item in potential_cols if item in col]
         
         default = ['Accession', 'Gene names', 'Mol. weight [kDa]']
+
+        try:
+                df['Sample'] = df.Sample.str.replace(r'.0', '', regex=True)
+        except:
+                pass
     
         conditions, samples, replicate_dict = alpaca.path_finder(df, lfq_method)
         all_ids = [col for col in df.columns if col not in samples]
@@ -230,10 +235,7 @@ class alpaca:
                 
                 df, lfq_method = alpaca.normalizer(df, lfq_method=lfq_method, 
                                                    normalization=normalization, id_col=ids)
-            try:
-                df['Sample'] = df.Sample.str.replace(r'.0', '', regex=True)
-            except:
-                pass
+                
             df['Condition'] = np.nan
             df['Replicate'] = np.nan
             
