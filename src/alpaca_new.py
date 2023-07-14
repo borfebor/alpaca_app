@@ -26,15 +26,15 @@ class alpaca:
             
             df = pd.read_csv(file, sep='\t')
 
-        if 'TSV' in file.upper():
+        elif 'TSV' in file.upper():
             
             df = pd.read_csv(file, sep='\t')
             
-        if 'CSV' in file.upper():
+        elif 'CSV' in file.upper():
             
             df = pd.read_csv(file, sep=',')
             
-        if 'XLSX' in file.upper():
+        elif 'XLSX' in file.upper():
                 
             df = pd.read_excel(file)
         
