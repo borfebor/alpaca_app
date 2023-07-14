@@ -242,7 +242,7 @@ class alpaca:
                 df['Sample'] = df['Sample'].str.rsplit(' ', expand=True, n=1)[1]
                 df['Sample'] = df['Sample'].apply(lambda x: re.sub(r'.0', '', x))
             except:
-                continue
+                pass
             df = df.dropna(subset=lfq_method)
             
             if 'Gene names' in ids:
