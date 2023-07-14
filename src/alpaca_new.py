@@ -205,10 +205,11 @@ class alpaca:
         potential_cols = ['identified by site', 'contaminant', 'Reverse']
         cont_key = [col for col in df.columns for item in potential_cols if item in col]
         
-        default = ['Accession', 'Gene names', 'Mol. weight [kDa]']
+        suggested = ['Accession', 'Gene names', 'Mol. weight [kDa]']
     
         conditions, samples, replicate_dict = alpaca.path_finder(df, lfq_method)
         all_ids = [col for col in df.columns if col not in samples]
+        default = [col for col in all_ids if col in suggested]
         
         wanted_ids = st.sidebar.multiselect('Data identifiers of interest', all_ids , default)
         ids = [col for col in df.columns if col in wanted_ids]
