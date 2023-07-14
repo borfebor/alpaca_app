@@ -18,15 +18,26 @@ import os
 class alpaca:
     
     def eats(file):
-        try:
+        file_type = file.name.split('.')[1].upper()
+        
+        if file_type == 'TXT':
+            
             df = pd.read_csv(file, sep='\t')
-        except:
-            try:
-                df = pd.read_csv(file, sep=',')
-            except:
-                df = pd.read_excel(file)
-            else:
-                print('Sorry, this app ')
+
+        if file_type == 'TSV':
+            
+            df = pd.read_csv(file, sep='\t')
+            
+        if file_type == 'CSV':
+            
+            df = pd.read_csv(file, sep=',')
+            
+        if file_type == 'XLSX':
+                
+            df = pd.read_excel(file)
+        
+        else:
+            st.warning('Not compatible format')
 
        	return df
        
@@ -37,26 +48,18 @@ class alpaca:
         if file_type == 'TXT':
             
             df = pd.read_csv(file, sep='\t')
-            df = methods.true_columns(df)
-            return df.reset_index(drop=True).dropna(axis=1, how='all')
 
         if file_type == 'TSV':
             
             df = pd.read_csv(file, sep='\t')
-            df = methods.true_columns(df)
-            return df.reset_index(drop=True).dropna(axis=1, how='all')
             
         if file_type == 'CSV':
             
             df = pd.read_csv(file, sep=',')
-            df = methods.true_columns(df)
-            return df.reset_index(drop=True).dropna(axis=1, how='all')
             
         if file_type == 'XLSX':
                 
             df = pd.read_excel(file)
-            df = methods.true_columns(df)
-            return df.reset_index(drop=True).dropna(axis=1, how='all')
         
         else:
             st.warning('Not compatible format')
