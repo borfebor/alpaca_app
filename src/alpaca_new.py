@@ -24,19 +24,19 @@ class alpaca:
         
         if 'TXT' in file_type.upper():
             
-            df = pd.read_csv(file, sep='\t')
+            df = pd.read_csv(file_type, sep='\t')
 
         if 'TSV' in file_type.upper():
             
-            df = pd.read_csv(file, sep='\t')
+            df = pd.read_csv(file_type, sep='\t')
             
         if 'CSV' in file_type.upper():
             
-            df = pd.read_csv(file, sep=',')
+            df = pd.read_csv(file_type, sep=',')
             
         if 'XLSX' in file_type.upper():
                 
-            df = pd.read_excel(file)
+            df = pd.read_excel(file_type)
         
         else:
             st.warning('Not compatible format')
