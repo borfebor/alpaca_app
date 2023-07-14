@@ -18,21 +18,23 @@ import os
 class alpaca:
     
     def eats(file):
-        file_type = file.name.split('.')[1].upper()
         
-        if file_type == 'TXT':
+        file_type = file.name
+        st.write(file_type)
+        
+        if 'TXT' in file_type.upper():
             
             df = pd.read_csv(file, sep='\t')
 
-        if file_type == 'TSV':
+        if 'TSV' in file_type.upper():
             
             df = pd.read_csv(file, sep='\t')
             
-        if file_type == 'CSV':
+        if 'CSV' in file_type.upper():
             
             df = pd.read_csv(file, sep=',')
             
-        if file_type == 'XLSX':
+        if 'XLSX' in file_type.upper():
                 
             df = pd.read_excel(file)
         
