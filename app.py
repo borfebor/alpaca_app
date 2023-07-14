@@ -89,7 +89,7 @@ if uploaded_file is not None:
     
     st.sidebar.header('Quantification standards')
     
-    standards = alpaca.eats('UPS2.txt')  
+    standards = alpaca.eats(Path('UPS2.txt')) 
     
     used_std = st.sidebar.selectbox('Used quantification standards', 
                      ['UPS1', 'UPS2', 'UPS3', 'Custom'], 1)
