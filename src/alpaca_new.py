@@ -242,6 +242,7 @@ class alpaca:
                 df['Replicate'] = np.where(df.Sample == item, replicate_dict[item][1], df.Replicate)
 
             df['Sample'] = df['Sample'].str.rsplit(' ', expand=True, n=1)[1]
+            df['Condition'] = df['Condition'].str.replace(r'[_-]0', '', regex=True)
 
             df = df.dropna(subset=lfq_method)
             
