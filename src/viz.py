@@ -53,7 +53,7 @@ class Viz:
                         r=50,
                         b=100,
                         t=100,
-                        pad=4
+                        pad=10
                     ),
                     legend=dict(
                         orientation="h",
