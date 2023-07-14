@@ -22,7 +22,7 @@ st.sidebar.image(image)
 
 top_bar = st.sidebar.empty()
 uploaded_file = top_bar.file_uploader('Import your Protein Groups file:',
-                                        type=['csv','txt','xlsx'],
+                                        type=['csv','txt','xlsx', 'tsv'],
                                          help='You can upload directly your ProteinGroup.txt from MaxQuant output '
                                               'and clean it using the button below, or pre-clean the data with Perseus. '
                                               'Our quantification approach uses iBAQ for Absolute Quantification.')
