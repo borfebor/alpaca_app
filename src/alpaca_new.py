@@ -207,7 +207,7 @@ class alpaca:
         
         default = ['Accession', 'Gene names', 'Mol. weight [kDa]']
         
-        df.columns = [re.sub(r'[-_]0', '', col) for col in df.columns ]
+        df.columns = [re.sub(r'[-_]0', '', col) for col in df.columns]
     
         conditions, samples, replicate_dict = alpaca.path_finder(df, lfq_method)
         all_ids = [col for col in df.columns if col not in samples]
