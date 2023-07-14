@@ -20,7 +20,7 @@ class alpaca:
     def eats(file):
         
         #file_type = file.name
-        st.write(file)
+        st.write(type(file))
         
         if 'TXT' in file.upper():
             
