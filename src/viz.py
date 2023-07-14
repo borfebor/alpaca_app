@@ -109,6 +109,7 @@ class Viz:
                         xanchor="right",
                         x=1
                 )) 
+            box.update_yaxes(automargin=True)
         except:
             box = f'Oops! Apparently I cannot plot based on {categorical}'
         return box
@@ -137,6 +138,7 @@ class Viz:
                                         color='DarkSlateGrey')),
                       selector=dict(mode='markers'))
             chart.update_layout(title_text=fitting, title_x=0.5)
+            chart.update_yaxes(automargin=True)
         except:
             box = f'Oops! Something went wrong when I tried to plot your standards :('
         
@@ -165,6 +167,7 @@ class Viz:
                         xanchor="right",
                         x=1
                 ))
+            chart.update_yaxes(automargin=True)
         except:
             chart = f'Sorry :( This is a bit embarrassing but something went wrong'
         
@@ -206,6 +209,7 @@ class Viz:
                         xanchor="right",
                         x=1
                 )) 
+            chart.update_yaxes(automargin=True)
         except:
             chart = f'Sorry :( This is a bit embarrassing but something went wrong'
         
@@ -245,6 +249,10 @@ class Viz:
             chart = px.imshow(hm,
                               text_auto=True, aspect="auto",
                              color_continuous_scale=color_scheme)
+            chart.update_layout(
+                    xaxis_title=None,
+                    yaxis_title=None) 
+            chart.update_yaxes(automargin=True)
         except:
             chart = f'Sorry :( This is a bit embarrassing but something went wrong'
 
