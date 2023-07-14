@@ -48,13 +48,6 @@ class Viz:
                     yaxis_title='ID proteins',
                     xaxis_title=None,
                     hovermode="x",
-                    margin=dict(
-                        l=50,
-                        r=50,
-                        b=100,
-                        t=100,
-                        pad=10
-                    ),
                     legend=dict(
                         orientation="h",
                         yanchor="bottom",
@@ -62,6 +55,7 @@ class Viz:
                         xanchor="right",
                         x=1
                 ))  
+            chart.update_yaxes(automargin=True)
         except:
             error_on = (',').join(group for group in grouper)
             chart = f'Oops! Apparently I cannot plot based on the given categories ({error_on})'
