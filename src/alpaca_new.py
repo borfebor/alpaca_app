@@ -206,11 +206,8 @@ class alpaca:
         cont_key = [col for col in df.columns for item in potential_cols if item in col]
         
         default = ['Accession', 'Gene names', 'Mol. weight [kDa]']
-
-        try:
-                df['Sample'] = df.Sample.str.replace(r'.0', '', regex=True)
-        except:
-                pass
+        
+        df.columns = [re.sub(r'.0', '', col) for col in df.columns ]
     
         conditions, samples, replicate_dict = alpaca.path_finder(df, lfq_method)
         all_ids = [col for col in df.columns if col not in samples]
