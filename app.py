@@ -270,7 +270,7 @@ if uploaded_file is not None:
                   
                   if "PARAM" in item.name.upper():
                       
-                      sample_conditions = alpaca.eats_better(item)
+                      sample_conditions = alpaca.eats(item)
                       sample_conditions = alpaca.matchmaker(sample_conditions, params_example)
                       sample_conditions = sample_conditions.set_index(sample_conditions.columns[0])
                       
