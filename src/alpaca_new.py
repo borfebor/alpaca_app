@@ -510,7 +510,6 @@ class alpaca:
             ).groupby('Condition')['CorrectionSRM'].mean().reset_index()
            
             preparation = preparation.merge(correction, on='Condition') 
-            st.write(correction, preparation)
     
         return preparation
         
