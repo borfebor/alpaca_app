@@ -263,7 +263,7 @@ class Viz:
         #except:
             #chart = f'Sorry :( This is a bit embarrassing but something went wrong'
 
-        return chart
+            return chart
         
     def heatmap_2(df, x, y, c, z_score=False, color_scheme='redblue'):
         try:
