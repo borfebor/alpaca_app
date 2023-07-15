@@ -508,7 +508,7 @@ class alpaca:
                             'CorrectionSRM': x['fmolSRM'].mean() / x['fmol'].mean()
                         })).reset_index(
             ).groupby('Condition')['CorrectionSRM'].mean().reset_index()
-            st.write(preparation, correction)
+           
             preparation = preparation.merge(correction, on='Condition') 
     
         return preparation
@@ -740,9 +740,9 @@ class alpaca:
                                           df.fmol * values['EnrichmentFactor'], 
                                           df.fmol)
                     
-                preparation = alpaca.correctionSRM(df, preparation)
+            preparation = alpaca.correctionSRM(df, preparation)
                 
-                if "CorrectionSRM" in df.columns:
+            if "CorrectionSRM" in df.columns:
                 
                     df['fmol'] = np.where(df.Condition == condition, 
                                         df.fmol * values['CorrectionSRM'], 
