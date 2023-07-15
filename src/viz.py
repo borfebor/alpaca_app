@@ -231,41 +231,8 @@ class Viz:
             
         sns.catplot(data, x='Condition', y='z_score', kind='box', hue='Replicate')
         return data
-
-    def heatmap(df, x, y, c, z_score=False, color_scheme='redblue'):
-        #try:
-            source = df.copy().dropna(subset=y)
-            
-            if z_score == True:
-            
-                source = Viz.z_score(source, c)
-                c = 'z_score'
-            
-            quant_75 = source[c].quantile(0.75)
-            quant_50 = source[c].quantile(0.5)
-            quant_25 = source[c].quantile(0.25)
-    
-            hm = source.pivot_table(columns=y, index=x, values=c).dropna()
-    
-            chart = dash_bio.Clustergram(
-                    data=hm,
-                    column_labels=list(df.columns.values),
-                    row_labels=list(df.index),
-                    height=800,
-                    width=700,
-                    color_list={
-                        'row': ['#636EFA', '#00CC96', '#19D3F3'],
-                        'col': ['#AB63FA', '#EF553B'],
-                        'bg': '#506784'
-                    },
-                    line_width=2
-                )
-        #except:
-            #chart = f'Sorry :( This is a bit embarrassing but something went wrong'
-
-            return chart
         
-    def heatmap_2(df, x, y, c, z_score=False, color_scheme='redblue'):
+    def heatmap(df, x, y, c, z_score=False, color_scheme='redblue'):
         try:
             source = df.copy().dropna(subset=y)
             
