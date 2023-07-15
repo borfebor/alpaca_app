@@ -486,7 +486,7 @@ class alpaca:
 
         data = pd.DataFrame()
 
-        for index, content in preparation.dropna().iterrows():
+        for index, content in preparation.iterrows():
             
                 vals = str(content['fmolSRM']).split(',')
                 values = [float(val) for val in vals]
@@ -508,9 +508,8 @@ class alpaca:
                             'CorrectionSRM': x['fmolSRM'].mean() / x['fmol'].mean()
                         })).reset_index(
             ).groupby('Condition')['CorrectionSRM'].mean().reset_index()
-            st.write(preparation)
+
             preparation = preparation.merge(correction, on='Condition') 
-            st.write(preparation)
     
         return preparation
         
