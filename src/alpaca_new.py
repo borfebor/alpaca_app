@@ -508,8 +508,9 @@ class alpaca:
                             'CorrectionSRM': x['fmolSRM'].mean() / x['fmol'].mean()
                         })).reset_index(
             ).groupby('Condition')['CorrectionSRM'].mean().reset_index()
-           
-            preparation = preparation.merge(correction, on='Condition', how='right') 
+            st.write(preparation)
+            preparation = preparation.merge(correction, on='Condition') 
+            st.write(preparation)
     
         return preparation
         
