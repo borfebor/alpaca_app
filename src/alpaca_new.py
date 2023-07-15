@@ -741,7 +741,7 @@ class alpaca:
                                           df.fmol)
                     
             preparation = alpaca.correctionSRM(df, preparation)
-            st.write(preparation)
+
             if "CorrectionSRM" in preparation.columns:
                 
                 for condition, values in preparation.set_index('Condition').fillna(1).iterrows():
