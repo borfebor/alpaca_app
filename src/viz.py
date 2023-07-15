@@ -245,7 +245,7 @@ class Viz:
             quant_50 = source[c].quantile(0.5)
             quant_25 = source[c].quantile(0.25)
     
-            hm = source.pivot_table(columns=y, index=x, values=c)
+            hm = source.pivot_table(columns=y, index=x, values=c).dropna()
     
             chart = dash_bio.Clustergram(
                     data=hm,
