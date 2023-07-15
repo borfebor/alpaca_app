@@ -744,7 +744,8 @@ class alpaca:
             preparation = alpaca.correctionSRM(df, preparation)
                         
             if "CorrectionSRM" in preparation.columns:
-                for condition, values in preparation.set_index('Condition')[enrichment_params].fillna(1).iterrows():
+                
+                for condition, values in preparation.set_index('Condition').fillna(1).iterrows():
                         
                             df['fmol'] = np.where(df.Condition == condition, 
                                                 df.fmol * values['CorrectionSRM'], 
