@@ -10,4 +10,4 @@ openpyxl
 thefuzz
 python-Levenshtein
 plotly
-pathlib
+dash_bio
