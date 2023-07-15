@@ -233,7 +233,7 @@ class Viz:
         return data
 
     def heatmap(df, x, y, c, z_score=False, color_scheme='redblue'):
-        try:
+        #try:
             source = df.copy().dropna(subset=y)
             
             if z_score == True:
@@ -260,8 +260,8 @@ class Viz:
                     },
                     line_width=2
                 )
-        except:
-            chart = f'Sorry :( This is a bit embarrassing but something went wrong'
+        #except:
+            #chart = f'Sorry :( This is a bit embarrassing but something went wrong'
 
         return chart
         
