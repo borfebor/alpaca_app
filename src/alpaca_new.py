@@ -747,6 +747,7 @@ class alpaca:
                     df['fmol'] = np.where(df.Condition == condition, 
                                         df.fmol * values['CorrectionSRM'], 
                                         df.fmol)
+                    st.write(preparation)
         
         df['Molecules'] = df['fmol'] * 6.023e8  # Avogadro's number fixed for fmol (-15)
         
