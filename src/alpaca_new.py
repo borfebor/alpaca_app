@@ -509,7 +509,7 @@ class alpaca:
                         })).reset_index(
             ).groupby('Condition')['CorrectionSRM'].mean().reset_index()
     
-            preparation = preparation.merge(correction, on='Condition') 
+            preparation = preparation.merge(correction, on='Condition', how='left') 
     
         return preparation
         
