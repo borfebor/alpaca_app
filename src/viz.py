@@ -265,7 +265,7 @@ class Viz:
 
         return chart
         
-    def heatmap(df, x, y, c, z_score=False, color_scheme='redblue'):
+    def heatmap_2(df, x, y, c, z_score=False, color_scheme='redblue'):
         try:
             source = df.copy().dropna(subset=y)
             
