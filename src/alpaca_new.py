@@ -740,14 +740,16 @@ class alpaca:
                                           df.fmol * values['EnrichmentFactor'], 
                                           df.fmol)
                     
-            preparation = alpaca.correctionSRM(df, preparation)
-                
-            if "CorrectionSRM" in df.columns:
-                
-                    df['fmol'] = np.where(df.Condition == condition, 
-                                        df.fmol * values['CorrectionSRM'], 
-                                        df.fmol)
-                    st.write(preparation)
+                preparation = alpaca.correctionSRM(df, preparation)
+
+                st.write(preparation)
+                        
+                if "CorrectionSRM" in preparation.columns:
+                        
+                            df['fmol'] = np.where(df.Condition == condition, 
+                                                df.fmol * values['CorrectionSRM'], 
+                                                df.fmol)
+                            st.write(preparation)
         
         df['Molecules'] = df['fmol'] * 6.023e8  # Avogadro's number fixed for fmol (-15)
         
