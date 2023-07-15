@@ -740,7 +740,7 @@ class alpaca:
                                           df.fmol * values['EnrichmentFactor'], 
                                           df.fmol)
                     
-                #preparation = alpaca.correctionSRM(df, preparation)
+                preparation = alpaca.correctionSRM(df, preparation)
                 
                 if "CorrectionSRM" in df.columns:
                 
