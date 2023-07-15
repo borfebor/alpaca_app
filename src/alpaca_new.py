@@ -509,7 +509,7 @@ class alpaca:
                         })).reset_index(
             ).groupby('Condition')['CorrectionSRM'].mean().reset_index()
            
-            preparation = preparation.merge(correction, on='Condition', how='left') 
+            preparation = preparation.merge(correction, on='Condition', how='right') 
     
         return preparation
         
@@ -741,6 +741,7 @@ class alpaca:
                                           df.fmol)
                     
             preparation = alpaca.correctionSRM(df, preparation)
+            st.write(preparation)
                         
             if "CorrectionSRM" in preparation.columns:
                 
