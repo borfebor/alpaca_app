@@ -31,7 +31,7 @@ example_data = None
 
 if uploaded_file == None:
     
-    example_data = st.sidebar.selectbox('Example datasets', [None, 'Standard protocol', 'Enriched protocol'])
+    example_data = st.sidebar.selectbox('Example datasets', [None, 'Standard protocol', 'Enriched protocol', 'Membrane protocol'])
 
 if example_data != None:   
     
