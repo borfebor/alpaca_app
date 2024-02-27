@@ -108,8 +108,8 @@ class Viz:
             chart = px.scatter(
                         x=df[amount], 
                         y=df[lfq_method],
-                        trendline='ols',
-                        trendline_color_override='Black',
+                        #trendline='ols',
+                        #trendline_color_override='Black',
                         hover_name=df['Accession'],
                         labels={ 
                                 "x": "fmol of standard (log2)",  "y": f"{lfq_method} (log2)",
