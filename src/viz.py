@@ -101,7 +101,7 @@ class Viz:
     
     
     def Regression(df, amount, lfq_method, R):
-        #try:
+        try:
             
             fitting = f'R² = {round(R, 3)}'
     
@@ -109,7 +109,7 @@ class Viz:
                         x=df[amount], 
                         y=df[lfq_method],
                         trendline='ols',
-                        #trendline_color_override='Black',
+                        trendline_color_override='Black',
                         hover_name=df['Accession'],
                         labels={ 
                                 "x": "fmol of standard (log2)",  "y": f"{lfq_method} (log2)",
@@ -126,8 +126,8 @@ class Viz:
             chart.update_layout(title_text=fitting, title_x=0.5)
             chart.update_yaxes(automargin=True)  
 
-        #except:
-        #    chart = "Oops! Something went wrong when I tried to plot your standards :("
+        except:
+            chart = "Oops! Something went wrong when I tried to plot your standards :("
         
             return chart
     
