@@ -6,12 +6,10 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.impute import KNNImputer, SimpleImputer
 import streamlit as st
-from itertools import takewhile, permutations, combinations
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from thefuzz import fuzz
-from thefuzz import process
 import re
 import os
 
