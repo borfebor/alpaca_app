@@ -36,9 +36,9 @@ if uploaded_file == None:
 if example_data != None:   
     
     paper_dict = {'Standard protocol':{'id':'Cytosol_example','source':'Ferrero-Bordera et al. 2024. Microbiology Spectrum','link':'https://doi.org/10.1128/spectrum.02616-23'}, 
-                  'Enriched protocol':{'id':'Enriched_example','source':'Ferrero-Bordera et al. 2024. Microbiology Spectrum','link':'https://doi.org/10.1128/spectrum.02616-23'}}
+                  'Enriched protocol':{'id':'Enriched_example','source':'Ferrero-Bordera et al. 2024. Microbiology Spectrum','link':'https://doi.org/10.1128/spectrum.02616-23'},
+                  'Membrane protocol':{'id':'Membrane_example','source':'Antelo-Varela et al. 2019. Anal. Chem.','link':'https://doi.org/10.1021/acs.analchem.9b02869'}}
     
-    title = f"Working with an example dataset from [{paper_dict[example_data]['source']}]({paper_dict[example_data]['link']})"
     top_bar.markdown(f"Working with an example dataset from [{paper_dict[example_data]['source']}]({paper_dict[example_data]['link']})")
     uploaded_file = f"Datasets/{paper_dict[example_data]['id']}.txt"
 
