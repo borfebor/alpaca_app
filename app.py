@@ -4,7 +4,7 @@ import pandas as pd
 import streamlit as st
 from PIL import Image
 
-from src.alpaca_new import alpaca
+from src.alpaca_st import alpaca
 from src.viz import Viz
 
 image = Image.open('ALPACA_LOGO2.png')
@@ -25,7 +25,7 @@ uploaded_file = top_bar.file_uploader('Import your Protein Groups file:',
                                         type=['csv','txt','xlsx', 'tsv'],
                                          help='You can upload directly your ProteinGroup.txt from MaxQuant output '
                                               'and clean it using the button below, or pre-clean the data with Perseus. '
-                                              'Our quantification approach uses iBAQ for Absolute Quantification.')
+                                              'Different intensity-based quantification methods can be selected in the app.')
 
 example_data = None
 
@@ -35,12 +35,12 @@ if uploaded_file == None:
 
 if example_data != None:   
     
-    paper_dict = {'Standard protocol':'Cytosol_example', 
-                  'Enriched protocol':'Enriched_example'}
+    paper_dict = {'Standard protocol':{'id':'Cytosol_example','source':'Ferrero-Bordera et al. 2024. Microbiology Spectrum','link':'https://doi.org/10.1128/spectrum.02616-23'}, 
+                  'Enriched protocol':{'id':'Enriched_example','source':'Ferrero-Bordera et al. 2024. Microbiology Spectrum','link':'https://doi.org/10.1128/spectrum.02616-23'}}
     
-    title = f'Working with an example dataset from {example_data}'
+    title = st.markdown(f"Working with an example dataset from {paper_dict[example_data]['source']}")
     top_bar.title(title)
-    uploaded_file = f'Datasets/{paper_dict[example_data]}.txt'
+    uploaded_file = f"Datasets/{paper_dict[example_data]['id']}.txt"
 
 if uploaded_file is None:
     st.image(instructions)
