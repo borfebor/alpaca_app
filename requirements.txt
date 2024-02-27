@@ -11,3 +11,6 @@ thefuzz
 python-Levenshtein
 plotly
 dash_bio
+statsmodels
+
+
