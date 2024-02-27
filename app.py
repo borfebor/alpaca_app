@@ -39,7 +39,7 @@ if example_data != None:
                   'Enriched protocol':{'id':'Enriched_example','source':'Ferrero-Bordera et al. 2024. Microbiology Spectrum','link':'https://doi.org/10.1128/spectrum.02616-23'}}
     
     title = f"Working with an example dataset from [{paper_dict[example_data]['source']}]({paper_dict[example_data]['link']})"
-    top_bar.markdown(title)
+    top_bar.markdown("Working with an example dataset from [{paper_dict[example_data]['source']}]({paper_dict[example_data]['link']})")
     uploaded_file = f"Datasets/{paper_dict[example_data]['id']}.txt"
 
 if uploaded_file is None:
