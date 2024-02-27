@@ -139,11 +139,11 @@ class Viz:
             chart.update_layout(title_text=fitting, title_x=0.5)
             chart.update_yaxes(automargin=True)
             
-            return chart
+
         except:
-            box = f"Oops! Something went wrong when I tried to plot your standards :("
+            chart = "Oops! Something went wrong when I tried to plot your standards :("
         
-            return box
+        return chart
     
     def displot(df, lfq_method):
         try:
@@ -170,7 +170,7 @@ class Viz:
                 ))
             chart.update_yaxes(automargin=True)
         except:
-            chart = f'Sorry :( This is a bit embarrassing but something went wrong'
+            chart = 'Sorry :( This is a bit embarrassing but something went wrong'
         
         return chart
     
@@ -212,7 +212,7 @@ class Viz:
                 )) 
             chart.update_yaxes(automargin=True)
         except:
-            chart = f'Sorry :( This is a bit embarrassing but something went wrong'
+            chart = 'Sorry :( This is a bit embarrassing but something went wrong'
         
         return chart
     
@@ -255,7 +255,7 @@ class Viz:
                     yaxis_title=None) 
             chart.update_yaxes(automargin=True)
         except:
-            chart = f'Sorry :( This is a bit embarrassing but something went wrong'
+            chart = 'Sorry :( This is a bit embarrassing but something went wrong'
 
         return chart
 
