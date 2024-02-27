@@ -25,6 +25,7 @@ import plotly.io as pio
 from plotly.subplots import make_subplots
 import seaborn as sns
 import plotly.express as px
+import statsmodels.api as sm
 
 class Viz:
     
