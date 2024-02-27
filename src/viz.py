@@ -115,7 +115,8 @@ class Viz:
     
     
     def Regression(df, amount, lfq_method, R):
-        try:
+        #try:
+            
             fitting = f'R² = {round(R, 3)}'
     
             chart = px.scatter(
@@ -137,13 +138,12 @@ class Viz:
                                         color='DarkSlateGrey')),
                       selector=dict(mode='markers'))
             chart.update_layout(title_text=fitting, title_x=0.5)
-            chart.update_yaxes(automargin=True)
-            
+            chart.update_yaxes(automargin=True)  
 
-        except:
-            chart = "Oops! Something went wrong when I tried to plot your standards :("
+        #except:
+        #    chart = "Oops! Something went wrong when I tried to plot your standards :("
         
-        return chart
+            return chart
     
     def displot(df, lfq_method):
         try:
