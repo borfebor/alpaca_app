@@ -138,10 +138,12 @@ class Viz:
                       selector=dict(mode='markers'))
             chart.update_layout(title_text=fitting, title_x=0.5)
             chart.update_yaxes(automargin=True)
+            
+            return chart
         except:
-            box = f'Oops! Something went wrong when I tried to plot your standards :('
+            box = f"Oops! Something went wrong when I tried to plot your standards :("
         
-        return chart
+            return box
     
     def displot(df, lfq_method):
         try:
