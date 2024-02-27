@@ -6,24 +6,10 @@ Created on Sun Jan  1 21:00:40 2023
 @author: borfebor
 """
 
-import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-import streamlit as st
-from PIL import Image
-from random import randint
-from math import pi
 import seaborn as sns
-from src.alpaca_st import alpaca
-from st_aggrid import AgGrid
-import altair as alt
-import time
-import dash_bio
 
 import plotly.graph_objs as go
-import plotly.io as pio
-from plotly.subplots import make_subplots
-import seaborn as sns
 import plotly.express as px
 
 class Viz:
