@@ -14,7 +14,7 @@ from PIL import Image
 from random import randint
 from math import pi
 import seaborn as sns
-from src.alpaca_new import alpaca
+from src.alpaca_st import alpaca
 from st_aggrid import AgGrid
 import altair as alt
 import time
