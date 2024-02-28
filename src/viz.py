@@ -117,7 +117,7 @@ class Viz:
         # plotly figure layout
         chart.update_layout(xaxis_title = 'X', yaxis_title = 'Y')
         return chart
-    """
+        """
         try:
             
             fitting = f'R² = {round(R, 3)}'
