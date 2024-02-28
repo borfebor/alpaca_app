@@ -113,8 +113,8 @@ class Viz:
         
         # plotly figure setup
         chart=go.Figure()
-        chart.add_trace(go.Scatter(name='X vs Y', x=df[amount], y=df[lfq_method].values, mode='markers'))
-        chart.add_trace(go.Scatter(name='line of best fit', x=df[amount], y=df['bestfit'], mode='lines'))
+        chart.add_trace(go.Scatter(name='Standard proteins', x=df[amount], y=df[lfq_method].values, mode='markers'))
+        chart.add_trace(go.Scatter(name='line of best fit', x=df[amount], y=df['bestfit'], mode='lines', color='k'))
         
         # plotly figure layout
         chart.update_layout(xaxis_title = 'fmol of standard (log2)', yaxis_title = f"{lfq_method} (log2)")
@@ -124,7 +124,8 @@ class Viz:
                             line=dict(width=2,
                                     color='DarkSlateGrey')),
                   selector=dict(mode='markers'))
-        chart.update_layout(title_text=fitting, title_x=0.5)
+        chart.update_layout(title_text=fitting, title_x=0.5,  width=500,
+         height=600)
         chart.update_yaxes(automargin=True) 
         return chart
         """
