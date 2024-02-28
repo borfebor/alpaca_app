@@ -114,9 +114,7 @@ class Viz:
         # plotly figure setup
         chart=go.Figure()
         chart.add_trace(go.Scatter(name='X vs Y', x=df[amount], y=df[lfq_method].values, mode='markers'))
-        chart.add_trace(go.Scatter(name='line of best fit', x=df[amount], y=df['bestfit'], mode='lines'),
-                        line=dict(width=2,
-                                color='DarkSlateGrey'))
+        chart.add_trace(go.Scatter(name='line of best fit', x=df[amount], y=df['bestfit'], mode='lines'))
         
         # plotly figure layout
         chart.update_layout(xaxis_title = 'fmol of standard (log2)', yaxis_title = f"{lfq_method} (log2)")
