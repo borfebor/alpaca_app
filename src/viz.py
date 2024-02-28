@@ -109,13 +109,25 @@ class Viz:
         reg = LinearRegression().fit(np.vstack(df[amount]), df[lfq_method].values)
         df['bestfit'] = reg.predict(np.vstack(df[amount]))
         
+        fitting = f'R² = {round(R, 3)}'
+        
         # plotly figure setup
         chart=go.Figure()
         chart.add_trace(go.Scatter(name='X vs Y', x=df[amount], y=df[lfq_method].values, mode='markers'))
-        chart.add_trace(go.Scatter(name='line of best fit', x=df[amount], y=df['bestfit'], mode='lines'))
+        chart.add_trace(go.Scatter(name='line of best fit', x=df[amount], y=df['bestfit'], mode='lines'),
+                        line=dict(width=2,
+                                color='DarkSlateGrey'))
         
         # plotly figure layout
-        chart.update_layout(xaxis_title = 'X', yaxis_title = 'Y')
+        chart.update_layout(xaxis_title = 'fmol of standard (log2)', yaxis_title = f"{lfq_method} (log2)")
+        chart.update_traces(marker=dict(
+                            color='LightSkyBlue',
+                            size=8,
+                            line=dict(width=2,
+                                    color='DarkSlateGrey')),
+                  selector=dict(mode='markers'))
+        chart.update_layout(title_text=fitting, title_x=0.5)
+        chart.update_yaxes(automargin=True) 
         return chart
         """
         try:
