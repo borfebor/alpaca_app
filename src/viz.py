@@ -12,6 +12,9 @@ import seaborn as sns
 import plotly.graph_objs as go
 import plotly.express as px
 
+from sklearn.linear_model import LinearRegression
+
+
 class Viz:
     
     def identifications(df, categorical, color, grouper):
@@ -101,6 +104,20 @@ class Viz:
     
     
     def Regression(df, amount, lfq_method, R):
+        
+        # regression
+        reg = LinearRegression().fit(np.vstack(df[amount]), df[lfq_method].values)
+        df['bestfit'] = reg.predict(np.vstack(df[amount]))
+        
+        # plotly figure setup
+        chart=go.Figure()
+        chart.add_trace(go.Scatter(name='X vs Y', x=df[amount], y=df[lfq_method].values, mode='markers'))
+        chart.add_trace(go.Scatter(name='line of best fit', x=df[amount], y=df['bestfit'], mode='lines'))
+        
+        # plotly figure layout
+        chart.update_layout(xaxis_title = 'X', yaxis_title = 'Y')
+        return chart
+    """
         try:
             
             fitting = f'R² = {round(R, 3)}'
@@ -128,8 +145,8 @@ class Viz:
 
         except:
             chart = "Oops! Something went wrong when I tried to plot your standards :("
-        
-            return chart
+            """        
+            #return chart
     
     def displot(df, lfq_method):
         try:
