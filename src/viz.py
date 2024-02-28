@@ -110,54 +110,28 @@ class Viz:
         df['bestfit'] = reg.predict(np.vstack(df[amount]))
         
         fitting = f'R² = {round(R, 3)}'
-        
-        # plotly figure setup
-        chart=go.Figure()
-        chart.add_trace(go.Scatter(name='Standard proteins', x=df[amount], y=df[lfq_method].values, mode='markers'))
-        chart.add_trace(go.Scatter(name='line of best fit', x=df[amount], y=df['bestfit'], mode='lines', line_color='Black'))
-        
-        # plotly figure layout
-        chart.update_layout(xaxis_title = 'fmol of standard (log2)', yaxis_title = f"{lfq_method} (log2)")
-        chart.update_traces(marker=dict(
-                            color='LightSkyBlue',
-                            size=8,
-                            line=dict(width=2,
-                                    color='DarkSlateGrey')),
-                  selector=dict(mode='markers'))
-        chart.update_layout(title_text=fitting, title_x=0.5,  width=500,
-         height=600)
-        chart.update_yaxes(automargin=True) 
-        return chart
-        """
-        try:
+        try: 
+            # plotly figure setup
+            chart=go.Figure()
+            chart.add_trace(go.Scatter(name='Standard proteins', x=df[amount], y=df[lfq_method].values, mode='markers'))
+            chart.add_trace(go.Scatter(name='line of best fit', x=df[amount], y=df['bestfit'], mode='lines', line_color='Black'))
             
-            fitting = f'R² = {round(R, 3)}'
-    
-            chart = px.scatter(
-                        x=df[amount], 
-                        y=df[lfq_method],
-                        trendline='ols',
-                        trendline_color_override='Black',
-                        hover_name=df['Accession'],
-                        labels={ 
-                                "x": "fmol of standard (log2)",  "y": f"{lfq_method} (log2)",
-                        },
-                width=500,
-                height=600
-            )
+            # plotly figure layout
+            chart.update_layout(xaxis_title = 'fmol of standard (log2)', yaxis_title = f"{lfq_method} (log2)")
             chart.update_traces(marker=dict(
                                 color='LightSkyBlue',
                                 size=8,
                                 line=dict(width=2,
                                         color='DarkSlateGrey')),
                       selector=dict(mode='markers'))
-            chart.update_layout(title_text=fitting, title_x=0.5)
-            chart.update_yaxes(automargin=True)  
+            chart.update_layout(title_text=fitting, title_x=0.5,  width=500,
+             height=600)
+            chart.update_yaxes(automargin=True) 
 
         except:
             chart = "Oops! Something went wrong when I tried to plot your standards :("
-            """        
-            #return chart
+                  
+        return chart
     
     def displot(df, lfq_method):
         try:
