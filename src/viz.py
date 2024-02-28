@@ -114,7 +114,7 @@ class Viz:
         # plotly figure setup
         chart=go.Figure()
         chart.add_trace(go.Scatter(name='Standard proteins', x=df[amount], y=df[lfq_method].values, mode='markers'))
-        chart.add_trace(go.Scatter(name='line of best fit', x=df[amount], y=df['bestfit'], mode='lines', fill='k'))
+        chart.add_trace(go.Scatter(name='line of best fit', x=df[amount], y=df['bestfit'], mode='lines', line_color='Black'))
         
         # plotly figure layout
         chart.update_layout(xaxis_title = 'fmol of standard (log2)', yaxis_title = f"{lfq_method} (log2)")
