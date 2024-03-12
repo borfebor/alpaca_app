@@ -4,4 +4,4 @@
 
 This is a GUI from the Python package [Alpaca_proteomics](https://github.com/borfebor/alpaca_proteomics). The app aims to facilitate the analysis of proteomics samples for Absolute Proteome Quantification based on protein standards. 
 
-[Instructions](https://github.com/borfebor/alpaca_app/blob/main/instructions.png)https://github.com/borfebor/alpaca_app/blob/main/instructions.png)
+![Instructions](https://github.com/borfebor/alpaca_app/blob/main/instructions.png)
