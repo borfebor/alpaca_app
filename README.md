@@ -3,14 +3,17 @@
 > An app by [B. Ferrero-Bordera](https://www.linkedin.com/in/borjaferrero/)
 ### Requirements
 
-Required packages for a proper function of the pipeline:
+Required packages for a proper function of the pipeline and last tested versions:
 
-- pandas 1.3.4
-- numpy 1.20.3
-- bokeh 2.4.2
-- matplotlib.pyplot
+- pandas 2.1.4
+- numpy 1.24.3
+- matplotlib 3.8.1
+- scipy 1.11.3
+- scikit-learn 1.4.1.post1
 - sklearn 1.0.1
 - seaborn 0.11.2
+- thefuzz 0.20.0
+
 
 **Other packages**
 - math / pi
