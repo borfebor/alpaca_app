@@ -37,7 +37,7 @@ After uploading the ProteinGroups file, the GUI changes to the data analysis pag
 
 This tab controls the sample preparation. It is an optional input in case the user wants to trace back to the original amount in the samples, rather than just quantifying what was measured in the Mass Spectrometer.
 
-### ![Photo 3. Experimental set-up]
+![Photo 3. Experimental set-up](https://github.com/borfebor/alpaca_app/blob/main/Screenshots/set_up.png)
 
 #### Sample preparation
 
@@ -85,7 +85,7 @@ In case the sample preparation includes the enrichment of a subproteomic fractio
 
 ### Data visualization
 
-### ![Photo 4. Visualization tab]
+![Photo 4. Visualization tab](https://github.com/borfebor/alpaca_app/blob/main/Screenshots/viz_option.png)
 This tab allows to explore some summary statistics of the data. As it is the amount of proteins quantified (`Quantified proteins`) per sample and summary statistics of the measured intensities per sample represented as boxplot (`intensities`). Additionally, principal component analysis (`PCA`) and intensity distribution (`Distribution plot`) were added the assesment of the samples quality. The fitting of calibration standards can be visualized in `Calibration curve`. Finally, a `heatmap` can be drawn and exported if desired.
 
 ### Your Data
