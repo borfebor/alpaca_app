@@ -113,8 +113,8 @@ This section corresponds to the quantified data allowing the user to export it f
 # Example datasets
 
 Example datasets are available in the following [folder](https://github.com/borfebor/alpaca_app/tree/main/Datasets).
-- **Enriched_example.txt**: Exoproteome dataset from [Ferrero-Bordera et al. 2024. Microbiology Spectrum](https://doi.org/10.1128/spectrum.02616-23')
-- **Membrane_example.txt**: Membrane proteome dataset from [Antelo-Varela et al. 2019. Anal. Chem.]('https://doi.org/10.1021/acs.analchem.9b02869')
+- **Enriched_example.txt**: Exoproteome dataset from [Ferrero-Bordera et al. 2024. Microbiology Spectrum](https://doi.org/10.1128/spectrum.02616-23)
+- **Membrane_example.txt**: Membrane proteome dataset from [Antelo-Varela et al. 2019. Anal. Chem.](https://doi.org/10.1021/acs.analchem.9b02869)
 
 # Cite us
 
