@@ -30,13 +30,14 @@ example_data = None
 
 if uploaded_file == None:
     
-    example_data = st.sidebar.selectbox('Example datasets', [None, 'Standard protocol', 'Enriched protocol', 'Membrane protocol'])
+    example_data = st.sidebar.selectbox('Example datasets', [None, 'Ferrero-Bordera et al. 2024', 'Antelo-Varela et al. 2019'])
 
 if example_data != None:   
     
-    paper_dict = {'Standard protocol':{'id':'Cytosol_example','source':'Ferrero-Bordera et al. 2024. Microbiology Spectrum','link':'https://doi.org/10.1128/spectrum.02616-23'}, 
-                  'Enriched protocol':{'id':'Enriched_example','source':'Ferrero-Bordera et al. 2024. Microbiology Spectrum','link':'https://doi.org/10.1128/spectrum.02616-23'},
-                  'Membrane protocol':{'id':'Membrane_example','source':'Antelo-Varela et al. 2019. Anal. Chem.','link':'https://doi.org/10.1021/acs.analchem.9b02869'}}
+    paper_dict = { 
+                  'Ferrero-Bordera et al. 2024':{'id':'Enriched_example','source':'Ferrero-Bordera et al. 2024. Microbiology Spectrum','link':'https://doi.org/10.1128/spectrum.02616-23'},
+                  'Antelo-Varela et al. 2019':{'id':'Membrane_example','source':'Antelo-Varela et al. 2019. Anal. Chem.','link':'https://doi.org/10.1021/acs.analchem.9b02869'}
+                  }
     
     top_bar.markdown(f"Working with an example dataset from [{paper_dict[example_data]['source']}]({paper_dict[example_data]['link']})")
     uploaded_file = f"Datasets/{paper_dict[example_data]['id']}.txt"

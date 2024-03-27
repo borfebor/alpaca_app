@@ -278,7 +278,7 @@ class alpaca:
             
         return df, conditions, lfq_method    
     
-    def scientist(prep, enrichment_type_dict, subproteome_dict=None):
+    def scienttist(prep, enrichment_type_dict, subproteome_dict=None):
         preparation = dict()
         for prepa in enumerate(enrichment_type_dict):
             enriched = prep[prepa[0]][1] != 0
