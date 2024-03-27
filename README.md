@@ -10,19 +10,19 @@ This is a GUI from the Python package [Alpaca_proteomics](https://github.com/bor
  
 Alpaca is a GUI optimised for the analysis and quantification of proteomics samples using protein standards (e.g., [UPS2](https://www.sigmaaldrich.com/DE/en/product/sigma/ups2)). It uses the Python pipeline [Alpaca_proteomics](https://github.com/borfebor/alpaca_proteomics) for quantifying Mass Spectrometry (MS)-based proteomics samples.
 
-### ![Photo 1. Home Page]
+### ![Photo 1. Home Page](https://github.com/borfebor/alpaca_app/blob/main/Screenshots/home.png)
 
 When accessing the GUI, a short description of the preferable workflow for the pipeline is shown in the main body. In the side bar, an uploader widget allows the users to import their ProteinGroups. CSV, TXT and Excel files are compatible with the software. Below the widget, different example datasets can be selected to explore the GUI capabilities.
 
-Sample names and replicates for each studied condition are infered by the software based on the given names during the search on MaxQuant. 
+Sample names and replicates for each studied condition are inferred by the software based on the given names during the search on MaxQuant. 
 
 ### ![Photo 2. Structure of the GUI](https://github.com/borfebor/alpaca_app/blob/main/Screenshots/Sidebartutorial.png)
 
-After uploading the ProteinGroups file, the GUI changes to the data analysis page. This page consist of two main parts, the body and the side bar.
+After uploading the ProteinGroups file, the GUI changes to the data analysis page. This page consists of two main parts, the body and the sidebar.
 
-- The **GUI side bar** controls quantification parameters as desired MS intensity method, normalization and protein standards. The side bar contains 2 main parts (`Data preprocessing` and `Quantification standards`). The desired data processing parameters can be choose in the `Data preprocessing` section. This include removal of contaminants, intensity normalization and data formatting. Additionally, `Quantification standards`section allows to select the used protein standards for quantification and the added amounts. By default it is set for UPS2, but custom standards can be added).
+- The **GUI sidebar** controls quantification parameters as desired MS intensity method, normalization and protein standards. The sidebar contains 2 main parts (`Data preprocessing` and `Quantification standards`). The desired data processing parameters can be chosen in the `Data preprocessing` section. This includes removal of contaminants, intensity normalization and data formatting. Additionally, the `Quantification standards` section allows to select the used protein standards for quantification and the added amounts. By default, it is set for UPS2, but custom standards can be added).
 
-- The **GUI body** which is divided in 3 parts (`Experimental set-up`, `Data visualization` and `Your data`) allows to user to add details on the experiment and visualize the data. Details on the sample preparation can be added on the `Experimental set-up`tab. Summary statistics of the data and its quantification can be explored in the `Data visualization`tab. Finally, `Your data` corresponds to the quantified proteins in tabular format to ready to be exported.
+- The **GUI body** which is divided into 3 parts (`Experimental set-up`, `Data visualization` and `Your data`) allows the user to add details on the experiment and visualize the data. Details on the sample preparation can be added to the `Experimental set-up` tab. Summary statistics of the data and its quantification can be explored in the `Data visualization` tab. Finally, `Your data` corresponds to the quantified proteins in a tabular format ready to be exported.
 
 
 # GUI side bar
