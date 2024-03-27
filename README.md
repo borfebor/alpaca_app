@@ -30,8 +30,24 @@ After uploading the ProteinGroups file, the GUI changes to the data analysis pag
 ![Photo 2. Sidebar](https://github.com/borfebor/alpaca_app/blob/main/Screenshots/Sidebartutorial.png)
 
 ### Data preprocessing
+- **Data cleaning:** If selected, proteins tagged as contaminants, decoys or reverse identifications are removed. It can be selected below which ones to remove or keep if necessary. Enabled by default.
+- **Data formatting:** Formats the data for the pipeline calculations. Necessary for the pipeline. If not selected, the data can only be cleaned as specified above and exported. Enabled by default.
+- **Label-Free Quantification Method:** The desired intensity-based method can be selected in this tab. The intensity methods shown are based on the ones identified in the provided dataset. By default, iBAQ is selected if it is present in the dataset.
+- **Normalization:** Three methods are implemented in Alpaca for intensity normalization. Median, relative and quantile normalization. By default is None.
 
 ### Quantification standards
+
+Absolute quantification using Alpaca is optimised for label-free methods, relying on the addition of a set of anchor proteins at a known amount. By default, UPS2 are set as anchor proteins. The user can add custom anchor proteins following the format described in Table 1.
+
+**Table 1.** Format for the file describing the stock solution of anchor proteins.
+
+| Accession  | MW (kDa) | Amount (fmol) |
+|------------|---------:|--------------:|
+| P02768     |   10.1   |         50    |
+| Q9Y6K9     |   65.8   |        100    |
+| P05067     |   32.5   |         25    |
+| O75475     |   48.2   |         75    |
+| Q00653     |   20.9   |         30    |
 
 # GUI body
 
@@ -43,7 +59,7 @@ This tab controls the sample preparation. It is an optional input in case the us
 
 #### Sample preparation
 
-**Table 1.** Example of the input table to define the parameters used for sample parameters. An example table can be generated in the GUI based on the added conditions. This example table can be exported as a template and edited to be imported later into the GUI.
+**Table 2.** Example of the input table to define the parameters used for sample parameters. An example table can be generated in the GUI based on the added conditions. This example table can be exported as a template and edited to be imported later into the GUI.
 | Condition   | SampleVolume | ProteinConcentration | AmountMS | CellsPerML | TotalCultureVolume | ProteinSRM | fmolSRM | Enrichment | EnrichmentDirection | StdDilution | StdVolume |
 |-------------|--------------|----------------------|----------|------------|--------------------|------------|---------|------------|---------------------|-------------|-----------|
 | Cond1_t0    | 2.31         | 2.99                 | 9.67     | 4.54       | 7.54               | TNAMLN     | 4.44    | False      | Down                | 3.96        | 1.22      |
@@ -74,9 +90,9 @@ This tab controls the sample preparation. It is an optional input in case the us
 
 #### Proteome fraction enrichment (Optional)
 
-In case the sample preparation includes the enrichment of a subproteomic fraction and protein standards have been used to quantify this enrichment step, the standards can be uploaded in this section. As in the sample preparation tab, a template can be generated and downloaded to edit. The GUI accepts the format described in table 2. 
+In case the sample preparation includes the enrichment of a subproteomic fraction and protein standards have been used to quantify this enrichment step, the standards can be uploaded in this section. As in the sample preparation tab, a template can be generated and downloaded to edit. The GUI accepts the format described in Table 3. 
 
-**Table 2.** Example of the enrichment standards input.
+**Table 3.** Example of the enrichment standards input.
 | Accession | MW (kDa) | StdConcentration (µg/µl) |
 |-----------|---------:|-------------------------:|
 | P02768    |     10.1 |                     2.5  |
@@ -88,7 +104,7 @@ In case the sample preparation includes the enrichment of a subproteomic fractio
 ### Data visualization
 
 ![Photo 4. Visualization tab](https://github.com/borfebor/alpaca_app/blob/main/Screenshots/viz_option.png)
-This tab allows to explore some summary statistics of the data. As it is the amount of proteins quantified (`Quantified proteins`) per sample and summary statistics of the measured intensities per sample represented as boxplot (`intensities`). Additionally, principal component analysis (`PCA`) and intensity distribution (`Distribution plot`) were added the assesment of the samples quality. The fitting of calibration standards can be visualized in `Calibration curve`. Finally, a `heatmap` can be drawn and exported if desired.
+This tab allows to explore some summary statistics of the data. As it is the number of proteins quantified (`Quantified proteins`) per sample and summary statistics of the measured intensities per sample represented as a boxplot (`intensities`). Additionally, principal component analysis (`PCA`) and intensity distribution (`Distribution plot`) were added to the assessment of the sample quality. The fitting of calibration standards can be visualized in the `Calibration curve`. Finally, a `heatmap` can be drawn and exported if desired.
 
 ### Your Data
 
@@ -96,6 +112,11 @@ This section corresponds to the quantified data allowing the user to export it f
 
 # Example datasets
 
+Example datasets are available in the following [folder](https://github.com/borfebor/alpaca_app/tree/main/Datasets).
+- **Enriched_example.txt**: Exoproteome dataset from [Ferrero-Bordera et al. 2024. Microbiology Spectrum](https://doi.org/10.1128/spectrum.02616-23')
+- **Membrane_example.txt**: Membrane proteome dataset from [Antelo-Varela et al. 2019. Anal. Chem.]('https://doi.org/10.1021/acs.analchem.9b02869')
+
 # Cite us
 
+Stay tuned, the article is submitted.
 
