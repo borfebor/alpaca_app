@@ -31,11 +31,11 @@ example_data = None
 if uploaded_file == None:
     
     example_data = st.sidebar.selectbox('Example datasets', [None, 'Ferrero-Bordera et al. 2024', 'Antelo-Varela et al. 2019'])
-    st.markdown("""
+    st.sidebar.markdown("""
                 ## About us
                 An app developed by [Microbial Proteomics lab](https://microbialproteomics.uni-greifswald.de/en/)
                 
-                ###[Tutorial and documentation](https://github.com/borfebor/alpaca_app)
+                ### [Tutorial and documentation](https://github.com/borfebor/alpaca_app)
                 """)
 
 if example_data != None:   
