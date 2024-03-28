@@ -34,7 +34,7 @@ if uploaded_file == None:
     st.sidebar.markdown("""
                 ### [Tutorial and documentation](https://github.com/borfebor/alpaca_app)
                 
-                An app developed by [Microbial Proteomics lab](https://microbialproteomics.uni-greifswald.de/en/)
+                An app developed by [Microbial Proteomics (Uni Greifswald)](https://microbialproteomics.uni-greifswald.de/en/)
                 
                 """)
                 
