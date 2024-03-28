@@ -1,6 +1,6 @@
 ![Instructions](https://github.com/borfebor/alpaca_app/blob/main/instructions.png)
 
-> An app by [B. Ferrero-Bordera](https://www.linkedin.com/in/borjaferrero/)
+> An app by [B. Ferrero-Bordera](https://www.linkedin.com/in/borjaferrero/) from [Microbial Proteomics (Uni Greifswald)](https://microbialproteomics.uni-greifswald.de/en/)
 ## Getting started
 
 Access the GUI in the following link:
@@ -8,6 +8,16 @@ Access the GUI in the following link:
 ### [🔗 alpaca.streamlit.app](https://alpaca.streamlit.app/)
 
 This is a GUI from the Python package [Alpaca_proteomics](https://github.com/borfebor/alpaca_proteomics). The app aims to facilitate the analysis of proteomics samples for Absolute Proteome Quantification based on protein standards. 
+
+# Cite us
+
+Stay tuned, the paper is submitted.
+
+# Example datasets
+
+Example datasets are available in the following [folder](https://github.com/borfebor/alpaca_app/tree/main/Datasets).
+- **Enriched_example.txt**: Exoproteome dataset from [Ferrero-Bordera et al. 2024. Microbiology Spectrum](https://doi.org/10.1128/spectrum.02616-23)
+- **Membrane_example.txt**: Membrane proteome dataset from [Antelo-Varela et al. 2019. Anal. Chem.](https://doi.org/10.1021/acs.analchem.9b02869)
 
 # Tutorial
 
@@ -114,14 +124,4 @@ This tab allows to explore some summary statistics of the data. As it is the num
 ### Your Data
 
 This section corresponds to the quantified data allowing the user to export it for further analysis. The data is exported as CSV. The data can be pivoted if the export format is not the desired, as by default it specified a row per protein quantified in each sample. Quantified data can also be filtered and sorted to export just a selected set of proteins. 
-
-# Example datasets
-
-Example datasets are available in the following [folder](https://github.com/borfebor/alpaca_app/tree/main/Datasets).
-- **Enriched_example.txt**: Exoproteome dataset from [Ferrero-Bordera et al. 2024. Microbiology Spectrum](https://doi.org/10.1128/spectrum.02616-23)
-- **Membrane_example.txt**: Membrane proteome dataset from [Antelo-Varela et al. 2019. Anal. Chem.](https://doi.org/10.1021/acs.analchem.9b02869)
-
-# Cite us
-
-Stay tuned, the article is submitted.
 
