@@ -1,6 +1,6 @@
 ![Instructions](https://github.com/borfebor/alpaca_app/blob/main/instructions.png)
 
-> An app by [B. Ferrero-Bordera](https://www.linkedin.com/in/borjaferrero/)
+> An app by [B. Ferrero-Bordera](https://www.linkedin.com/in/borjaferrero/) from [Microbial Proteomics (Uni Greifswald)](https://microbialproteomics.uni-greifswald.de/en/)
 ## Getting started
 
 Access the GUI in the following link:
