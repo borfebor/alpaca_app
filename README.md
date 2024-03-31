@@ -31,7 +31,7 @@ When accessing the GUI, a short description of the preferable workflow for the p
 
 Sample names and replicates for each studied condition are inferred by the software based on the given names during the search on MaxQuant. 
 
-### ![Photo 2. Structure of the GUI](https://github.com/borfebor/alpaca_app/blob/main/Screenshots/Sidebartutorial.png)
+### ![Photo 2. Structure of the GUI](https://github.com/borfebor/alpaca_app/blob/main/Screenshots/structure.png)
 
 After uploading the ProteinGroups file, the GUI changes to the data analysis page. This page consists of two main parts, the body and the sidebar.
 
