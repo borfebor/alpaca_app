@@ -5,6 +5,7 @@ from PIL import Image
 
 from src.alpaca_st import alpaca
 from src.viz import Viz
+from src.spits import detective, Normalization, Imputation, tools
 
 image = Image.open('ALPACA_LOGO2.png')
 tab_logo = Image.open('tab_logo.png')
@@ -38,8 +39,6 @@ if uploaded_file == None:
                 
                 """)
                 
-                
-
 if example_data != None:   
     
     paper_dict = { 
@@ -63,23 +62,56 @@ if uploaded_file is not None:
      
     st.sidebar.header('Data preprocessing')
     cleaning = st.sidebar.checkbox('Data cleaning', value=True)
-    formatting = st.sidebar.checkbox('Data formatting', value=True)
     
-    lfq_options = ['iBAQ', 'LFQ intensity', 'Top3', 'Intensity', 'MS/MS count']
+    id_col, is_pivot, it = detective.alpacaHolmes(df)
     
+    formatting = st.sidebar.checkbox('Data formatting', value=is_pivot)
+    
+    lfq_options = list(it.keys())
+    
+    id_cols = list(dict.fromkeys([col for col in df.select_dtypes(exclude=[np.number, 'bool']).columns]))
     lfq_menu = list(dict.fromkeys([item for item in lfq_options for col in df.select_dtypes(include=np.number).columns if item in col]))
     
+    id_col = st.sidebar.selectbox('Accession column', id_cols, id_cols.index(id_col))
     lfq_method = st.sidebar.selectbox('Label-Free Quantification method', lfq_menu, 0)
     
-    normalization = st.sidebar.selectbox('Intensity normalization', [False, 'Relative', 'Median', 'Quantile'], 0)
-        
-    df, condition, lfq_method = alpaca.spits(df, lfq_method=lfq_method, lfq_columns=lfq_menu,
-                                                cleaning=cleaning, normalization=normalization,
-                                                formatting=formatting, identifier=None)
+    replicate_dict, conditions, it = detective.alpacaWatson(df, it, id_col, lfq_method)
+    
+    norm_dict = {'None':None, 'Relative': Normalization.Median, 'Median': Normalization.Median, 'Quantile': Normalization.Quantile}
+    
+    normalization = st.sidebar.selectbox('Intensity normalization', list(norm_dict.keys()), 0)
+    
+    the_list = [len(v) for k, v in  tools.invert_dict(replicate_dict).items()]
+    max_values = np.max(the_list)
+    
+    value_filter = st.sidebar.slider('Valid values per condition', min_value=0, max_value=max_values, value=2) / max_values
+    
+    imputation_methods = {
+        'None': ('', {''}),
+        'Lowest of Detection (LOD)': (Imputation.impute_lod, {'lod': 0.01}),
+        'Normal Distribution (ND)': (Imputation.impute_nd, {'lod': 0.01}),# 'mean': mean, 'std': std}),
+        'k-Nearest Neighbors (kNN)': (Imputation.impute_knn, {'n_neighbors': 5}),
+        'Local Least Squares (LLS)': (Imputation.impute_lls, {'max_iter': 10}),
+        #'Random Forest (RF)': (Imputation.impute_rf, {'max_iter': 10}),
+        'Singular Value Decomposition (SVD)': (Imputation.impute_svd, {'n_components': 2}),
+        #'Bayesian Principal Component Analysis (BPCA)': (Imputation.impute_bpca, {'n_components': 2, 'max_iter': 100})
+        }
+    
+    impute = st.sidebar.selectbox('Imputation method', list(imputation_methods.keys()), 0)
+    imp_method = imputation_methods[impute][0]
+    
+    df = alpaca.spits(df, id_col, lfq_method, replicate_dict,
+                      cleaning=cleaning, formatting=formatting, normalization=norm_dict[normalization],
+                      valid_values=value_filter, imputation=imp_method,)
     
     if formatting == False:
      
         export_not_formated_results = df.to_csv(sep='\t').encode('utf-8')
+        
+        st.title('Your data')
+        
+        listed_cond = ', '.join(col for col in conditions)
+        st.write(f'Your data contains {df.Accession.nunique()} proteins from {len(conditions)} experimental conditions ({listed_cond})')
         
         st.dataframe(df, use_container_width=True)   
         
@@ -121,7 +153,7 @@ if uploaded_file is not None:
                |QZ06T9          |50 |18093|
                > **Amount column:** it should contain "fmol" on the title (e.g. Amount_fmol)
                
-               > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification (e.g. Molecular wight (Da)).
+               > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification (e.g. Molecular weight (Da)).
                """)
         else:
           standards = alpaca.eats(custom_std)  
@@ -164,8 +196,8 @@ if uploaded_file is not None:
     
     st.title('Your data')
     
-    listed_cond = ', '.join(col for col in condition)
-    st.write(f'Your data contains {len(condition)} experimental conditions ({listed_cond})')
+    listed_cond = ', '.join(col for col in conditions)
+    st.write(f'Your data contains {df.Accession.nunique()} proteins from {len(conditions)} experimental conditions ({listed_cond})')
     
     results = st.empty()
     
@@ -393,7 +425,7 @@ if uploaded_file is not None:
                 to_pca = df[~df[sorter].isin(sorting)]
                 
                 pcanalysis, components, variance = alpaca.pcomponent(to_pca, lfq_method, 
-                                                                     conditions=condition)
+                                                                     conditions=conditions)
                 
                 x = settings.selectbox('X axis component', 
                                                  components, 0)
