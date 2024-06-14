@@ -8,12 +8,9 @@ Created on Sun Jan  1 21:00:40 2023
 
 import numpy as np
 import seaborn as sns
-
 import plotly.graph_objs as go
 import plotly.express as px
-
 from sklearn.linear_model import LinearRegression
-
 
 class Viz:
     

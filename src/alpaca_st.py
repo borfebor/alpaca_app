@@ -13,6 +13,7 @@ from sklearn.cluster import KMeans
 from thefuzz import fuzz
 import re
 import os
+from src.spits import Normalization, tools, clean, Imputation
 
 class alpaca:
     
@@ -68,216 +69,64 @@ class alpaca:
             st.warning('Not compatible format')
 
        	return df
-
-    def data_cleaner(df, to_remove):
-    
-    	for col in to_remove:
-        	if col in df.columns:
-            		df = df.loc[lambda df: df[col].isna()]
-    	df = df.drop(columns=to_remove)
-
-    	return df
-
-    
-    def quant_norm(df):
-        ranks = (df.rank(method="first")
-                  .stack())
-        rank_mean = (df.stack()
-                       .groupby(ranks)
-                       .mean())
-        # Add interpolated values in between ranks
-        finer_ranks = ((rank_mean.index+0.5).to_list() +
-                        rank_mean.index.to_list())
-        rank_mean = rank_mean.reindex(finer_ranks).sort_index().interpolate()
-        return (df.rank(method='average')
-                  .stack()
-                  .map(rank_mean)
-                  .unstack())
-    
-    
-    def normalizer(data, lfq_method='iBAQ', normalization='Median', 
-                   id_col=['Protein', 'Accession', 'Unique peptides', 'Mol. weight [kDa]']):
-    
-        df = data.copy()  
-        print(f'Samples are normalized through {normalization} normalization')
-        if normalization == 'Median':
-    
-            for sample in df.Sample.unique():
-                operator = df[df.Sample == sample][lfq_method].median()
-                
-                df[lfq_method] = np.where(df.Sample == sample, df[lfq_method] - operator, df[lfq_method])
-            new_col = f'm{lfq_method}'
-            df = df.rename(columns={lfq_method:new_col})
-                
-        elif normalization == 'Relative':
-            
-            df[lfq_method] = np.power(df[lfq_method], 2)
-            for sample in df.Sample.unique():
-                
-                operator = df[df.Sample == sample][lfq_method].sum()
-                df[lfq_method] = np.where(df.Sample == sample, df[lfq_method] / operator, df[lfq_method])
-            
-            df[lfq_method] = np.log2(df[lfq_method])
-                
-            new_col = f'r{lfq_method}'
-            df = df.rename(columns={lfq_method:new_col})
-                
-        elif normalization == 'Quantile':
-    
-            pivot_df = df.pivot_table(index=id_col, columns='Sample', values=lfq_method)
-            
-            lfq = [col for col in pivot_df.columns if lfq_method in col if '_' in col]
-                
-            pivot_df[lfq] = alpaca.quant_norm(pivot_df[lfq])
-            
-            df = pivot_df.reset_index().melt(id_vars=id_col, value_vars=lfq, var_name='Sample', value_name=lfq_method)
-            new_col = f'q{lfq_method}'
-            df = df.rename(columns={lfq_method:new_col})
-            
-        return df, new_col
-
-
-    def machine_vision(df, conditions, ids, lfq_cols, lfq_method, identifier=None):
-    	
-        df_melt = df.melt(id_vars=ids, 
-                        value_vars=lfq_cols,
-                        var_name='Sample', value_name='value')
-        df_melt = df_melt.rename(columns={'value':lfq_method})
-        if identifier != None:
-                df_melt = alpaca.identifiers(df_melt, identifier)
-            
-        return df_melt
-    
-    def identifiers(df, identifier):
-        if type(identifier) is not dict:
-            
-            raise ValueError("A dictionary should be used to add identifiers (e.g. {'Subproteome':'Membrane'})")
+       
         
-        else:
-            
-            clean = df.copy()
-            
-            for col_name in identifier:
-            
-                if type(identifier[col_name]) is dict:
-                    
-                    for wish in identifier[col_name]:
-            
-                        column = [col for col in clean.columns if wish in clean[col].to_list()]
-                        
-                        #if col
-                        if col_name not in clean.columns:
-                            clean[col_name] = np.nan
-                            
-                        clean[col_name] = np.where(clean[column[0]] == wish,
-                                                    identifier[col_name][wish], 
-                                                    clean[col_name])
-                elif type(identifier[col_name]) is str:
-                    clean[col_name] = identifier[col_name]
-        
-            return clean
-        
-    def spits(df, lfq_method='iBAQ', cleaning=True, formatting=True, 
-              lfq_columns=['iBAQ', 'LFQ', 'Top3', 'Intensity', 'MS/MS count'], 
-              normalization=False, identifier=None,
-              protein_ids=['Accession', 'Gene names', 'Mol. weight [kDa]']):
-        '''
-        
-
-        Parameters
-        ----------
-        df : dataframe
-            DESCRIPTION.
-        lfq_method : str, optional
-            DESCRIPTION. The default is 'iBAQ'.
-        cleaning : bool, optional
-            Removes potential contaminants, reverse and identified by site. The default is True.
-        formating : bool, optional
-            Rearranges the data with the desired structure for further analysis. The default is True.
-        identifier : dict, optional
-            Adds a column with the given identifiers (e.g. {'col_name':'value'}. The default is None.
-        valid_values : int, optional
-            Minimum quantified values per protein needed considering it as a valid quantification. The default is 2.
-        protein_ids : list, optional
-            List of headers which are desired to be used as identifiers. They should be present in the ProteinGroups.txt headers. 
-            The default is ['Accession', 'Gene names', 'Unique peptides', 'Mol. weight [kDa]'].
-        Returns
-        -------
-        df : TYPE
-            DESCRIPTION.
-        conditions : TYPE
-            DESCRIPTION.
-
-        '''
-    
+    def spits(df, id_col, lfq_method, replicate_dict, cleaning=True, formatting='auto', 
+             transformation=np.log2, normalization=None, valid_values=0.7, imputation='', **imp_kwargs):
+        """
+        """
         df.columns = df.columns.str.replace('.: ', '')
-        
-        if 'Accession' not in df.columns:
-            uniprot_key = [col for col in range(len(df.columns)) if 'Protein ID' in df.columns[col]]
-            columns = list(df.columns)
-            columns[uniprot_key[0]] = 'Accession'
-            
-            df.columns = columns
-        
-    	# Checking for data cleaning
-        
-        potential_cols = ['identified by site', 'contaminant', 'Reverse']
-        cont_key = [col for col in df.columns for item in potential_cols if item in col]
-        
-        suggested = ['Accession', 'Gene names', 'Mol. weight [kDa]']
+        samples = list(replicate_dict.keys())
+        #conditions = list(tools.invert_dict(replicate_dict).keys())
     
-        conditions, samples, replicate_dict = alpaca.path_finder(df, lfq_method)
-        all_ids = [col for col in df.columns if col not in samples]
-        default = [col for col in all_ids if col in suggested]
-        
-        wanted_ids = st.sidebar.multiselect('Data identifiers of interest', all_ids , default)
-        ids = [col for col in df.columns if col in wanted_ids]
+        if 'Accession' not in df.columns:
+            df.columns = [re.sub(id_col, 'Accession', id_col) 
+                          if id_col == col else col for col in df.columns]
+    
+        # Removal of contaminants, and decoys
+        potential_cols = ['identified by site', 'contaminant', 'Reverse']
+        cont_key = [col for col in df.select_dtypes(exclude=np.number).columns for item in potential_cols if item in col]
+    
+        # Select columns with additional information 
+        all_ids, priority = ['Accession'],  ['name', 'kDa']
+        [all_ids.append(col) for col in df.columns for i in priority if i.upper() in col.upper()]
+        [all_ids.append(col) for col in df.select_dtypes(exclude=np.number).columns if col not in all_ids]
+        wanted_ids = st.sidebar.multiselect('Data identifiers of interest', all_ids , all_ids[:3])
+        ids = [col for col in df.select_dtypes(exclude=np.number).columns if col in wanted_ids]
         
         if cleaning is True:
-            to_remove = st.sidebar.multiselect('Items to remove', cont_key, cont_key)
-            df = alpaca.data_cleaner(df, to_remove)
-            print(f'Items marked on {to_remove} have been removed from the dataset.')
-            
+            cont_key = st.sidebar.multiselect('Items to remove', cont_key, cont_key)
+            df = df[df[cont_key].isna().all(axis=1)].reset_index(drop=True)
+            print(f"Items marked on {', '.join(cont_key)} have been removed from the dataset.")
+    
+        df = df[ids+samples].replace(0, np.nan)
+        log_samples = [i for i in samples if 'LOG' not in i.upper()]
+        df[log_samples] = df[log_samples].apply(lambda x: transformation(x)) 
+        df[samples] = clean.filter_rows_by_missing_values(df[samples], replicate_dict, valid_values)
+        df = df.dropna(subset=samples, thresh=1)
+        if imputation != '':
+            df[samples] = Imputation.by_condition(df[samples], replicate_dict, imputation, **imp_kwargs)
+        df = Normalization.normalizer(df, samples, normalization)
         
+        if formatting == 'auto':
+            formatting = tools.is_pivot(df, id_col)
+    
         if formatting is True:
-            
-            df = alpaca.machine_vision(df, conditions, ids, samples, lfq_method, identifier)
-            
-            df = df.replace(0, np.nan)
-            df[lfq_method] = np.log2(df[lfq_method])
-            
-            if normalization != False:
-                
-                df, lfq_method = alpaca.normalizer(df, lfq_method=lfq_method, 
-                                                   normalization=normalization, id_col=ids)
-                
-            df['Condition'] = np.nan
-            df['Replicate'] = np.nan
-            
-            for item in replicate_dict:
-                
-                df['Condition'] = np.where(df.Sample == item, replicate_dict[item][0], df.Condition)
-                df['Replicate'] = np.where(df.Sample == item, replicate_dict[item][1], df.Replicate)
-
-            df['Sample'] = df['Sample'].str.rsplit(' ', expand=True, n=1)[1]
-            df['Condition'] = df['Condition'].str.replace(r'[_-]0', '', regex=True)
-
+            df = df.melt(id_vars=ids, value_vars=samples, 
+                        var_name='Sample', value_name=lfq_method).replace(0, np.nan)
+            df[['Condition', 'Replicate']] = df['Sample'].replace(replicate_dict).str.split(';', expand=True)
             df = df.dropna(subset=lfq_method)
-            
+
             if 'Gene names' in ids:
                 df['Gene names'] = df['Gene names'].str[0].str.upper() + df['Gene names'].str[1:]
                 df = df.rename(columns={'Gene names':'Protein'})
-            print('Dataset formated for further analysis and visualisation.')
-            
-            conditions = df.Condition.unique()
-        
+                
+            print('Dataset formated for further analysis and visualisation.')   
+            return df
         else:
-            ids = ids + samples
-            df = df[ids]
-            print('Data is formated for human vision.\nThat could lead to errors or incompatibilities in further analysis using Alpaca pipeline.\nConsider formating your dataset if you see any anomally.')
-            
-        return df, conditions, lfq_method    
-    
+            st.warning('Data is formated for human vision.\nThat could lead to errors or incompatibilities in further analysis using Alpaca pipeline.\nConsider formating your dataset if you see any anomally.')
+            return df
+
     def scienttist(prep, enrichment_type_dict, subproteome_dict=None):
         preparation = dict()
         for prepa in enumerate(enrichment_type_dict):
@@ -925,7 +774,11 @@ class alpaca:
     def create_random_df(df):
         # Select 10 random entries from the original data frame
         random_indices = np.random.choice(df.index, size=9, replace=False)
-        random_df = df.loc[random_indices, ["Accession", "Mol. weight [kDa]"]]
+        selector = [col for col in df.columns if col in ["Accession", "Mol. weight [kDa]"]]
+            
+        random_df = df.loc[random_indices, selector]
+        if "Mol. weight [kDa]" not in selector:
+            random_df["Mol. weight [kDa]"] = np.random.rand(9)*100
     
         # Add fmol values of 50, 500, and 5000
         fmol_values = [50, 500, 5000] * 3
