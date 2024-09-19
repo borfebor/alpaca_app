@@ -2,10 +2,12 @@
 import numpy as np
 import streamlit as st
 from PIL import Image
+import pandas as pd
 
 from src.alpaca_st import alpaca
 from src.viz import Viz
 from src.spits import detective, Normalization, Imputation, tools
+from src.census import advisor
 
 image = Image.open('ALPACA_LOGO2.png')
 tab_logo = Image.open('tab_logo.png')
@@ -59,79 +61,13 @@ if uploaded_file is not None:
     df = alpaca.eats(uploaded_file)
 
     aid =  st.empty()
-     
-    st.sidebar.header('Data preprocessing')
-    cleaning = st.sidebar.checkbox('Data cleaning', value=True)
-    
-    id_col, is_pivot, it = detective.alpacaHolmes(df)
-    
-    formatting = st.sidebar.checkbox('Data formatting', value=is_pivot)
-    
-    lfq_options = list(it.keys())
-    
-    id_cols = list(dict.fromkeys([col for col in df.select_dtypes(exclude=[np.number, 'bool']).columns]))
-    lfq_menu = list(dict.fromkeys([item for item in lfq_options for col in df.select_dtypes(include=np.number).columns if item in col]))
-    
-    id_col = st.sidebar.selectbox('Accession column', id_cols, id_cols.index(id_col))
-    lfq_method = st.sidebar.selectbox('Label-Free Quantification method', lfq_menu, 0)
-    
-    replicate_dict, conditions, it = detective.alpacaWatson(df, it, id_col, lfq_method)
-    
-    norm_dict = {'None':None, 'Relative': Normalization.Median, 'Median': Normalization.Median, 'Quantile': Normalization.Quantile}
-    
-    normalization = st.sidebar.selectbox('Intensity normalization', list(norm_dict.keys()), 0)
-    
-    the_list = [len(v) for k, v in  tools.invert_dict(replicate_dict).items()]
-    max_values = np.max(the_list)
-    
-    value_filter = st.sidebar.slider('Valid values per condition', min_value=0, max_value=max_values, value=2) / max_values
-    
-    imputation_methods = {
-        'None': ('', {''}),
-        'Lowest of Detection (LOD)': (Imputation.impute_lod, {'lod': 0.01}),
-        'Normal Distribution (ND)': (Imputation.impute_nd, {'lod': 0.01}),# 'mean': mean, 'std': std}),
-        'k-Nearest Neighbors (kNN)': (Imputation.impute_knn, {'n_neighbors': 5}),
-        'Local Least Squares (LLS)': (Imputation.impute_lls, {'max_iter': 10}),
-        #'Random Forest (RF)': (Imputation.impute_rf, {'max_iter': 10}),
-        'Singular Value Decomposition (SVD)': (Imputation.impute_svd, {'n_components': 2}),
-        #'Bayesian Principal Component Analysis (BPCA)': (Imputation.impute_bpca, {'n_components': 2, 'max_iter': 100})
-        }
-    
-    impute = st.sidebar.selectbox('Imputation method', list(imputation_methods.keys()), 0)
-    imp_method = imputation_methods[impute][0]
-    
-    df = alpaca.spits(df, id_col, lfq_method, replicate_dict,
-                      cleaning=cleaning, formatting=formatting, normalization=norm_dict[normalization],
-                      valid_values=value_filter, imputation=imp_method,)
-    
-    if formatting == False:
-     
-        export_not_formated_results = df.to_csv(sep='\t').encode('utf-8')
-        
-        st.title('Your data')
-        
-        listed_cond = ', '.join(col for col in conditions)
-        st.write(f'Your data contains {df.Accession.nunique()} proteins from {len(conditions)} experimental conditions ({listed_cond})')
-        
-        st.dataframe(df, use_container_width=True)   
-        
-        st.download_button(
-              label="Download clean data",
-              data=export_not_formated_results,
-              file_name='alpaca_clean_data.txt',
-              mime='text/csv',
-              help='Here you can download your data',
-              use_container_width=True,
-          )
-        
-        st.stop()
     
     st.sidebar.header('Quantification standards')
     
     standards = alpaca.eats('UPS2.txt')
     
     used_std = st.sidebar.selectbox('Used quantification standards', 
-                     ['UPS1', 'UPS2', 'UPS3', 'Custom'], 1)
+                     ['UPS2', 'Custom'], 0)
     
     if used_std == 'Custom':
         
@@ -158,10 +94,51 @@ if uploaded_file is not None:
         else:
           standards = alpaca.eats(custom_std)  
         
-    st.sidebar.subheader('Quantification standards parameters')
+
+     
+    st.sidebar.header('Data preprocessing')
+    cleaning = st.sidebar.checkbox('Data cleaning', value=True)
     
-    samples = list(df.Sample.unique())
-    replicate = None
+    id_col, is_pivot, it = detective.alpacaHolmes(df)
+    it_raw = it.copy()
+    
+    formatting = st.sidebar.checkbox('Data formatting', value=is_pivot)
+    
+    lfq_options = list(it.keys())
+    
+    id_cols = list(dict.fromkeys([col for col in df.select_dtypes(exclude=[np.number, 'bool']).columns]))
+    lfq_menu = list(dict.fromkeys([item for item in lfq_options for col in df.select_dtypes(include=np.number).columns if item in col]))
+    
+    id_col = st.sidebar.selectbox('Accession column', id_cols, id_cols.index(id_col))
+    lfq_method = st.sidebar.selectbox('Label-Free Quantification method', lfq_menu, 0)
+    
+    replicate_dict, conditions, it = detective.alpacaWatson(df, it, id_col, lfq_method)
+    
+    norm_dict = {'None':None, 'Relative': Normalization.Relative, 'Median': Normalization.Median, 'Quantile': Normalization.Quantile}
+    
+    normalization = st.sidebar.selectbox('Intensity normalization', list(norm_dict.keys()), 0)
+    
+    the_list = [len(v) for k, v in  tools.invert_dict(replicate_dict).items()]
+    max_values = np.max(the_list)
+    
+    value_filter = st.sidebar.slider('Valid values per condition', min_value=0, max_value=max_values, value=2) / max_values
+    
+    imputation_methods = {
+        'None': ('', {''}),
+        'Lowest of Detection (LOD)': (Imputation.impute_lod, {'lod': 0.01}),
+        'Normal Distribution (ND)': (Imputation.impute_nd, {'lod': 0.01}),# 'mean': mean, 'std': std}),
+        'k-Nearest Neighbors (kNN)': (Imputation.impute_knn, {'n_neighbors': 5}),
+        'Local Least Squares (LLS)': (Imputation.impute_lls, {'max_iter': 10}),
+        #'Random Forest (RF)': (Imputation.impute_rf, {'max_iter': 10}),
+        'Singular Value Decomposition (SVD)': (Imputation.impute_svd, {'n_components': 2}),
+        #'Bayesian Principal Component Analysis (BPCA)': (Imputation.impute_bpca, {'n_components': 2, 'max_iter': 100})
+        }
+    
+    impute = st.sidebar.selectbox('Imputation method', list(imputation_methods.keys()), 0)
+
+    imp_method = imputation_methods[impute][0]
+    
+    st.sidebar.subheader('Quantification standards parameters')
         
     col1, col2 = st.sidebar.columns(2)  
     concentration = col1.number_input('Quantification Standards concentration (µg/µl)', 0.0, 21.2, 0.5)
@@ -172,21 +149,59 @@ if uploaded_file is not None:
     
     standards_clean = standards.copy()
     
+    raw_df = df.copy()
+    df = alpaca.spits(df, id_col, lfq_method, replicate_dict,
+                      cleaning=cleaning, formatting=formatting, normalization=norm_dict[normalization],
+                      valid_values=value_filter, imputation=imp_method,)
+    
+    samples = list(replicate_dict.values())
+   
+    replicate = None
+    added = None
+    
     if samples_with_ups == False:
         
         try:
-            suggested = alpaca.pca(df, standards_clean, lfq_method)
-            clustered, suggested = alpaca.KMeans(suggested)
+            suggested = advisor.pca(df, standards_clean, lfq_method)
+            clustered, suggested = advisor.KMeans(suggested)
         except:
             suggested = []
         
-        replicate = st.sidebar.multiselect('Select where can I find your UPS spiked', 
+        suggested = [replicate_dict[i] for i in suggested]
+        added = st.sidebar.multiselect('Select where can I find your UPS spiked', 
                                    samples, suggested)
+        
+        inverted = {v: k for k, v in replicate_dict.items()}
+        
+        replicate = [inverted[i] for i in added]
+
         
     selected = st.sidebar.multiselect('Is there any outlier to remove?',
                                 list(standards['Accession'].unique()))
             
     standards_clean = standards[~standards['Accession'].isin(selected)] 
+    
+    if formatting == False:
+     
+        export_not_formated_results = df.to_csv(sep='\t').encode('utf-8')
+        
+        st.title('Your data')
+        
+        listed_cond = ', '.join(col for col in conditions)
+        st.write(f'Your data contains {df.Accession.nunique()} proteins from {len(conditions)} experimental conditions ({listed_cond})')
+        
+        st.dataframe(df, use_container_width=True)   
+        
+        st.download_button(
+              label="Download clean data",
+              data=export_not_formated_results,
+              file_name='alpaca_clean_data.txt',
+              mime='text/csv',
+              help='Here you can download your data',
+              use_container_width=True,
+          )
+        
+        st.stop()
         
     experimenter = st.expander('Experimental set-up', expanded=False)
     
@@ -207,7 +222,7 @@ if uploaded_file is not None:
         data, ups2, coef, inter, R2 = alpaca.census(df, standards_clean, concentration=concentration, 
                                                            in_sample=amount, lfq_col=lfq_method, filter_col='Sample',
                                                            added_samples=replicate, valid_values=2,
-                                                           save=False)   
+                                                           save=False)  
     except:
         aid.warning("Couldn't find the quantification standards")
         aid.markdown("""
@@ -231,6 +246,25 @@ if uploaded_file is not None:
                
                > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification (e.g. Molecular wight (Da)).
                """)
+               
+    try:
+        ups2
+    except:
+        std_check = None
+    
+    if std_check is not None:
+           
+        std_test = ups2[['Accession', 'log2_Amount_fmol']].copy()
+        
+        norm_advise = ''
+        res_hm, lfq_advise, norm_advise = advisor.mini_spits(raw_df, std_test, it, id_col, norm_dict=norm_dict,
+                           added_samples=added)
+        
+        if norm_advise != '':
+            aid.info(f'Based on your data, {norm_advise}-normalized {lfq_advise} is recommended for the quantification.')
+        else:
+            aid.info(f'Based on your data, {lfq_advise} without normalization is recommended for the quantification.')
+
     
     with experimenter:
 
@@ -355,7 +389,7 @@ if uploaded_file is not None:
        
     if 'sample_conditions' in globals():
         
-        data = alpaca.wooler(df, sample_conditions)
+        data = alpaca.wool(df, sample_conditions)
 
 
     param_1 = 'Sample'
@@ -366,14 +400,19 @@ if uploaded_file is not None:
         
         settings, plot = st.columns([1,2])
         
-        plots = ['Intensities', 'Quantified proteins', 'Calibration curve',
-         'PCA','Distribution plot', 'Heatmap']
+        plots = []
+                
+        if 'res_hm' in globals():
+            plots.append('Fitting advisor')
             
+        plots = plots + ['Intensities', 'Quantified proteins', 'Calibration curve',
+         'PCA','Distribution plot', 'Heatmap']
+        
         if 'e_test' in globals():
             plots.append('Enrichment')
             
         viz_type = settings.selectbox('What would you like to inspect?', 
-                                plots, 1)
+                                plots, plots.index('Quantified proteins'))
         
         adjusment = settings.checkbox('Adjust plot to the container', True)
         
@@ -457,7 +496,6 @@ if uploaded_file is not None:
         elif viz_type == 'Heatmap':
                      
             z_score = settings.checkbox('Z score normalization', False)
-            
             numerical = settings.selectbox('Value to plot', 
                                            numbers, lfq_index)
 
@@ -480,6 +518,30 @@ if uploaded_file is not None:
                                          hm_palettes , hm_palettes.index('rdbu'))
             
             chart = Viz.heatmap(data, 'Sample','Protein',  numerical, z_score, color_scheme)
+            
+        elif viz_type == 'Fitting advisor':
+                     
+            z_score = False
+            res_hm['score'] = res_hm['score'].apply(lambda x: np.round(x, 3))
+            hm_palettes = ['aggrnyl', 'agsunset', 'algae', 'amp', 'armyrose', 'balance',
+                                            'blackbody', 'bluered', 'blues', 'blugrn', 'bluyl', 'brbg',
+                                            'brwnyl', 'bugn', 'bupu', 'burg', 'burgyl', 'cividis', 'curl',
+                                            'darkmint', 'deep', 'delta', 'dense', 'earth', 'edge', 'electric',
+                                            'emrld', 'fall', 'geyser', 'gnbu', 'gray', 'greens', 'greys',
+                                            'haline', 'hot', 'hsv', 'ice', 'icefire', 'inferno', 'jet',
+                                            'magenta', 'magma', 'matter', 'mint', 'mrybm', 'mygbm', 'oranges',
+                                            'orrd', 'oryel', 'oxy', 'peach', 'phase', 'picnic', 'pinkyl',
+                                            'piyg', 'plasma', 'plotly3', 'portland', 'prgn', 'pubu', 'pubugn',
+                                            'puor', 'purd', 'purp', 'purples', 'purpor', 'rainbow', 'rdbu',
+                                            'rdgy', 'rdpu', 'rdylbu', 'rdylgn', 'redor', 'reds', 'solar',
+                                            'spectral', 'speed', 'sunset', 'sunsetdark', 'teal', 'tealgrn',
+                                             'tealrose', 'tempo', 'temps', 'thermal', 'tropic', 'turbid',
+                                            'turbo', 'twilight', 'viridis', 'ylgn', 'ylgnbu', 'ylorbr','ylorrd']
+            
+            color_scheme = settings.selectbox('Colour scheme', 
+                                         hm_palettes , hm_palettes.index('blues'))
+            
+            chart = Viz.heatmap(res_hm, 'method', 'normalization',  'score', z_score, color_scheme)
 
         try: 
              plot.plotly_chart(chart, theme=None, use_container_width=adjusment) 
