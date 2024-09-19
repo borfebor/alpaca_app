@@ -9,18 +9,14 @@ Created on Sun Jun 30 18:34:39 2024
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import r2_score
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.impute import KNNImputer, SimpleImputer
 import streamlit as st
-from itertools import permutations
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
-from thefuzz import fuzz
 import re
-import os
 from src.spits import Normalization, tools, clean, Imputation, detective
 
 

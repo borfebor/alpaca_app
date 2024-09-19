@@ -187,8 +187,8 @@ class alpaca:
             added_samples = df[filter_col].unique().tolist()  # Apply to all replicates by default
         ups_red, coef, inter, R2 = Quantification.regression(df, ups2, lfq_col=lfq_col, filter_col=filter_col,
                                                      added_samples=added_samples, valid_values=valid_values) # Regression between intensities and standards
-        if R2 < 0.8:
-            st.warning(f"Low R² value ({R2:.2f}), indicating a poor fit for the regression.")
+        #if R2 < 0.8:
+        #    st.warning(f"Low R² value ({R2:.2f}), indicating a poor fit for the regression.")
         Quantification.abacusreg(ups_red, lfq_col=lfq_col, R2=R2, save=save) # Plots the Regression
         df = Quantification.moles(df, coef, inter, lfq_col=lfq_col, ratio = ratio)
     
