@@ -1,80 +1,84 @@
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.impute import KNNImputer, SimpleImputer
 import streamlit as st
-from itertools import permutations
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from sklearn.cluster import KMeans
-from thefuzz import fuzz
 import re
-import os
 from src.spits import Normalization, tools, clean, Imputation
+from src.census import Quantification
+from src.gathers import gathering
+from src.wool import yarnScissors
 
 class alpaca:
     
     def eats(file):
+        """
+        Loads a file (either in CSV, TSV, or XLSX format) into a Pandas DataFrame.
         
-        if type(file) == str:
+        Parameters:
+        file : str or file-like object
+            The file can be provided as a string representing the file path (in which case it's assumed to be on disk)
+            or as a file-like object (e.g., uploaded file in Streamlit).
+        
+        Returns:
+        df : pandas.DataFrame or None
+            The file content as a DataFrame if it is of a supported type (CSV, TSV, XLSX), otherwise returns None.
+        """
+        
+        if isinstance(file, str):
             file_name = file
         else:
             file_name = file.name
-        
-        if 'TXT' in file_name.upper():
-            
-            df = pd.read_csv(file, sep='\t')
 
-        elif 'TSV' in file_name.upper():
-            
-            df = pd.read_csv(file, sep='\t')
-            
+        if 'TXT' in file_name.upper() or 'TSV' in file_name.upper():
+            df = pd.read_csv(file, sep='\t')  # Tab-separated values
         elif 'CSV' in file_name.upper():
-            
-            df = pd.read_csv(file, sep=',')
-            
+            df = pd.read_csv(file, sep=',')  # Comma-separated values
         elif 'XLSX' in file_name.upper():
-                
-            df = pd.read_excel(file)
-        
+            df = pd.read_excel(file)  # Excel file
         else:
             st.warning('Not compatible format')
-
-       	return df
+            return None  # Return None explicitly if format is unsupported
+    
+        return df
        
-    def eats_better(file):
-        
-        file_type = file.name.split('.')[1].upper()
-        
-        if file_type == 'TXT':
-            
-            df = pd.read_csv(file, sep='\t')
-
-        if file_type == 'TSV':
-            
-            df = pd.read_csv(file, sep='\t')
-            
-        if file_type == 'CSV':
-            
-            df = pd.read_csv(file, sep=',')
-            
-        if file_type == 'XLSX':
-                
-            df = pd.read_excel(file)
-        
-        else:
-            st.warning('Not compatible format')
-
-       	return df
-       
-        
     def spits(df, id_col, lfq_method, replicate_dict, cleaning=True, formatting='auto', 
              transformation=np.log2, normalization=None, valid_values=0.7, imputation='', **imp_kwargs):
         """
+        Processes a DataFrame for quantitative analysis, performing tasks such as cleaning, 
+        transformation, imputation, normalization, and reformatting based on provided parameters.
+    
+        Parameters:
+        df : pandas.DataFrame
+            Input dataframe containing raw data for processing.
+        id_col : str
+            Column name in `df` representing unique identifiers for the dataset (e.g., 'Accession').
+        lfq_method : str
+            Column name or method representing LFQ (Label-Free Quantification) values in the data.
+        replicate_dict : dict
+            A dictionary mapping sample names to condition and replicate information.
+        cleaning : bool, optional, default=True
+            Whether to clean the data by removing contaminants and decoys.
+        formatting : str or bool, optional, default='auto'
+            Controls the format of the output dataframe ('auto', True, or False).
+        transformation : callable, optional, default=np.log2
+            A transformation function to apply to the data (e.g., log2).
+        normalization : callable or None, optional, default=None
+            A normalization function to apply to the data. If None, no normalization is applied.
+        valid_values : float, optional, default=0.7
+            Proportion of valid values required for each row to be retained.
+        imputation : str, optional, default=''
+            Method for data imputation. If empty, no imputation is performed.
+        **imp_kwargs : dict
+            Additional keyword arguments passed to the imputation function.
+        
+        Returns:
+        pandas.DataFrame
+            Processed DataFrame ready for further analysis or visualization.
         """
+        
         df.columns = df.columns.str.replace('.: ', '')
         samples = list(replicate_dict.keys())
         #conditions = list(tools.invert_dict(replicate_dict).keys())
@@ -103,13 +107,13 @@ class alpaca:
         log_samples = [i for i in samples if 'LOG' not in i.upper()]
         df[log_samples] = df[log_samples].apply(lambda x: transformation(x)) 
         df[samples] = clean.filter_rows_by_missing_values(df[samples], replicate_dict, valid_values)
-        df = df.dropna(subset=samples, thresh=1)
+        #df = df.dropna(subset=samples, thresh=1)
         if imputation != '':
             df[samples] = Imputation.by_condition(df[samples], replicate_dict, imputation, **imp_kwargs)
         df = Normalization.normalizer(df, samples, normalization)
         
         if formatting == 'auto':
-            formatting = tools.is_pivot(df, id_col)
+            formatting = tools.check_format(df, id_col)
     
         if formatting is True:
             df = df.melt(id_vars=ids, value_vars=samples, 
@@ -127,188 +131,100 @@ class alpaca:
             st.warning('Data is formated for human vision.\nThat could lead to errors or incompatibilities in further analysis using Alpaca pipeline.\nConsider formating your dataset if you see any anomally.')
             return df
 
-    def scienttist(prep, enrichment_type_dict, subproteome_dict=None):
-        preparation = dict()
-        for prepa in enumerate(enrichment_type_dict):
-            enriched = prep[prepa[0]][1] != 0
-            if subproteome_dict != None:
-                preparation[prepa[1]]= {'Enrichment': enriched,
-                                 'Dilution': prep[prepa[0]][0],
-                                 'Added_vol': prep[prepa[0]][1],
-                                 'Sample_vol': prep[prepa[0]][2],
-                                 'Enriched_Condition': enrichment_type_dict[prepa[1]],
-                                 'Subproteome': subproteome_dict[prepa[1]]}
-            else:
-                preparation[prepa[1]]= {'Enrichment': enriched,
-                                 'Dilution': prep[prepa[0]][0],
-                                 'Added_vol': prep[prepa[0]][1],
-                                 'Sample_vol': prep[prepa[0]][2],
-                                 'Enriched_Condition': enrichment_type_dict[prepa[1]],
-                                 'Subproteome': False}
-        return preparation
-    
-    def abacus(ups2, concentration=0.5, in_sample=6.0, total_protein=10):
-        
-        #ups2 = alpaca.eats(standards)
-        
-        fmol_col = [fmol for fmol in ups2.columns if ('mol' or 'MOL') in fmol]
-        MW = [mw for mw in ups2.columns if ('Da' or 'MW') in mw]
-        
-        print('Got column:', fmol_col[0], '- Calculating fmols for you')
-        µg_standards = in_sample * concentration
-        
-        ups2['fmol_inSample'] = ups2[fmol_col[0]] / 10.6 * µg_standards
-        ups2['log2_Amount_fmol'] = np.log2(ups2.fmol_inSample)
-        ups2['Mass fraction (fmol/µg_extract)'] = ups2.fmol_inSample * (µg_standards / total_protein)
-        ups2['log2_Mass_fract'] = np.log2(ups2['Mass fraction (fmol/µg_extract)'])
-        
-        volume = 10.6 / concentration  # concentration in µL
-        
-        print('UPS2 standards vial concentration:', concentration, 'µg/µl | Resuspended in:', volume, 'µl')
-        ups2['Stock_ng_µl'] = ups2[fmol_col[0]] * ups2[MW[0]] / (volume*1e6)
-        
-        added = in_sample * ups2['Stock_ng_µl']
-        print(in_sample, 'µl added to the sample')
-        ups2['In_sample_ng'] = ups2['Stock_ng_µl'] * added
-        return ups2
-    
-    def regression(df, ups2, lfq_col='iBAQ', filter_col='Replicate', added_samples=None, valid_values=2):
-    
-        data = pd.merge(ups2, df, on='Accession', how='right')
-        #data = data.dropna(subset=[fmol_col])
-        if added_samples != None:
-            data = data[data[filter_col].isin(added_samples)]
-            
-        ups_red = data.dropna(subset=lfq_col).groupby(['Accession', 'log2_Amount_fmol']).apply(lambda x: pd.Series({
-                                lfq_col: x[lfq_col].median(), 'N': x[lfq_col].nunique()})).reset_index()
-        
-        ups_red = ups_red[ups_red.N >= valid_values] #Filters for a minimum of values needed for fitting
-        
-        X = ups_red['log2_Amount_fmol'].values.reshape(-1, 1)  # values converts it into a numpy array
-        Y = ups_red[lfq_col].values.reshape(-1, 1)  # -1 means that calculate the dimension of rows, but have 1 column
-        linear_regressor = LinearRegression().fit(X, Y)  # create object for the class & perform linear regression
-        Y_pred = linear_regressor.predict(X)  # make predictions
-        # The coefficients
-        coef = linear_regressor.coef_
-        inter = linear_regressor.intercept_
-        print(f'Coefficients: {coef}')
-        print(f'Intercept: {inter}')
-        # The mean squared error
-        print('Mean squared error: %.2f'
-            % mean_squared_error(Y, Y_pred))
-        # The coefficient of determination: 1 is perfect prediction
-        R2 = r2_score(Y, Y_pred)
-        print('Coefficient of determination: %.2f'
-            % R2)
-        
-        return ups_red, coef[0], inter, R2
-    
-    def abacusreg(ups_red, lfq_col='iBAQ', R2='', save=True):
-        
-        sns.set_context('paper')
-        sns.set(style='whitegrid', font_scale=1.5)
-        g = sns.lmplot(x='log2_Amount_fmol', y=lfq_col, data=ups_red, palette=['#656565'],  aspect=1)
-        g.set_axis_labels("UPS2 amount (log2)", f"UPS2 {lfq_col} (log2)")
-        plt.text(ups_red['log2_Amount_fmol'].min()-0.2, ups_red[lfq_col].max()-0.5, round(R2, 3), fontsize=20)
-        if save == True:
-            g.savefig('UPS2_Quantification.svg', bbox_inches='tight', pad_inches=0.5)
-            
-    def moles(df, coef, inter, lfq_col='iBAQ', ratio= 1, ratio_col='identifier'):
-    
-        df['fmol'] = 2 ** ((df[lfq_col] - inter) / coef)
-        
-        if type(ratio) is int:
-            df['fmol'] = df['fmol'] / ratio
-        elif type(ratio) is dict: 
-            for key, value in ratio.items():
-                df['fmol'] = np.where(df[ratio_col] == key,  df['fmol'] / value,  df['fmol'])
-        
-        return df
         
     def census(df, standards, concentration=0.5, in_sample=6.0, lfq_col='iBAQ', ratio=1, 
                total_protein= 1, filter_col='Replicate', added_samples=None, valid_values=2, save=True):
         '''
-        
-
+        Performs protein quantification using regression between quantified protein intensities and 
+        dynamic standards (e.g., UPS2).
+    
         Parameters
         ----------
-        df : Dataframe
-            Clean data from quantified proteins
-        standards : File (.csv, .txt, .xlsx)
-            UPS2 dynamic standards information.
-        concentration : float, optional
-            Standards stock concentration. The default is 0.5.
-        in_sample : float, optional
-            Added volume in sample. The default is 6.0.
-        lfq_col : ('iBAQ', 'LFQ', 'Intensity'), optional
-            DESCRIPTION. The default is 'iBAQ'.
-        added_samples : str or None, optional
-            Samples (conditions) in which it was added the standards. The default is None.
-        save : bool, optional
-            Toggle save the graphs. The default is True.
-
+        df : pandas.DataFrame
+            DataFrame containing clean data for quantified proteins.
+        standards : str or file-like object (.csv, .txt, .xlsx)
+            Path to a file containing UPS2 dynamic standards information or the standards file itself.
+        concentration : float, optional, default=0.5
+            Stock concentration of the standards in mg/mL.
+        in_sample : float, optional, default=6.0
+            Volume (in microliters) of standards added to each sample.
+        lfq_col : str, optional, default='iBAQ'
+            Column in `df` representing the label-free quantification (LFQ) values. Can be 'iBAQ', 'LFQ', or 'Intensity'.
+        ratio : float, optional, default=1
+            A multiplier for adjusting the calculated concentration of each protein.
+        total_protein : float, optional, default=1
+            Total protein concentration in the sample.
+        filter_col : str, optional, default='Replicate'
+            Column to filter data for specific replicates or conditions.
+        added_samples : list or None, optional, default=None
+            List of samples or conditions where standards were added. If None, assume standards were added to all samples.
+        valid_values : int, optional, default=2
+            Minimum number of valid (non-missing) values required for regression.
+        save : bool, optional, default=True
+            Whether to save regression plots.
+    
         Returns
         -------
-        df : dataframe
-            Quantified proteins.
-        ups_red : dataframe
-            Measured standards in the sample.
+        df : pandas.DataFrame
+            DataFrame with quantified proteins, adjusted for concentration.
+        ups_red : pandas.DataFrame
+            DataFrame containing measured standards in the sample.
         coef : float
-            Regression slope.
+            Regression slope (used for quantification).
         inter : float
-            Regression interception.
-
+            Regression intercept (used for quantification).
+        R2 : float
+            R-squared value representing the goodness-of-fit for the regression.
+            
         '''
-        ups2 = alpaca.abacus(standards, concentration, in_sample, total_protein=total_protein) # Arranges the standards
-        ups_red, coef, inter, R2 = alpaca.regression(df, ups2, lfq_col=lfq_col, filter_col=filter_col,
+        try:
+            ups2 = Quantification.abacus(standards, concentration, in_sample, total_protein=total_protein)
+        except Exception as e:
+            raise ValueError(f"Error processing standards: {e}")
+        if lfq_col not in df.columns:
+            raise ValueError(f"The specified lfq_col '{lfq_col}' does not exist in the dataframe.")
+        if added_samples is None:
+            added_samples = df[filter_col].unique().tolist()  # Apply to all replicates by default
+        ups_red, coef, inter, R2 = Quantification.regression(df, ups2, lfq_col=lfq_col, filter_col=filter_col,
                                                      added_samples=added_samples, valid_values=valid_values) # Regression between intensities and standards
-        alpaca.abacusreg(ups_red, lfq_col=lfq_col, R2=R2, save=save) # Plots the Regression
-        df = alpaca.moles(df, coef, inter, lfq_col=lfq_col, ratio = ratio)
+        if R2 < 0.8:
+            st.warning(f"Low R² value ({R2:.2f}), indicating a poor fit for the regression.")
+        Quantification.abacusreg(ups_red, lfq_col=lfq_col, R2=R2, save=save) # Plots the Regression
+        df = Quantification.moles(df, coef, inter, lfq_col=lfq_col, ratio = ratio)
     
         return df, ups_red, coef, inter, R2
     
-    def gathers(df, enrichment_standards, preparation, subproteome=None, QC=False, deviation_lim=10, thresh=10, 
-                imputation=True, strategy='KNN', plot=False, save_plot=False, lfq_method='iBAQ'):
-        '''
-        
-
+    def gathers(df, enrichment_standards, preparation, plot=False, save_plot=False, lfq_method='iBAQ'):
+        """
+        Calculates enrichment factors for protein standards spiked into samples and optionally plots the results.
+    
         Parameters
         ----------
-        df : dataframe
-            Quantified data.
-        enrichment_standards : dataframe
-            Enrichment standards data.
-        preparation : dict, optional
-            Dictionary with the gathering which samples are prepared in which way.
-            If None, it will assume that all conditions were prepared the same way.
-            The default is None.
-        subproteome: str or list. The default is None.
-        Subproteomic fractions that have been enriched
-        QC : bool, optional
-            Toggle for outlier QC. The default is True.
-        deviation_lim : int or float, optional
-            Parameter for detecting outliers. The default is 10.
-        thresh: float or int, optional
-            Parameter for filtering outlier values regarding the deviation to the enrichment median of a protein. The default is 10.
-        imputation : bool, optional
-            Toggle for imputation of dropped outliers. The default is True.
-        strategy : str, optional
-            Imputation method ('KNN', 'mean', 'median', 'most frequent', 'constant').. The default is 'KNN'.
-
+        df : pandas.DataFrame
+            DataFrame containing the quantified protein data (e.g., with iBAQ or LFQ values).
+        enrichment_standards : pandas.DataFrame
+            DataFrame or file containing the standard information for calculating enrichment.
+        preparation : pandas.DataFrame
+            DataFrame containing information about the experimental preparation (e.g., conditions).
+        plot : bool, optional
+            Whether to plot the enrichment factors. Default is False.
+        save_plot : bool, optional
+            Whether to save the plot as a file. Default is False.
+        lfq_method : str, optional
+            Label-free quantification method used in the analysis (e.g., 'iBAQ', 'LFQ'). Default is 'iBAQ'.
+    
         Returns
         -------
-        e_test : df
-            Dataframe containing the quantified spiked_in standards.
-        enrichment_factors : dict
-            Dict with our calculated enrichment factors.
-
-        '''
+        e_test : pandas.DataFrame
+            DataFrame containing calculated enrichment values for each sample.
+        preparation : pandas.DataFrame
+            Updated preparation DataFrame with enrichment factors added.
+        """
             
-        e_test = alpaca.enrichment_calculator(df, enrichment_standards, preparation, lfq_method).dropna(subset='Enrichment')
-            
-        if QC == True:
-            e_test = alpaca.looksafter(e_test, deviation_lim, thresh, imputation, strategy)
-            
+        e_test = gathering.enrichment_calculator(df, enrichment_standards, preparation, lfq_method).dropna(subset='Enrichment')
+        required_cols = ['Condition', 'Replicate', 'Enrichment']
+        if not all(col in df.columns for col in required_cols):
+            raise ValueError(f"Missing required columns in DataFrame: {required_cols}")
         grouping = ['Condition', 'Replicate']
         col_grouper = [columns for columns in df.columns if columns in grouping]
 
@@ -320,9 +236,9 @@ class alpaca:
 
         preparation = preparation.merge(enrichment_factors, on='Condition', how='left')
             
-        for key, value in enrichment_factors.iterrows():
-            print(f'Enrichment factor on condition: {key} = {value}')
-            
+        for index, row in enrichment_factors.iterrows():
+            print(f'Enrichment factor for condition {row["Condition"]}: {row["EnrichmentFactor"]}')
+     
         if plot == True:
             sns.catplot(data=enrichments, x='Condition', y='Enrichment', kind='box', width=0.5)
         if save_plot == True:
@@ -330,37 +246,6 @@ class alpaca:
         
         return e_test, preparation
    
-    def correctionSRM(df, preparation):
-
-        data = pd.DataFrame()
-
-        for index, content in preparation.iterrows():
-            
-                vals = str(content['fmolSRM']).split(',')
-                values = [float(val) for val in vals]
-    
-                entries = content['ProteinSRM'].split(',')
-    
-                condition = content.Condition
-    
-                temp = pd.DataFrame(zip(entries,values), columns=['Accession', 'fmolSRM'])
-                temp['Condition'] = condition
-                data = pd.concat([data, temp])
-                
-        if data.shape[0] >= 1:
-    
-            correction = data.merge(df, 
-                                   on=['Accession', 'Condition'],
-                                   how='left').groupby([
-                            'Condition', 'Accession']).apply(lambda x: pd.Series({
-                            'CorrectionSRM': x['fmolSRM'].mean() / x['fmol'].mean()
-                        })).reset_index(
-            ).groupby('Condition')['CorrectionSRM'].mean().reset_index()
-
-            preparation = preparation.merge(correction, on='Condition') 
-    
-        return preparation
-        
     def preparator(std, clean, sample, lfq_method='iBAQ'):
     
         enriched_conditions = [condition for condition, details in sample['Added volume'].items() if details != 0]
@@ -399,178 +284,37 @@ class alpaca:
         e_found['Enrichment'] = e_found['Added_fmol'] / e_found['fmol']
         
         return e_found    
+     
+    def wool(df, preparation):
+        """
+        Applies enrichment factor corrections to a dataframe, converts amounts to molecules using Avogadro's number,
+        and computes sample-specific and cell-specific molecule concentrations.
     
-    def standards_preparation_check(preparation):
-    
-        try:
-            vol_col = [col for col in preparation.columns if ("STDV" or "STD_V" or "STD V") in col.upper()][0]
-        except:
-            print('Added volume is missing in sample parameters')
-        
-        try:
-            splv_col = [col for col in preparation.columns if ("SAMPLEV" or "SAMPLE_V" or "SAMPLE V") in col.upper()][0]
-        except:
-            print('Sample volume is missing in sample parameters')
-        
-        try:
-            dil_col = [col for col in preparation.columns if ("STDD" or "STD_D" or "STD D") in col.upper()][0]
-        except:
-            print('Dilution of the standard stock solution is missing in sample parameters')
-            
-        return vol_col, splv_col, dil_col
-    
-    def multiplier(enriched_conditions, standards):
-    
-        arranger = pd.DataFrame()
-    
-        for condition in enriched_conditions:
-    
-            standards['Condition'] = condition
-            arranger = pd.concat([arranger, standards])
-            
-        return arranger
-    
-    def enrichment_calculator(df, standards, preparation, lfq_method='iBAQ', subproteome=None):
-        
-        enriched_conditions = [item[1]['Condition'] for item in preparation.iterrows() if item[1]['Enrichment'] == True]
-        
-        if enriched_conditions == []:
-            pass
-        else:
-            vol_col, splv_col, dil_col = alpaca.standards_preparation_check(preparation)
-    
-            standards_mod = alpaca.multiplier(enriched_conditions, standards)
-    
-            standards_mod = standards_mod.merge(preparation, on=['Condition'])
-            
-            MW = [col for col in standards_mod.columns if 'Da' in col][0]
-    
-            standards_mod['StdMass'] = standards_mod['StdConcentration'] / standards_mod[dil_col] * standards_mod[vol_col]
-            standards_mod['StdFmol'] = standards_mod['StdMass'] / standards_mod[MW] * 1000
-    
-            standards_mod['StdFmol'] = np.where(standards_mod['StdFmol'] == 0, np.nan, standards_mod['StdFmol'])
-    
-            standards_mod = standards_mod[['Accession', 'Condition', MW, 'StdMass','StdFmol']]
-    
-            ID_standards = df[df.Condition.isin(enriched_conditions)
-                             ].merge(standards_mod, how='right', on=["Accession", "Condition"])
-            
-            ID_standards['Enrichment'] = ID_standards['StdFmol'] / ID_standards['fmol']  
-    
-            e_reduction = ['Accession', MW, 'Sample', lfq_method, 
-                                           'Condition', 'Replicate', 'fmol', 'StdFmol', 'Subproteome', 'Enrichment']
-    
-            ID_standards = ID_standards[[col for col in ID_standards.columns if col in e_reduction]]
-                    
-            return ID_standards
-
-    
-    def droper(e_test, std=10, thresh=10):
-
-        test = e_test.copy()
-        test = test.dropna().reset_index(drop=True)
-        for item in test.Accession.unique():
-            for condition in test.Condition.unique():
-                ef = test[(test.Accession == item) & (test.Condition == condition)]['Enrichment'].dropna()
-                
-                if ef.std() > std:
-                    dropers = [item for item in np.array(ef) if np.absolute((item - ef.median())) > thresh]
-                    for droper in dropers:
-                        test['Enrichment'] = np.where(test.Enrichment == droper, np.nan, test.Enrichment)
-                        new_enrichment = test[(test.Accession == item) &(test.Condition == condition)]['Enrichment']
-                        new_std = round(new_enrichment.std(),2)
-                    if len(new_enrichment.dropna()) < 2:
-                        test = test.drop(index=ef.index)
-                        print('Droped', item, 'at', condition, 'cause there was only 1 value.')
-                    else:
-                        print(f"Droped a replicate of {item} at {condition} cause STD was too high ({round(ef.std(),2)}).\nStandard deviation is now to {new_std}.")
-                
-                elif len(ef) < 2:
-                    test = test.drop(index=ef.index)
-                    print('Droped', item, 'at', condition, 'cause there was only 1 value.')
-        return test
-
-    def KNNimputation(test):
-        test = test.reset_index(drop=True)
-        imputed = list()
-        for item in test.Accession.unique():
-            for condition in test.Condition.unique():
-                sorted_data = test[(test.Accession == item) & (test.Condition == condition)]
-                ef = np.array(sorted_data.Enrichment)
-                ef = ef.reshape(-1, 1) 
-                if len(ef) >= 1:
-                    imputer = KNNImputer(n_neighbors=len(ef))
-                    ef_mod = imputer.fit_transform(ef)
-                    ef_mod_std = ef.std()
-                    ef_mod = np.reshape(ef_mod, len(ef_mod))
-                    data = pd.DataFrame(ef_mod, index=sorted_data.index)
-                    imputed.append(data)
-            print(f'Enrichment outliers imputed through k-Nearest Neighbors.\nFor {item} at {condition}, standard deviation is now {round(ef_mod_std,2)}')
-        test['Enrichment'] = pd.concat(imputed)
-        return test
-    
-    def SimpleImputation(test, strategy='Median'):
-        test = test.reset_index(drop=True)
-        imputed = list()
-        for item in test.Accession.unique():
-            for condition in test.Condition.unique():
-                sorted_data = test[(test.Accession == item) & (test.Condition == condition)]
-                ef = np.array(sorted_data.Enrichment)
-                ef = ef.reshape(-1, 1) 
-                if len(ef) >= 1:
-                    imputer = SimpleImputer(missing_values=np.nan, strategy=strategy)
-                    ef_mod = imputer.fit_transform(ef)
-                    ef_mod_std = ef.std()
-                    ef_mod = np.reshape(ef_mod, len(ef_mod))
-                    data = pd.DataFrame(ef_mod, index=sorted_data.index)
-                    imputed.append(data)
-        
-            print(f'Enrichment outliers imputed through {strategy}.\nFor {item} at {condition}, standard deviation is now {round(ef_mod_std,2)}')
-        test['Enrichment'] = pd.concat(imputed)
-        return test
-    
-    def looksafter(test, deviation_lim=10, thresh=10, imputation=True, strategy='KNN'):
-        '''
-        
-
         Parameters
         ----------
-        test : dataFrame
-            Enrichment standards data.
-        deviation_lim : int or float, optional
-            Standard deviation threshold among a standard to drop a replicate. The default is 10.
-        imputation : Bool, optional
-            Option to enable imputation of values with high deviation. If False, outliers will be dropped. The default is True.
-        strategy : str, optional
-            Imputation method ('KNN', 'mean', 'median', 'most frequent', 'constant'). The default is 'KNN'.
-
+        df : pandas.DataFrame
+            DataFrame containing the quantified protein data (e.g., fmol values).
+        preparation : pandas.DataFrame
+            DataFrame containing experimental setup and enrichment information (e.g., Enrichment factors, sample volumes).
+    
         Returns
         -------
-        test_imputed : dataFrame
-            Clean enrichment standards data.
-
-        '''
-        test_clean = alpaca.droper(test, std=deviation_lim, thresh=thresh)
-        if imputation == True:
-            if strategy != 'KNN':
-                test_imputed = alpaca.SimpleImputation(test_clean, strategy=strategy)
-            else:
-                test_imputed = alpaca.KNNimputation(test_clean)
-        else:
-            test_imputed = test_clean.copy()
-        return test_imputed
-    
-    def wooler(df, preparation):
-
-        enrichment_params = ['Enrichment', 'EnrichmentDirection', 'ProteinSRM', 'fmolSRM', 'EnrichmentFactor']
+        df : pandas.DataFrame
+            Updated DataFrame with corrected fmol values and molecule counts.
+        """
+        enrichment_params = ['Enrichment', 'EnrichmentMode', 'ProteinSRM', 'fmolSRM', 'EnrichmentFactor']
         sample_params = ['SampleVolume', 'ProteinConcentration', 'AmountMS']
         cells_params = ['CellsPerML', 'TotalCultureVolume']
         
-        if 'EnrichmentFactor' in preparation.columns.to_list():
+        required_columns = ['Condition', 'fmol']
+        if not all(col in df.columns for col in required_columns):
+            raise ValueError(f"Required columns {required_columns} are missing in the input DataFrame")
+        
+        if 'EnrichmentFactor' in preparation.columns:
         
             for condition, values in preparation.set_index('Condition')[enrichment_params].fillna(1).iterrows():
                 
-                if values['EnrichmentDirection'] == 'Up':
+                if values['EnrichmentMode'] == 'Amplification':
                     """
                     This calculation is made for samples which correspond to a higher fraction 
                     compared to the original proteome. E.g., Membrane
@@ -579,7 +323,7 @@ class alpaca:
                                         df.fmol / values['EnrichmentFactor'], 
                                         df.fmol)
                     
-                elif values['EnrichmentDirection'] == 'Down': 
+                elif values['EnrichmentMode'] == 'Sampling': 
                     """
                     This calculation is made for samples which correspond to a smaller fraction
                     to the original proteome. E.g., Secretome
@@ -588,7 +332,7 @@ class alpaca:
                                           df.fmol * values['EnrichmentFactor'], 
                                           df.fmol)
                     
-            preparation = alpaca.correctionSRM(df, preparation)
+            preparation = yarnScissors.correctionSRM(df, preparation)
 
             if "CorrectionSRM" in preparation.columns:
                 
@@ -627,6 +371,26 @@ class alpaca:
         
         return df
     
+    def scienttist(prep, enrichment_type_dict, subproteome_dict=None):
+        preparation = dict()
+        for prepa in enumerate(enrichment_type_dict):
+            enriched = prep[prepa[0]][1] != 0
+            if subproteome_dict != None:
+                preparation[prepa[1]]= {'Enrichment': enriched,
+                                 'Dilution': prep[prepa[0]][0],
+                                 'Added_vol': prep[prepa[0]][1],
+                                 'Sample_vol': prep[prepa[0]][2],
+                                 'Enriched_Condition': enrichment_type_dict[prepa[1]],
+                                 'Subproteome': subproteome_dict[prepa[1]]}
+            else:
+                preparation[prepa[1]]= {'Enrichment': enriched,
+                                 'Dilution': prep[prepa[0]][0],
+                                 'Added_vol': prep[prepa[0]][1],
+                                 'Sample_vol': prep[prepa[0]][2],
+                                 'Enriched_Condition': enrichment_type_dict[prepa[1]],
+                                 'Subproteome': False}
+        return preparation
+    
     def parameter_gen(clean, params, conditions):
 
         N = len(conditions)
@@ -662,7 +426,7 @@ class alpaca:
         param_names = ['SampleVolume', 'ProteinConcentration', 'AmountMS',
                        'CellsPerML', 'TotalCultureVolume', 
                        'ProteinSRM', 'fmolSRM', 
-                       'Enrichment', 'EnrichmentDirection', 'StdDilution', 'StdVolume']
+                       'Enrichment', 'EnrichmentMode', 'StdDilution', 'StdVolume']
         param_types = [float, float, float,
                        float, float, 
                        str, float,
@@ -673,8 +437,8 @@ class alpaca:
         for name, dtype in zip(param_names, param_types):
             if dtype == bool:
                 data[name] = np.random.choice([True, False], size=(n_conditions))
-            elif name == 'EnrichmentDirection':
-                data[name] = np.random.choice(['Up', 'Down'], size=(n_conditions))
+            elif name == 'EnrichmentMode':
+                data[name] = np.random.choice(['Sampling', 'Amplification'], size=(n_conditions))
             elif name == 'ProteinSRM':
                 data[name] = np.random.choice(df.Accession, size=(n_conditions))
             else:
@@ -697,33 +461,6 @@ class alpaca:
         
         return suggestion
         
-    def pca(clean, standards, lfq_method='iBAQ'):
-        
-        stan_list = standards['Accession'].unique()  
-    
-        idstd = clean[clean.Accession.isin(stan_list)].dropna()
-        
-        pivot_data = idstd.dropna(subset=lfq_method).pivot_table(index='Sample', 
-                                                         columns='Accession', 
-                                                         values=lfq_method).fillna(0).reset_index()
-        features = pivot_data.columns[1:]
-        # Separating out the features
-        x = pivot_data.loc[:, features].values
-        # Separating out the target
-        y = pivot_data.loc[:,['Sample']].values
-        # Standardizing the features
-        x = StandardScaler().fit_transform(x)
-        pd.DataFrame(x, index=pivot_data.Sample)
-        #pivot_data
-        
-        pca = PCA(n_components=2)
-        principalComponents = pca.fit_transform(x)
-        principalDf = pd.DataFrame(data = principalComponents
-                     , columns = ['PC1', 'PC2'])
-        
-        finalDF = principalDf.set_index(pivot_data.Sample).sort_values(by='PC1', ascending=False).reset_index()
-        
-        return finalDF
     
     def pcomponent(clean, lfq_method='iBAQ', index=['Sample', 'Condition'], components=5, conditions=False):
         
@@ -756,20 +493,6 @@ class alpaca:
                
         
         return finalDF, columns, variance
-    
-    def KMeans(sorted_data, component='PC1', n_clusters=2):
-    
-        model = KMeans(n_clusters=n_clusters)
-    
-        model.fit(sorted_data[component].values.reshape([-1, 1]) )
-    
-        all_predictions = model.predict(sorted_data[component].values.reshape([-1, 1]))
-        sorted_data['cluster'] = pd.Series(all_predictions)
-        
-        group = all_predictions[0]
-        suggestions = sorted_data[sorted_data.cluster == group]['Sample']
-        
-        return sorted_data, suggestions
     
     def create_random_df(df):
         # Select 10 random entries from the original data frame
@@ -811,68 +534,5 @@ class alpaca:
         
         return df_pivot
         
-    def match_names(name, df, thresh=75):
-    
-        for index, x in enumerate(df.columns):
 
-            score = fuzz.ratio(name.lower(), x.lower())
-
-            if score > thresh:
-
-                return index, name, score
-        
-    def matchmaker(df_original, df_desired):
-    
-        editable = df_original.columns.to_list()
-
-        for x in df_desired.columns:
-
-            match = alpaca.match_names(x, df_original, 75)
-
-            editable[match[0]] = match[1]
-
-        df_original.columns = editable
-
-        return df_original
-    
-    def path_finder(df, lfq_method):
-
-        candidates = [re.findall(r"\w+", col)[-1] for col in df.columns if lfq_method in col if len(col) > len(lfq_method)]
-
-        conditions = []
-        replicate = dict()
-        previous = ''
-
-        for candidate in permutations(candidates, 2):
-
-            name1 = re.sub('[^0-9a-zA-Z]+', '', candidate[0])
-
-            name2 = re.sub('[^0-9a-zA-Z]+', '', candidate[1])
-
-            ratio = fuzz.ratio(name1, name2)
-
-            if ratio > 85:
-
-                common = os.path.commonprefix(candidate)
-
-                if common in previous:
-
-                    common = previous
-
-                previous = common
-
-                if common != '':
-
-                    conditions.append(common)
-
-                    rep = candidate[0].replace(common, '')
-
-                    col = [col for col in df.columns for item in conditions if lfq_method in col if candidate[0] in col][0]
-
-                    replicate[col] = [common, f'Replicate_{rep}']
-
-        conditions = list(dict.fromkeys(conditions))
-        sample_cols = list(replicate.keys())
-
-        return conditions, sample_cols,  replicate
 

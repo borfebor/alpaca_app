@@ -36,6 +36,8 @@ class detective:
         candidates = tools.in_polish_please(it, lfq_method)
         export = tools.in_the_darkness_bind_them(candidates)#, test
         replicate_dict, conditions = tools.wrap_it_up(export, it, lfq_method)
+        it[lfq_method] = [i for i in it[lfq_method] if i in list(replicate_dict.keys())]
+
         return replicate_dict, conditions, it
             #except:
             #    st.error('An error happened here')
