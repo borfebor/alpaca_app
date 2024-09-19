@@ -214,6 +214,8 @@ if uploaded_file is not None:
     listed_cond = ', '.join(col for col in conditions)
     st.write(f'Your data contains {df.Accession.nunique()} proteins from {len(conditions)} experimental conditions ({listed_cond})')
     
+    message = st.empty()
+    
     results = st.empty()
     
     data_frame = st.empty()
@@ -223,6 +225,8 @@ if uploaded_file is not None:
                                                            in_sample=amount, lfq_col=lfq_method, filter_col='Sample',
                                                            added_samples=replicate, valid_values=2,
                                                            save=False)  
+        if R2 < 0.8:
+            message.warning(f"Low R² value ({R2:.2f}), indicating a poor fit for the regression.")
     except:
         aid.warning("Couldn't find the quantification standards")
         aid.markdown("""
@@ -248,11 +252,11 @@ if uploaded_file is not None:
                """)
                
     try:
-        ups2
+        ups2 in globals()
     except:
-        std_check = None
+        ups2 = None
     
-    if std_check is not None:
+    if ups2 is not None:
            
         std_test = ups2[['Accession', 'log2_Amount_fmol']].copy()
         
