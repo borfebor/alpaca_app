@@ -252,11 +252,11 @@ if uploaded_file is not None:
                """)
                
     try:
-        ups2 in globals()
+        exist = ups2
     except:
-        ups2 = None
+        exist = None
     
-    if ups2 is not None:
+    if exist is not None:
            
         std_test = ups2[['Accession', 'log2_Amount_fmol']].copy()
         
