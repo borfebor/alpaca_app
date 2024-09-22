@@ -222,9 +222,9 @@ class alpaca:
         """
             
         e_test = gathering.enrichment_calculator(df, enrichment_standards, preparation, lfq_method).dropna(subset='Enrichment')
-        required_cols = ['Condition', 'Replicate', 'Enrichment']
-        if not all(col in df.columns for col in required_cols):
-            raise ValueError(f"Missing required columns in DataFrame: {required_cols}")
+        #required_cols = ['Condition', 'Replicate', 'Enrichment']
+        #if not all(col in df.columns for col in required_cols):
+        #    raise ValueError(f"Missing required columns in DataFrame: {required_cols}")
         grouping = ['Condition', 'Replicate']
         col_grouper = [columns for columns in df.columns if columns in grouping]
 
