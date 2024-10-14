@@ -93,7 +93,7 @@ This tab controls the sample preparation. It is an optional input in case the us
 > - **fmolSRM** `Optional`: If the enrichment of a subcellular fraction has been calculated using targeted proteomics (SRM). Fmol of the
 > proteins measured in the targeted proteomics measurements. 
 > - **Enrichment** `Optional`: Boolean (True or False). Samples that have been enriched should be specified as True
-> - **EnrichmentDirection** `Optional`: UP or DOWN. 
+> - **EnrichmentDirection** `Optional`: Amplification or Sampling (see Supplementary Material).
 > - **StdDilution** `Optional`: This parameter specifies how many times the stock solution of enrichment standards has been diluted before
 > adding it to the sample. If the standards were not diluted before
 > addition, specify 1. Only used when the enrichment is calculated
