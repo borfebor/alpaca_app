@@ -314,7 +314,7 @@ class alpaca:
         
             for condition, values in preparation.set_index('Condition')[enrichment_params].fillna(1).iterrows():
                 
-                if values['EnrichmentMode'] == 'Amplification':
+                if values['EnrichmentMode'] == 'Enrichment':
                     """
                     This calculation is made for samples which correspond to a higher fraction 
                     compared to the original proteome. E.g., Membrane
@@ -323,7 +323,7 @@ class alpaca:
                                         df.fmol / values['EnrichmentFactor'], 
                                         df.fmol)
                     
-                elif values['EnrichmentMode'] == 'Sampling': 
+                elif values['EnrichmentMode'] == 'Concentration': 
                     """
                     This calculation is made for samples which correspond to a smaller fraction
                     to the original proteome. E.g., Secretome
@@ -438,7 +438,7 @@ class alpaca:
             if dtype == bool:
                 data[name] = np.random.choice([True, False], size=(n_conditions))
             elif name == 'EnrichmentMode':
-                data[name] = np.random.choice(['Sampling', 'Amplification'], size=(n_conditions))
+                data[name] = np.random.choice(['Concentration', 'Enrichment'], size=(n_conditions))
             elif name == 'ProteinSRM':
                 data[name] = np.random.choice(df.Accession, size=(n_conditions))
             else:
