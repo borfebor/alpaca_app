@@ -77,9 +77,9 @@ This tab controls the sample preparation. It is an optional input in case the us
 **Table 2.** Example of the input table to define the parameters used for sample parameters. An example table can be generated in the GUI based on the added conditions. This example table can be exported as a template and edited to be imported later into the GUI.
 | Condition   | SampleVolume | ProteinConcentration | AmountMS | CellsPerML | TotalCultureVolume | ProteinSRM | fmolSRM | Enrichment | EnrichmentDirection | StdDilution | StdVolume |
 |-------------|--------------|----------------------|----------|------------|--------------------|------------|---------|------------|---------------------|-------------|-----------|
-| Cond1_t0    | 2.31         | 2.99                 | 9.67     | 4.54       | 7.54               | TNAMLN     | 4.44    | False      | Down                | 3.96        | 1.22      |
-| Cond2_t1    | 2.50         | 0.20                 | 4.10     | 5.13       | 2.62               | AJFVYC     | 4.85    | True       | Down                | 2.43        | 1.51      |
-| Cond3_t2    | 7.38         | 6.56                 | 2.77     | 3.66       | 3.80               | BYEKSC     | 9.71    | True       | Down                | 5.71        | 8.53      |
+| Cond1_t0    | 2.31         | 2.99                 | 9.67     | 4.54       | 7.54               | TNAMLN     | 4.44    | False      |                  | 3.96        | 1.22      |
+| Cond2_t1    | 2.50         | 0.20                 | 4.10     | 5.13       | 2.62               | AJFVYC     | 4.85    | True       | Enrichment                | 2.43        | 1.51      |
+| Cond3_t2    | 7.38         | 6.56                 | 2.77     | 3.66       | 3.80               | BYEKSC     | 9.71    | True       | Concentration                | 5.71        | 8.53      |
 
 > - **Condition**: Condition in which the parameters were applied.
 > - **SampleVolume**: Protein extract volume (µL) used for protein digestion.
@@ -93,7 +93,7 @@ This tab controls the sample preparation. It is an optional input in case the us
 > - **fmolSRM** `Optional`: If the enrichment of a subcellular fraction has been calculated using targeted proteomics (SRM). Fmol of the
 > proteins measured in the targeted proteomics measurements. 
 > - **Enrichment** `Optional`: Boolean (True or False). Samples that have been enriched should be specified as True
-> - **EnrichmentDirection** `Optional`: UP or DOWN. 
+> - **EnrichmentDirection** `Optional`: Enrichment or Concentration (see Supplementary Material).
 > - **StdDilution** `Optional`: This parameter specifies how many times the stock solution of enrichment standards has been diluted before
 > adding it to the sample. If the standards were not diluted before
 > addition, specify 1. Only used when the enrichment is calculated
