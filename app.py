@@ -91,6 +91,7 @@ if uploaded_file is not None:
                
                > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification (e.g. Molecular weight (Da)).
                """)
+               
         else:
           standards = alpaca.eats(custom_std)  
         
@@ -250,6 +251,21 @@ if uploaded_file is not None:
                
                > **Molecular weight:** It should be in Da and contain in the name either MW or Da for a proper identification (e.g. Molecular wight (Da)).
                """)
+        with results:
+        
+                      
+                      export_results = df.to_csv(sep='\t').encode('utf-8')
+                      
+                      data_frame.dataframe(df, use_container_width=True)   
+                      
+                      st.download_button(
+                            label="Download results",
+                            data=export_results,
+                            file_name='alpaca_results.txt',
+                            mime='text/csv',
+                            help='Here you can download your results',
+                            use_container_width=True,
+                        )
                
     try:
         exist = ups2
