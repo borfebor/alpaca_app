@@ -333,7 +333,9 @@ class alpaca:
                                           df.fmol * values['EnrichmentFactor'], 
                                           df.fmol)
                     
-            preparation = yarnScissors.correctionSRM(df, preparation)
+            if len(preparation.ProteinSRM.dropna()) != 0:      
+                    
+                preparation = yarnScissors.correctionSRM(df, preparation)
 
             if "CorrectionSRM" in preparation.columns:
                 
@@ -545,16 +547,16 @@ class alpaca:
 
                 return index, name, score
         
-    def matchmaker(df_original, df_desired):
+    def matchmaker(df_original, df_desired, thresh=75):
     
         editable = df_original.columns.to_list()
 
         for x in df_desired.columns:
 
-            match = alpaca.match_names(x, df_original, 75)
+            match = alpaca.match_names(x, df_original, thresh)
 
             editable[match[0]] = match[1]
-
+            
         df_original.columns = editable
 
         return df_original
