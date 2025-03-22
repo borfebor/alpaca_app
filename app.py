@@ -329,7 +329,7 @@ if uploaded_file is not None:
                   
                   example.dataframe(enrichment_example, use_container_width=True)
               
-              export_params = params_example.to_csv(sep='\t').encode('utf-8')
+              export_params = params_example.to_csv(sep='\t', index=False).encode('utf-8')
           
               params_temp.download_button(
                     label="Get params template",
@@ -340,7 +340,7 @@ if uploaded_file is not None:
                     use_container_width=True,
                 )
               
-              export_stds = enrichment_example.to_csv(sep='\t').encode('utf-8')
+              export_stds = enrichment_example.to_csv(sep='\t', index=False).encode('utf-8')
           
               std_temp.download_button(
                     label="Get standards template",
@@ -365,8 +365,8 @@ if uploaded_file is not None:
                   if "PARAM" in item.name.upper():
                       
                       sample_conditions = alpaca.eats(item)
-                      sample_conditions = alpaca.matchmaker(sample_conditions, params_example)
-                      sample_conditions = sample_conditions.set_index(sample_conditions.columns[0])
+                      sample_conditions = alpaca.matchmaker(sample_conditions, params_example, 85)
+                      sample_conditions = sample_conditions#.set_index(sample_conditions.columns[0])
                       
                       #agree = agree_placeholder.checkbox('Use parameters for calculations', True)
                       
@@ -383,10 +383,10 @@ if uploaded_file is not None:
               
               if 'sample_conditions' in globals():
                     
-                    placer_tab3.dataframe(sample_conditions)
+                  placer_tab3.dataframe(sample_conditions)
                 
               else:
-                    placer_tab3.markdown("""
+                  placer_tab3.markdown("""
                                 Someone is trying to run too fast.
                                 Please, upload your experimental parameters file first.
                                """)
