@@ -6,6 +6,7 @@ import streamlit as st
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import re
+from thefuzz import fuzz
 from src.spits import Normalization, tools, clean, Imputation
 from src.census import Quantification
 from src.gathers import gathering
@@ -533,6 +534,30 @@ class alpaca:
         df_pivot = df_pivot[cols].reset_index()
         
         return df_pivot
+    
+    def match_names(name, df, thresh=75):
+    
+        for index, x in enumerate(df.columns):
+
+            score = fuzz.ratio(name.lower(), x.lower())
+
+            if score > thresh:
+
+                return index, name, score
+        
+    def matchmaker(df_original, df_desired):
+    
+        editable = df_original.columns.to_list()
+
+        for x in df_desired.columns:
+
+            match = alpaca.match_names(x, df_original, 75)
+
+            editable[match[0]] = match[1]
+
+        df_original.columns = editable
+
+        return df_original
         
 
 
