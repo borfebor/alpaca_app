@@ -4,7 +4,7 @@
 
 ## Videotutorial
 
-[🎥 Watch the video on the university portal]([https://universityvideo.edu/watch/abc123](https://grypstube.uni-greifswald.de/w/xrmy6G55kbrjd3BFcLLSfG))
+[🎥 Watch the video on the university portal](https://grypstube.uni-greifswald.de/w/xrmy6G55kbrjd3BFcLLSfG)
 
 ## Getting started
 
