@@ -35,7 +35,7 @@ if uploaded_file == None:
     
     example_data = st.sidebar.selectbox('Example datasets', [None, 'Ferrero-Bordera et al. 2024', 'Antelo-Varela et al. 2019'])
     st.sidebar.markdown("""
-                ### [Tutorial and documentation](https://github.com/borfebor/alpaca_app)
+                ### [Tutorial](https://grypstube.uni-greifswald.de/w/xrmy6G55kbrjd3BFcLLSfG) and [documentation](https://borfebor.github.io/alpaca_proteomics/)
                 
                 Developed by [Microbial Proteomics (Uni Greifswald)](https://microbialproteomics.uni-greifswald.de/en/)
                 
