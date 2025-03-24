@@ -4,7 +4,7 @@
 
 ## Videotutorial
 
-[![Watch the video](https://i.sstatic.net/Vp2cE.png)](https://grypstube.uni-greifswald.de/w/xrmy6G55kbrjd3BFcLLSfG)
+[![Watch the video]([https://i.sstatic.net/Vp2cE.png](https://grypstube.uni-greifswald.de/w/xrmy6G55kbrjd3BFcLLSfG?start=21s))](https://grypstube.uni-greifswald.de/w/xrmy6G55kbrjd3BFcLLSfG)
 
 https://grypstube.uni-greifswald.de/w/xrmy6G55kbrjd3BFcLLSfG
 
