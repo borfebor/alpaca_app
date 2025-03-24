@@ -3,8 +3,7 @@
 > An app by [B. Ferrero-Bordera](https://www.linkedin.com/in/borjaferrero/) from [Microbial Proteomics (Uni Greifswald)](https://microbialproteomics.uni-greifswald.de/en/)
 
 ## Videotutorial
-
-[![Watch the video]([https://i.sstatic.net/Vp2cE.png](https://grypstube.uni-greifswald.de/w/xrmy6G55kbrjd3BFcLLSfG?start=21s))](https://grypstube.uni-greifswald.de/w/xrmy6G55kbrjd3BFcLLSfG)
+<iframe title="alpaca_tutorial" width="560" height="315" src="https://grypstube.uni-greifswald.de/videos/embed/fe958f27-e065-44ef-92dd-21bca527ad1c" frameborder="0" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
 
 https://grypstube.uni-greifswald.de/w/xrmy6G55kbrjd3BFcLLSfG
 
