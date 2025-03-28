@@ -5,6 +5,7 @@
 ## Videotutorial
 
 [🎥 Watch the video on the university portal](https://grypstube.uni-greifswald.de/w/xrmy6G55kbrjd3BFcLLSfG)
+<div style="position: relative; padding-top: 56.25%;"><iframe title="alpaca_tutorial" width="100%" height="100%" src="https://grypstube.uni-greifswald.de/videos/embed/fe958f27-e065-44ef-92dd-21bca527ad1c" frameborder="0" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups allow-forms" style="position: absolute; inset: 0px;"></iframe></div>
 
 ## Getting started
 
