@@ -14,6 +14,31 @@ Access the GUI at the following link:
 
 This is a GUI from the Python package [Alpaca_proteomics](https://github.com/borfebor/alpaca_proteomics). The app aims to facilitate the analysis of proteomics samples for Absolute Proteome Quantification based on protein standards. 
 
+## Run it locally
+
+1. Ensure [Docker](www.docker.com/get-started) is Installed and Running
+Make sure you have Docker installed on your system and that the Docker daemon is running.
+
+2. Clone and Build the Application
+
+```bash
+# Clone the repository
+git clone https://github.com/borfebor/alpaca_app.git
+
+# Navigate to the folder containing the cloned repository
+cd alpaca_app
+
+# Build the Alpaca app (the -t flag specifies the name of the Docker image)
+docker build -t alpaca-app . 
+
+# Start the Alpaca app from the terminal
+docker run -p 8501:8501 alpaca-app
+```
+
+3. Access the Web Interface:
+Once the container is running, open the following link in your browser:
+[http://localhost:8501/](http://localhost:8501/)
+
 # Cite us
 
 Stay tuned, the paper is submitted.
