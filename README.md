@@ -8,9 +8,9 @@
 
 ## Getting started
 
-Access the GUI in the following link:
+Access the GUI at the following link:
 
-### [🔗 alpaca.streamlit.app](https://alpaca.streamlit.app/)
+### [🔗 alpaca.nube.uni-greifswald.de](https://alpaca.nube.uni-greifswald.de/)
 
 This is a GUI from the Python package [Alpaca_proteomics](https://github.com/borfebor/alpaca_proteomics). The app aims to facilitate the analysis of proteomics samples for Absolute Proteome Quantification based on protein standards. 
 
@@ -32,7 +32,7 @@ Alpaca is a GUI optimised for the analysis and quantification of proteomics samp
 
 ### ![Photo 1. Home Page](https://github.com/borfebor/alpaca_app/blob/main/Screenshots/home.png)
 
-When accessing the GUI, a short description of the preferable workflow for the pipeline is shown in the main body. In the side bar, an uploader widget allows the users to import their ProteinGroups. CSV, TXT and Excel files are compatible with the software. Below the widget, different example datasets can be selected to explore the GUI capabilities.
+When accessing the GUI, a short description of the preferred workflow for the pipeline is shown in the main body. In the sidebar, an uploader widget allows users to import their ProteinGroups. CSV, TXT and Excel files are compatible with the software. Below the widget, different example datasets can be selected to explore the GUI capabilities.
 
 Sample names and replicates for each studied condition are inferred by the software based on the given names during the search on MaxQuant. 
 
@@ -40,7 +40,7 @@ Sample names and replicates for each studied condition are inferred by the softw
 
 After uploading the ProteinGroups file, the GUI changes to the data analysis page. This page consists of two main parts, the body and the sidebar.
 
-- The **GUI sidebar** controls quantification parameters as desired MS intensity method, normalization and protein standards. The sidebar contains 2 main parts (`Data preprocessing` and `Quantification standards`). The desired data processing parameters can be chosen in the `Data preprocessing` section. This includes removal of contaminants, intensity normalization and data formatting. Additionally, the `Quantification standards` section allows to select the used protein standards for quantification and the added amounts. By default, it is set for UPS2, but custom standards can be added).
+- The **GUI sidebar** controls quantification parameters as desired MS intensity method, normalization and protein standards. The sidebar contains 2 main parts (`Data preprocessing` and `Quantification standards`). The desired data processing parameters can be chosen in the `Data preprocessing` section. This includes removal of contaminants, intensity normalization and data formatting. Additionally, the `Quantification standards` section allows to select the used protein standards for quantification and the added amounts. By default, it is set for UPS2, but custom standards can be added.
 
 - The **GUI body** which is divided into 3 parts (`Experimental set-up`, `Data visualization` and `Your data`) allows the user to add details on the experiment and visualize the data. Details on the sample preparation can be added to the `Experimental set-up` tab. Summary statistics of the data and its quantification can be explored in the `Data visualization` tab. Finally, `Your data` corresponds to the quantified proteins in a tabular format ready to be exported.
 
@@ -80,7 +80,7 @@ This tab controls the sample preparation. It is an optional input in case the us
 #### Sample preparation
 
 **Table 2.** Example of the input table to define the parameters used for sample parameters. An example table can be generated in the GUI based on the added conditions. This example table can be exported as a template and edited to be imported later into the GUI.
-| Condition   | SampleVolume | ProteinConcentration | AmountMS | CellsPerML | TotalCultureVolume | ProteinSRM | fmolSRM | Enrichment | EnrichmentDirection | StdDilution | StdVolume |
+| Condition   | SampleVolume | ProteinConcentration | AmountMS | CellsPerML | TotalCultureVolume | ProteinSRM | fmolSRM | Enrichment | EnrichmentMode | StdDilution | StdVolume |
 |-------------|--------------|----------------------|----------|------------|--------------------|------------|---------|------------|---------------------|-------------|-----------|
 | Cond1_t0    | 2.31         | 2.99                 | 9.67     | 4.54       | 7.54               | TNAMLN     | 4.44    | False      |                  | 3.96        | 1.22      |
 | Cond2_t1    | 2.50         | 0.20                 | 4.10     | 5.13       | 2.62               | AJFVYC     | 4.85    | True       | Enrichment                | 2.43        | 1.51      |
@@ -98,7 +98,7 @@ This tab controls the sample preparation. It is an optional input in case the us
 > - **fmolSRM** `Optional`: If the enrichment of a subcellular fraction has been calculated using targeted proteomics (SRM). Fmol of the
 > proteins measured in the targeted proteomics measurements. 
 > - **Enrichment** `Optional`: Boolean (True or False). Samples that have been enriched should be specified as True
-> - **EnrichmentDirection** `Optional`: Enrichment or Concentration (see Supplementary Material).
+> - **EnrichmentMode** `Optional`: Enrichment or Concentration (see Supplementary Material, [integration protocol](https://www.protocols.io/view/integration-of-sample-preparation-and-subcellular-j8nlk9z46v5r/v1), or the [documentation](https://borfebor.github.io/alpaca_proteomics/) for more details).
 > - **StdDilution** `Optional`: This parameter specifies how many times the stock solution of enrichment standards has been diluted before
 > adding it to the sample. If the standards were not diluted before
 > addition, specify 1. Only used when the enrichment is calculated
@@ -124,9 +124,9 @@ In case the sample preparation includes the enrichment of a subproteomic fractio
 ### Data visualization
 
 ![Photo 4. Visualization tab](https://github.com/borfebor/alpaca_app/blob/main/Screenshots/viz_option.png)
-This tab allows to explore some summary statistics of the data. As it is the number of proteins quantified (`Quantified proteins`) per sample and summary statistics of the measured intensities per sample represented as a boxplot (`intensities`). Additionally, principal component analysis (`PCA`) and intensity distribution (`Distribution plot`) were added to the assessment of the sample quality. The fitting of calibration standards can be visualized in the `Calibration curve`. Finally, a `heatmap` can be drawn and exported if desired.
+This tab allows to explore some summary statistics of the data. As it is the number of proteins quantified (`Quantified proteins`) per sample and summary statistics of the measured intensities per sample are represented as a boxplot (`intensities`). Additionally, principal component analysis (`PCA`) and intensity distribution (`Distribution plot`) were added to the assessment of the sample quality. The fitting of calibration standards can be visualized in the `Calibration curve`. Finally, a `heatmap` can be drawn and exported if desired.
 
 ### Your Data
 
-This section corresponds to the quantified data allowing the user to export it for further analysis. The data is exported as CSV. The data can be pivoted if the export format is not the desired, as by default it specified a row per protein quantified in each sample. Quantified data can also be filtered and sorted to export just a selected set of proteins. 
+This section corresponds to the quantified data, allowing the user to export it for further analysis. The data is exported as CSV. The data can be pivoted if the export format is not desired, as by default it specifies a row per protein quantified in each sample. Quantified data can also be filtered and sorted to export just a selected set of proteins. 
 
